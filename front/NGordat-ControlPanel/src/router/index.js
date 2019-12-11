@@ -30,7 +30,7 @@ export default function (/* { store, ssrContext } */) {
     if (to.matched.some(record => record.meta.requiresAuth)) {
       if (!userService.isConnected()) {
         next({
-          path: '/login',
+          path: '/user/login',
           params: { nextUrl: to.fullPath }
         })
       } else {

@@ -10,32 +10,46 @@ const routes = [
     children: [
       {
         name: 'LoginPage',
-        path: '/login',
+        path: 'login',
         component: () => import('pages/user/LoginPage.vue')
       },
       {
         name: 'RegisterPage',
-        path: '/register',
+        path: 'register',
         component: () => import('pages/user/RegisterPage.vue')
       },
       {
         name: 'ActivatePage',
-        path: '/activate/:activationtoken',
+        path: 'activate/:activationtoken',
         component: () => import('pages/user/ActivatePage.vue')
       },
       {
         name: 'ForgotPasswordPage',
-        path: '/forgotpassword',
+        path: 'forgotpassword',
         component: () => import('pages/user/ForgotPasswordPage.vue')
       },
       {
         name: 'ResetPasswordPage',
-        path: '/resetpassword/:resetpasswordtoken',
+        path: 'resetpassword/:resetpasswordtoken',
         component: () => import('pages/user/ResetPasswordPage.vue')
       },
       {
         path: '/',
         redirect: { name: 'LoginPage' }
+      }
+    ]
+  },
+  {
+    path: '/groceries',
+    component: () => import('layouts/MainLayout.vue'),
+    meta: {
+      requiresAuth: true
+    },
+    children: [
+      {
+        name: 'GroceriesIndexPage',
+        path: '',
+        component: () => import('pages/groceries/IndexPage.vue')
       }
     ]
   },

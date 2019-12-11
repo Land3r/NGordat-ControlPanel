@@ -18,7 +18,7 @@
 import UserService from 'services/UserService'
 
 export default {
-  name: 'PageIndex',
+  name: 'IndexPage',
   components: {
   },
   data: function () {
