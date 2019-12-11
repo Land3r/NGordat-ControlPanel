@@ -53,14 +53,14 @@
       content-class="app-menu"
     >
       <q-list>
-        <q-item-label header>JWT-NetCore-Vue</q-item-label>
+        <q-item-label header>CP</q-item-label>
           <q-item clickable tag="a" target="_blank" href="https://github.quasar.dev">
           <q-item-section avatar>
             <q-icon name="code" />
           </q-item-section>
           <q-item-section>
             <q-item-label>Github</q-item-label>
-            <q-item-label caption>github.com/Land3r/JWT-NetCore-Vue</q-item-label>
+            <q-item-label caption>github.com/Land3r/ControlPanel</q-item-label>
           </q-item-section>
         </q-item>
         <q-item-label header>Quasar Links</q-item-label>

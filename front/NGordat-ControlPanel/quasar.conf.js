@@ -118,8 +118,8 @@ module.exports = function (ctx) {
       // workboxPluginMode: 'InjectManifest',
       // workboxOptions: {}, // only for NON InjectManifest
       manifest: {
-        // name: 'JWT-NetCore-Vue',
-        // short_name: 'JWT-NetCore-Vue',
+        // name: 'NGordat-ControlPanel',
+        // short_name: 'NGordat-ControlPanel',
         // description: 'A Quasar Framework app',
         display: 'standalone',
         orientation: 'portrait',

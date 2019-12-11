@@ -1,8 +1,8 @@
 {
-  "name": "jwt-netcore-vue",
+  "name": "ngordat-controlpanel",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
-  "productName": "JWT-NetCore-Vue",
+  "productName": "NGordat-Controlpanel",
   "cordovaId": "",
   "capacitorId": "",
   "author": "Nicolas Gordat <nicolas.gordat@some-email-provider.com>",

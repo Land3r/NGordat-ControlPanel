@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/back/JWT-NetCore-Vue/bin/Debug/netcoreapp3.0/JWTNetCoreVue.dll",
+            "program": "${workspaceFolder}/back/NGordat-ControlPanel/bin/Debug/netcoreapp3.1/NGordatControlPanel.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/back/JWT-NetCore-Vue",
+            "cwd": "${workspaceFolder}/back/NGordat-ControlPanel",
             "stopAtEntry": false,
             // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
             "serverReadyAction": {

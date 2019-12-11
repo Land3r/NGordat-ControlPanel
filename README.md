@@ -1,4 +1,4 @@
-# JWT-NetCore-Vue
+# NGordat-ControlPanel
 JWT (JSON Web Token) implementation with .Net Core - VueJs
 
 ## Prerequisites
@@ -15,12 +15,12 @@ JWT (JSON Web Token) implementation with .Net Core - VueJs
 ## Configuration
 
 ### Backend
-The configuration of the backend is located in `/back/JWT-NetCore-Vue/appsettings.json`.
+The configuration of the backend is located in `/back/NGordat-ControlPanel/appsettings.json`.
 You can also override `appsettings.Development.json` and `appsettings.Production.json` that are environment specifics.
 
 ### Frontend
 The configuration of the frontend is done using dotenv packages.
-The configuration is located at `/front/JWT-NetCore-Vue/.env.development` and `/front/JWT-NetCore-Vue/.env.production` depending on the environment.
+The configuration is located at `/front/NGordat-ControlPanel/.env.development` and `/front/NGordat-ControlPanel/.env.production` depending on the environment.
 
 ## Using Curl to test JWT
 `curl.exe -k -H "Content-Type: application/json" -X POST -d "{\"username\":\"test\", \"password\":\"test\"}" http://localhost:5001/api/users/auth`
