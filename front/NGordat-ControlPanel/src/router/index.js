@@ -26,6 +26,14 @@ export default function (/* { store, ssrContext } */) {
   const userService = new UserService()
 
   Router.beforeEach((to, from, next) => {
+    // Reconnects the user if needed.
+    if (!userService.isConnected() && userService.canBeReconnected()) {
+      console.log('User is not connected, but a previous session was found.')
+      let user = userService.getUser()
+      let token = userService.getToken()
+      userService.connect({ ...user, token: token, password: null })
+    }
+
     // If user hits a page that requires auth, redirects him to the login page.
     if (to.matched.some(record => record.meta.requiresAuth)) {
       if (!userService.isConnected()) {

@@ -88,7 +88,6 @@ export default {
 
         this.isLoading = false
       }).catch((response) => {
-        console.dir(response)
         this.isLoading = false
         this.$q.notify({ ...NotifyFailure, message: this.$t('resetpasswordpage.error.tokenisvaliderror') })
       })

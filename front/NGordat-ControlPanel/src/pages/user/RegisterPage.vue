@@ -92,15 +92,15 @@ export default {
     }
   },
   mounted: function () {
-    // If the user hits this page and is already loggedin, we should set the token for requests and redirects him to his homepage.
-    const userservice = new UserService()
-    if (userservice.isConnected()) {
-      const user = userservice.getUser()
-      const token = userservice.getToken()
+    // // If the user hits this page and is already loggedin, we should set the token for requests and redirects him to his homepage.
+    // const userservice = new UserService()
+    // if (userservice.isConnected()) {
+    //   const user = userservice.getUser()
+    //   const token = userservice.getToken()
 
-      userservice.connect({ ...user, token: token, password: null })
-      this.$router.push({ name: 'IndexPage' })
-    }
+    //   userservice.connect({ ...user, token: token, password: null })
+    //   this.$router.push({ name: 'IndexPage' })
+    // }
   },
   computed: {
     isFormValid: function () {
@@ -121,7 +121,6 @@ export default {
 
       const userservice = new UserService()
       userservice.doRegister(this.form.firstname, this.form.lastname, this.form.username, this.form.email, this.form.password).then((response) => {
-        userservice.connect(response)
         this.isLoading = false
         this.$q.notify({ ...NotifySuccess, message: this.$t('registerpage.success.registersuccess', { username: xss(response.username) }), html: true })
         this.$router.push({ name: 'LoginPage' })

@@ -67,8 +67,8 @@ export default {
     if (userservice.isConnected()) {
       const user = userservice.getUser()
       const token = userservice.getToken()
-
       userservice.connect({ ...user, token: token, password: null })
+
       this.$router.push({ name: 'IndexPage' })
     }
   },
