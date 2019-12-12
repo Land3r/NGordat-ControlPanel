@@ -182,7 +182,7 @@ namespace NGordatControlPanel.Services.Emails
       }
       catch (SmtpCommandException ex)
       {
-        // TODO
+        // TODO : Localiser
         this.Logger.LogCritical(ex, "Error while sending email.");
         return false;
       }

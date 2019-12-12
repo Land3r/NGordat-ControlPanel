@@ -1,32 +1,32 @@
 ﻿namespace NGordatControlPanel.Services.Users
 {
-  using System;
-  using System.Globalization;
-  using System.IdentityModel.Tokens.Jwt;
-  using System.Linq;
-  using System.Security.Claims;
-  using System.Text;
+    using System;
+    using System.Globalization;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Text;
+    using Microsoft.AspNetCore.Identity;
+    using System.Web;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Localization;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
+    using Microsoft.IdentityModel.Tokens;
+    using MongoDB.Driver;
+    using NGordatControlPanel.Entities.Users;
+    using NGordatControlPanel.Extensions;
+    using NGordatControlPanel.Helpers;
+    using NGordatControlPanel.Models.Users;
+    using NGordatControlPanel.Services.Core;
+    using NGordatControlPanel.Settings;
+    using Microsoft.AspNetCore.Http;
 
-  using Microsoft.AspNetCore.Mvc;
-  using Microsoft.Extensions.Localization;
-  using Microsoft.Extensions.Logging;
-  using Microsoft.Extensions.Options;
-  using Microsoft.IdentityModel.Tokens;
-
-  using MongoDB.Driver;
-
-  using NGordatControlPanel.Entities.Users;
-  using NGordatControlPanel.Extensions;
-  using NGordatControlPanel.Helpers;
-  using NGordatControlPanel.Models.Users;
-  using NGordatControlPanel.Services.Core;
-  using NGordatControlPanel.Settings;
-
-  /// <summary>
-  /// Classe UserService.
-  /// Service pour la gestion des utilisateurs.
-  /// </summary>
-  public class UserService : AMongoEntityLocalizedService<User, UserService>, IUserService
+    /// <summary>
+    /// Classe UserService.
+    /// Service pour la gestion des utilisateurs.
+    /// </summary>
+    public class UserService : AMongoEntityLocalizedService<User, UserService>, IUserService
   {
     /// <summary>
     /// Le nom de la collection mongo.
@@ -39,13 +39,20 @@
     private readonly AppSettings appSettings;
 
     /// <summary>
+    /// Le service de contexte http.
+    /// </summary>
+    private readonly IHttpContextAccessor httpContext;
+
+    /// <summary>
     /// Instancie une nouvelle instance de la classe <see cref="UserService"/>.
     /// </summary>
     /// <param name="appSettings">La configuration de l'application.</param>
+    /// <param name="httpContext">Le contexte http.</param>
     /// <param name="localizer">Les ressources de localisation.</param>
     /// <param name="logger">Le logger utilisé par le service.</param>
     public UserService(
       [FromServices]IStringLocalizer<UserService> localizer,
+      [FromServices]IHttpContextAccessor httpContext,
       IOptions<AppSettings> appSettings,
       [FromServices] ILogger<UserService> logger)
       : base(appSettings, CollectionName, logger, localizer)
@@ -57,6 +64,15 @@
       else
       {
         this.appSettings = appSettings.Value;
+      }
+
+      if (httpContext == null)
+      {
+        throw new ArgumentNullException(nameof(httpContext));
+      }
+      else
+      {
+        this.httpContext = httpContext;
       }
     }
 
@@ -108,6 +124,23 @@
     }
 
     /// <summary>
+    /// Obtient l'utilisateur authentifié.
+    /// </summary>
+    /// <returns>L'utilisateur en cours.</returns>
+    public User GetCurrentUser()
+    {
+      if (this.httpContext.HttpContext.User != null)
+      {
+        Guid id = new Guid(this.httpContext.HttpContext.User.Identity.Name);
+        return this.Get(id).WithoutPassword();
+      }
+      else
+      {
+        return null;
+      }
+    }
+
+    /// <summary>
     /// Obtient un <see cref="User"/>, basé sur le username fourni.
     /// </summary>
     /// <param name="username">Le nom d'utilisateur à utiliser pour authentifier l'<see cref="Utilisateur"/>.</param>
@@ -144,6 +177,8 @@
     /// <returns>L'utilisateur créé.</returns>
     public User Register(User model)
     {
+      this.GetCurrentUser();
+
       if (model == null)
       {
         throw new ArgumentNullException(nameof(model));
