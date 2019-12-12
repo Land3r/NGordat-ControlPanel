@@ -4,7 +4,7 @@
     <br />
     <VueRecordAudio
       mode="press"
-      mimeType="audio/wav"
+      :mimeType="recordingMimeType"
       @result="onAudioRecorded" />
   </q-page>
 </template>
@@ -29,6 +29,7 @@ export default {
   },
   data: function () {
     return {
+      recordingMimeType: 'audio/wav'
     }
   },
   methods: {
@@ -42,8 +43,10 @@ export default {
     }
   },
   created: function () {
-    // Inject polyfill for wav/ogg support.
-    window.MediaRecorder = AudioRecorderPolyfill
+    // Inject polyfill for requested mime type support.
+    if (window.MediaRecorder == null || !window.MediaRecorder.isTypeSupported(this.recordingMimeType)) {
+      window.MediaRecorder = AudioRecorderPolyfill
+    }
   }
 }
 </script>
