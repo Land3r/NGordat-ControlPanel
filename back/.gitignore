@@ -1,0 +1,6 @@
+# GCP file
+GCP/Controlpanel-e29cb429f0d9.json
+
+# Environment specific configurations
+NGordat-ControlPanel/appsettings.Development.json
+NGordat-ControlPanel/appsettings.Production.json
