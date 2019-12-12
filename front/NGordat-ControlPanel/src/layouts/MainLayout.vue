@@ -54,7 +54,7 @@
     >
       <q-list>
         <q-item-label header>CP</q-item-label>
-        <q-item clickable :to="{ name: 'IndexPage' }" exact="true">
+        <q-item clickable :to="{ name: 'IndexPage' }" :exact="true">
           <q-item-section avatar>
             <q-icon name="home" />
           </q-item-section>

@@ -13,7 +13,8 @@ namespace NGordatControlPanel
 
   using NGordatControlPanel.Security;
   using NGordatControlPanel.Services.Emails;
-  using NGordatControlPanel.Services.Users;
+    using NGordatControlPanel.Services.Google;
+    using NGordatControlPanel.Services.Users;
   using NGordatControlPanel.Settings;
 
   /// <summary>
@@ -123,6 +124,7 @@ namespace NGordatControlPanel
       services.AddScoped<IUserPasswordResetTokenService, UserPasswordResetTokenService>();
       services.AddScoped<IEmailService, EmailService>();
       services.AddScoped<IEmailTemplateService, EmailTemplateService>();
+      services.AddScoped<ISpeechToTextService, SpeechToTextService>();
     }
   }
 }

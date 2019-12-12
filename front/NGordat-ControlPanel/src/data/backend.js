@@ -7,7 +7,8 @@ export const baseUrl = process.env.BACKEND_BASE_URL + process.env.BACKEND_API_PR
  * The available API on backend
  */
 export const API = {
-  USER: 'users'
+  USER: 'users',
+  SPEECHTOTEXT: 'speechtotext'
 }
 
 /**
