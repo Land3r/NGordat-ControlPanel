@@ -56,5 +56,11 @@
     /// <param name="token">Le token d\'activation de l'utilisateur a activer.</param>
     /// <returns>L'utilisateur activé.</returns>
     User Activate(string token);
+
+    /// <summary>
+    /// Obtient l'utilisateur authentifié.
+    /// </summary>
+    /// <returns>L'utilisateur en cours.</returns>
+    User GetCurrentUser();
   }
 }

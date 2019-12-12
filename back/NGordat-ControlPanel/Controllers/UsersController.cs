@@ -107,6 +107,28 @@
     }
 
     /// <summary>
+    /// Obtient l'utilisateur en cours, au travers du token JWT fourni.
+    /// </summary>
+    /// <returns>L'<see cref="User">Utilisateur</see> si l'authentification est ok.</returns>
+    [HttpGet]
+    public IActionResult GetCurrentUser()
+    {
+      this.logger.LogDebug(string.Format(CultureInfo.InvariantCulture, this.localizer["LogGetCurrentUserTry"].Value));
+      var user = this.userService.GetCurrentUser();
+
+      if (user == null)
+      {
+        this.logger.LogWarning(string.Format(CultureInfo.InvariantCulture, this.localizer["LogGetCurrentUserFailed"].Value));
+        return this.BadRequest(new { message = this.localizer["LoginFailed"].Value });
+      }
+      else
+      {
+        this.logger.LogInformation(string.Format(CultureInfo.InvariantCulture, this.localizer["LogGetCurrentUserSuccess"].Value, user.Username));
+        return this.Ok(user);
+      }
+    }
+
+    /// <summary>
     /// Enregistre un nouvel utilisateur.
     /// </summary>
     /// <param name="model">Les données de l'utilisateur à créer.</param>
@@ -338,17 +360,6 @@
       {
         return this.StatusCode(498, new { message = string.Format(CultureInfo.InvariantCulture, this.localizer["LogResetPasswordExistsNotValid"].Value) });
       }
-    }
-
-    /// <summary>
-    /// Obtient les informations de l'utilisateur en cours.
-    /// </summary>
-    /// <returns>L'<see cref="User">Utilisateur</see> en cours.</returns>
-    [HttpGet]
-    public IActionResult Get()
-    {
-      User user = this.userService.GetByUsername("test");
-      return this.Ok(user);
     }
   }
 }
