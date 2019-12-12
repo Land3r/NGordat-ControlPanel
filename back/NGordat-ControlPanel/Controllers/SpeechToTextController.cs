@@ -5,10 +5,10 @@
   using System.Threading.Tasks;
   using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
-  using Google.Cloud.Speech.V1;
-    using Google.Protobuf.Collections;
+  using Microsoft.AspNetCore.Authorization;
 
-    [Route("api/[controller]")]
+  [Authorize]
+  [Route("api/[controller]")]
   [ApiController]
   public class SpeechToTextController : ControllerBase
   {

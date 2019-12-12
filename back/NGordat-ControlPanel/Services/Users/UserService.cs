@@ -177,8 +177,6 @@
     /// <returns>L'utilisateur créé.</returns>
     public User Register(User model)
     {
-      this.GetCurrentUser();
-
       if (model == null)
       {
         throw new ArgumentNullException(nameof(model));
