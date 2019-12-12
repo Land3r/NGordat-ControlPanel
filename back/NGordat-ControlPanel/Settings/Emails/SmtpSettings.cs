@@ -1,4 +1,4 @@
-﻿namespace NGordatControlPanel.Settings
+﻿namespace NGordatControlPanel.Settings.Emails
 {
   /// <summary>
   /// Classe SmtpSettings.
