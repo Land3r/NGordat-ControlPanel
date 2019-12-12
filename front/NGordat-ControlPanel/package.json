@@ -18,6 +18,7 @@
     "axios": "^0.19.0",
     "quasar": "^1.5.3",
     "vue-i18n": "^8.0.0",
+    "vue-typer": "^1.2.0",
     "xss": "^1.0.6"
   },
   "devDependencies": {
