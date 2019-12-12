@@ -4,13 +4,24 @@
     <br />
     <VueRecordAudio
       mode="press"
+      mimeType="audio/wav"
       @result="onAudioRecorded" />
   </q-page>
 </template>
 
 <script>
+import AudioRecorderPolyfill from 'audio-recorder-polyfill'
+import xss from 'xss'
+import { NotifySuccess, NotifyFailure } from 'data/notify'
 
 import SpeechToTextService from 'services/SpeechToTextService'
+
+// const supportedTypes = [
+//   'audio/aac',
+//   'audio/ogg',
+//   'audio/wav',
+//   'audio/webm'
+// ]
 
 export default {
   name: 'GroceriesIndexPage',
@@ -18,19 +29,21 @@ export default {
   },
   data: function () {
     return {
-      result: ''
     }
   },
   methods: {
     onAudioRecorded (blob) {
       const speechToTextService = new SpeechToTextService()
       speechToTextService.doUpload(blob).then((response) => {
-        console.dir(response)
+        this.$q.notify({ ...NotifySuccess, message: this.$t('groceriesindexpage.success.transcriptsuccess', { transcript: xss(response.message) }) })
       }).catch((response) => {
-        // TODO: Ajouter les messages localisés.
-        console.error(response)
+        this.$q.notify({ ...NotifyFailure, message: this.$t('groceriesindexpage.error.transcriptfailure') })
       })
     }
+  },
+  created: function () {
+    // Inject polyfill for wav/ogg support.
+    window.MediaRecorder = AudioRecorderPolyfill
   }
 }
 </script>
