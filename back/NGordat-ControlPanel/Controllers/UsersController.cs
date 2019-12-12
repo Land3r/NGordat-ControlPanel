@@ -173,7 +173,7 @@
         this.emailService.SendTemplate(new EmailAddress() { Address = model.Email, Name = model.Username }, "Register", new
         {
           username = user.Username,
-          activateaccountlink = $"{new Uri(new Uri(this.appSettings.Environment.FrontUrl), $"#/activate/{user.ActivationToken}")}",
+          activateaccountlink = $"{new Uri(new Uri(this.appSettings.Environment.FrontUrl), $"#/user/activate/{user.ActivationToken}")}",
           sitename = this.appSettings.Environment.Name,
           siteurl = this.appSettings.Environment.FrontUrl,
           unsubscribeurl = new Uri(new Uri(this.appSettings.Environment.FrontUrl), "/unsubscribe").ToString(),
