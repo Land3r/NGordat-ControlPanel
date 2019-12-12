@@ -36,10 +36,20 @@
       }
     }
 
+    /// <summary>
+    /// Upload a sound file, for speech recognision.
+    /// </summary>
+    /// <param name="blob">The binary value of the file.</param>
+    /// <returns>The result of the operation.</returns>
     [HttpPost("upload")]
     // attention name of formfile must be equal to the key u have used for formdata
     public async Task<IActionResult> UploadFileAsync([FromForm] IFormFile blob)
     {
+      if (blob == null)
+      {
+        throw new ArgumentNullException(nameof(blob));
+      }
+
       var totalSize = blob.Length;
       var fileBytes = new byte[blob.Length];
 
@@ -61,6 +71,7 @@
       string result = this.speechToTextService.SpeechToText(filePath);
       if (string.IsNullOrEmpty(result))
       {
+        // TODO: Resx
         return this.NotFound(new { message = "Transcript not found" });
       }
 
