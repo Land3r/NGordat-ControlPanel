@@ -15,6 +15,7 @@
 </template>
 
 <script>
+// TODO (mal placé): Lors du login, on est authentifié, alors que les headers JWT ne sont pas mis.
 import UserService from 'services/UserService'
 
 export default {
