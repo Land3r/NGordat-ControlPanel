@@ -12,12 +12,13 @@
   using Microsoft.Extensions.Options;
   using NGordatControlPanel.Services.Core;
   using NGordatControlPanel.Settings;
+    using static global::Google.Cloud.Speech.V1.RecognitionConfig.Types;
 
-  /// <summary>
-  /// Classe <see cref="SpeechToTextService"/>.
-  /// Classe de service permettant de contacter google speech-to-text API.
-  /// </summary>
-  public class SpeechToTextService : ALoggedLocalizedService<SpeechToTextService>, ISpeechToTextService
+    /// <summary>
+    /// Classe <see cref="SpeechToTextService"/>.
+    /// Classe de service permettant de contacter google speech-to-text API.
+    /// </summary>
+    public class SpeechToTextService : ALoggedLocalizedService<SpeechToTextService>, ISpeechToTextService
   {
     /// <summary>
     /// La configuration de l'application.
@@ -49,7 +50,7 @@
     /// Demande la transcription d'un fichier audio (format WAV ou FLAC).
     /// </summary>
     /// <param name="filepath">Le chemin du fichier audio.</param>
-    public void SpeechToText(string filepath)
+    public string SpeechToText(string filepath)
     {
       if (string.IsNullOrEmpty(filepath))
       {
@@ -65,8 +66,8 @@
       RecognizeResponse response = speech.Recognize(
         new RecognitionConfig()
         {
-          Encoding = RecognitionConfig.Types.AudioEncoding.Linear16,
-          SampleRateHertz = 16000,
+          Encoding = AudioEncoding.Linear16,
+          SampleRateHertz = 48000,
           LanguageCode = this.appSettings.Google.SpeechToText.LanguageCode,
         },
         RecognitionAudio.FromFile(filepath));
@@ -75,16 +76,11 @@
       {
         foreach (SpeechRecognitionAlternative alternative in result.Alternatives)
         {
-          Console.WriteLine($"Phrase: {alternative.Transcript}; Confiance: {alternative.Confidence}");
-          Console.Write($"Mots: ");
-          foreach (WordInfo word in alternative.Words)
-          {
-            Console.Write(word.Word);
-          }
-
-          Console.WriteLine(string.Empty);
+          return alternative.Transcript;
         }
       }
+
+      return null;
     }
   }
 }

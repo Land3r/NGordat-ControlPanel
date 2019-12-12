@@ -10,6 +10,7 @@
     /// Demande la transcription d'un fichier audio (format WAV ou FLAC).
     /// </summary>
     /// <param name="filepath">Le chemin du fichier audio.</param>
-    void SpeechToText(string filepath);
+    /// <returns>Le transcript detecté.</returns>
+    string SpeechToText(string filepath);
   }
 }
