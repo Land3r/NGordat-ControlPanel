@@ -21,6 +21,12 @@
         },
         "electron": {
           "iconHash": "28cb2cb8ae5f56f86be700b645681791"
+        },
+        "cordova": {
+          "iconHash": "28cb2cb8ae5f56f86be700b645681791",
+          "splashscreenHash": "f3a37d8ad9d13f082b8489c14e78183f",
+          "splashscreenType": "pure",
+          "backgroundColor": "#000074"
         }
       },
       "build": {
