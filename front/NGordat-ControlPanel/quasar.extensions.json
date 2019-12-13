@@ -18,6 +18,9 @@
       "dev": {
         "spa": {
           "iconHash": "28cb2cb8ae5f56f86be700b645681791"
+        },
+        "electron": {
+          "iconHash": "28cb2cb8ae5f56f86be700b645681791"
         }
       },
       "build": {
