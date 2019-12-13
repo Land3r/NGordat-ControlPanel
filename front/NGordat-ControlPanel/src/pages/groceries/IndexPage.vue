@@ -7,7 +7,7 @@
       mode="press"
       :mimeType="recordingMimeType"
       @result="onAudioRecorded" />
-      <app-typedspan :text="SexyTranscript" :repeat="0" />
+      <app-typedspan :text="SexyTranscript" :repeat="repeat" />
       <q-page-sticky position="bottom-right" :offset="[18, 18]">
         <q-btn fab icon="fas fa-cog" color="accent" :to="{ name: 'GroceriesReferentialPage' }"/>
       </q-page-sticky>
@@ -38,6 +38,7 @@ export default {
     return {
       // TODO: i18n
       transcript: '🙊 Just say something 🙊',
+      repeat: 0,
       recordingMimeType: 'audio/wav'
     }
   },

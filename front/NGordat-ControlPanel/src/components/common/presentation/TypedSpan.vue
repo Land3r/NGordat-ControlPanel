@@ -26,6 +26,25 @@
   </div>
 </template>
 
+<script>
+import { VueTyper } from 'vue-typer'
+
+/**
+ * TypedSpan component.
+ * Allow to simulate typing of a text.
+ */
+export default {
+  name: 'TypedSpan',
+  props: {
+    text: String,
+    repeat: Number
+  },
+  components: {
+    'vue-typer': VueTyper
+  }
+}
+</script>
+
 <style>
 .testimonial-quote {
   font-size: 16px;
@@ -96,22 +115,3 @@
   text-align: right;
 }
 </style>
-
-<script>
-import { VueTyper } from 'vue-typer'
-
-/**
- * TypedSpan component.
- * Allow to simulate typing of a text.
- */
-export default {
-  name: 'TypedSpan',
-  props: {
-    text: String,
-    repeat: String
-  },
-  components: {
-    'vue-typer': VueTyper
-  }
-}
-</script>
