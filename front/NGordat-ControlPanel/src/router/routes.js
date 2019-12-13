@@ -47,6 +47,11 @@ const routes = [
     },
     children: [
       {
+        name: 'GroceriesReferentialPage',
+        path: '/referential',
+        component: () => import('pages/groceries/ReferentialPage.vue')
+      },
+      {
         name: 'GroceriesIndexPage',
         path: '',
         component: () => import('pages/groceries/IndexPage.vue')

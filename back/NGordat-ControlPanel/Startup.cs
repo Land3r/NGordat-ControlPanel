@@ -14,6 +14,7 @@ namespace NGordatControlPanel
   using NGordatControlPanel.Security;
   using NGordatControlPanel.Services.Emails;
     using NGordatControlPanel.Services.Google;
+    using NGordatControlPanel.Services.Groceries;
     using NGordatControlPanel.Services.Users;
   using NGordatControlPanel.Settings;
 
@@ -125,6 +126,8 @@ namespace NGordatControlPanel
       services.AddScoped<IEmailService, EmailService>();
       services.AddScoped<IEmailTemplateService, EmailTemplateService>();
       services.AddScoped<ISpeechToTextService, SpeechToTextService>();
+      services.AddScoped<IGroceryActionService, GroceryActionService>();
+      services.AddScoped<IGroceryItemService, GroceryItemService>();
     }
   }
 }

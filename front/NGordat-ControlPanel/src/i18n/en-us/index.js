@@ -10,6 +10,7 @@ import registerpage from './pages/user/registerpage'
 import activatepage from './pages/user/activatepage'
 
 import groceriesindexpage from './pages/groceries/indexpage'
+import groceriesreferentialpage from './pages/groceries/referentialpage'
 
 export default {
   ...common,
@@ -37,5 +38,8 @@ export default {
   },
   groceriesindexpage: {
     ...groceriesindexpage
+  },
+  groceriesreferentialpage: {
+    ...groceriesreferentialpage
   }
 }
