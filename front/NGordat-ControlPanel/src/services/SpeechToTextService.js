@@ -8,9 +8,9 @@ const endpoints = {
 }
 
 /**
- * SpeechToText class.
+ * SpeechToTextService class.
  */
-export default class SpeechToText {
+export default class SpeechToTextService {
   /**
    * Upload a sound blob.
    * @param {bytes} blob The blob to upload.
