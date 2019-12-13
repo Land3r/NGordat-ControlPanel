@@ -59,6 +59,20 @@ const routes = [
     ]
   },
   {
+    path: '/download',
+    component: () => import('layouts/MainLayout.vue'),
+    meta: {
+      requiresAuth: true
+    },
+    children: [
+      {
+        name: 'DownloadAvailablePlatformsPage',
+        path: '/',
+        component: () => import('pages/download/AvailablePlatforms')
+      }
+    ]
+  },
+  {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     meta: {
