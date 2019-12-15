@@ -185,7 +185,6 @@ module.exports = function (ctx) {
       },
 
       builder: {
-        platform: ''
         // https://www.electron.build/configuration/configuration
 
         // appId: 'jwt-netcore-vue'

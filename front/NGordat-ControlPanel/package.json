@@ -9,7 +9,9 @@
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue src --fix",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "build_electron": "quasar build -m electron",
+    "publish_electron": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./scripts/publishElectronToSite.ps1"
   },
   "dependencies": {
     "@codekraft-studio/vue-record": "^0.0.2",
