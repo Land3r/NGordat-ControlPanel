@@ -1,28 +1,30 @@
 ﻿namespace NGordatControlPanel.Models.Users
 {
+  using NGordatControlPanel.Controllers;
+
   /// <summary>
-  /// Classe <see cref="UserResetPasswordModel"/>.
-  /// Modèle pour demander une réinitialisation de mot de passe d'une compte utilisateur.
+  /// <see cref="UserResetPasswordModel"/> class.
+  /// Class representing the model to communicate with the resetpassword endpoint of the <see cref="UsersController"/>.
   /// </summary>
   public class UserResetPasswordModel
   {
     /// <summary>
-    /// Obtient ou définit le token de réinitialisation du mot de passe.
+    /// Gets or sets the reset password token of the <see cref="UserResetPasswordModel"/>.
     /// </summary>
     public string ResetPasswordToken { get; set; }
 
     /// <summary>
-    /// Obtient ou définit l'email du compte à réinitialiser.
+    /// Gets or sets the email of the <see cref="UserResetPasswordModel"/>.
     /// </summary>
     public string Email { get; set; }
 
     /// <summary>
-    /// Obtient ou définit le nom d'utilisateur du compte à réinitialiser.
+    /// Gets or sets the username of the <see cref="UserResetPasswordModel"/>.
     /// </summary>
     public string Username { get; set; }
 
     /// <summary>
-    /// Obtient ou définit le nouveau mot de passe du compte.
+    /// Gets or sets the password of the <see cref="UserResetPasswordModel"/>.
     /// </summary>
     public string Password { get; set; }
   }

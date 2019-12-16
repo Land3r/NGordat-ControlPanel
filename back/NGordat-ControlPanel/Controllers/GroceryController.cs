@@ -3,50 +3,57 @@
   using System;
   using System.IO;
   using System.Threading.Tasks;
-  using System.Web;
+
   using Microsoft.AspNetCore.Authorization;
   using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.Extensions.Localization;
   using Microsoft.Extensions.Logging;
   using Microsoft.Extensions.Options;
+
   using NGordatControlPanel.Services.Google;
   using NGordatControlPanel.Settings;
 
+  /// <summary>
+  /// <see cref="GroceryController"/> class.
+  /// API controller for interacting with the groceries.
+  /// </summary>
   [Authorize]
   [Route("api/[controller]")]
   [ApiController]
-  public class SpeechToTextController : ControllerBase
+  public class GroceryController : ControllerBase
   {
     /// <summary>
-    /// La configuration de l'application.
+    /// The application configuration.
     /// </summary>
     private readonly AppSettings appSettings;
 
     /// <summary>
-    /// Le Logger utilisé par le controller.
+    /// The logger.
     /// </summary>
-    private readonly ILogger<UsersController> logger;
+    private readonly ILogger<GroceryController> logger;
 
     /// <summary>
-    /// Les ressources de langue.
+    /// The localized ressources.
     /// </summary>
-    private readonly IStringLocalizer<UsersController> localizer;
+    private readonly IStringLocalizer<GroceryController> localizer;
 
     /// <summary>
-    /// Le service SpeechToText.
+    /// The <see cref="ISpeechToTextService"/>.
     /// </summary>
     private readonly ISpeechToTextService speechToTextService;
 
     /// <summary>
-    /// Instancie une nouvelle instance de la classe <see cref="SpeechToTextController"/>.
-    /// Controlleur API permettant d'effectuer de la conversion Speech to Text.
+    /// Initializes a new instance of the <see cref="GroceryController"/> class.
     /// </summary>
-    /// <param name="speechToTextService">Le service Speech to Text à utiliser.</param>
-    public SpeechToTextController(
+    /// <param name="appSettings">The application configuration.</param>
+    /// <param name="logger">The logger to use.</param>
+    /// <param name="localizer">The localized ressources to use.</param>
+    /// <param name="speechToTextService">The <see cref="ISpeechToTextService"/> to use.</param>
+    public GroceryController(
       IOptions<AppSettings> appSettings,
-      ILogger<UsersController> logger,
-      IStringLocalizer<UsersController> localizer,
+      ILogger<GroceryController> logger,
+      IStringLocalizer<GroceryController> localizer,
       ISpeechToTextService speechToTextService)
     {
       if (appSettings == null)
@@ -88,9 +95,10 @@
 
     /// <summary>
     /// Upload a sound file, for speech recognision.
+    /// POST: api/Grocery.
     /// </summary>
-    /// <param name="blob">The binary value of the file.</param>
     /// <remarks>The name of the parameter (blob here) MUST match the name of the field from the form.</remarks>
+    /// <param name="blob">The binary value of the file.</param>
     /// <returns>The result of the operation.</returns>
     [HttpPost("upload")]
     public async Task<IActionResult> UploadFileAsync([FromForm] IFormFile blob)
@@ -125,7 +133,7 @@
         return this.NotFound(new { message = "Transcript not found" });
       }
 
-      return Ok(new { message = result });
+      return this.Ok(new { message = result });
     }
   }
 }

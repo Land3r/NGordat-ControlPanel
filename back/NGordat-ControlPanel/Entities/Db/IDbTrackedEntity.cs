@@ -5,31 +5,33 @@
   using MongoDB.Bson;
   using MongoDB.Bson.Serialization.Attributes;
 
+  using NGordatControlPanel.Entities.Users;
+
   /// <summary>
-  /// Interface IDbTrackedEntity.
-  /// Interface permettant de tracker d'autres entitées.
+  /// <see cref="IDbTrackedEntity"/> interface.
+  /// Interface representing a tracked Entity stored in database. Provides access to the Created and Updated properties of the Entity.
   /// </summary>
   public interface IDbTrackedEntity : IDbEntity
   {
     /// <summary>
-    /// Obtient ou définit le moment de la création de l'entitée.
+    /// Gets or sets the creation date of the <see cref="IDbTrackedEntity"/>.
     /// </summary>
     [BsonRepresentation(BsonType.DateTime)]
     public DateTime Created { get; set; }
 
     /// <summary>
-    /// Obtient ou définit l'utilisateur ayant effectué la création de l'entitée.
+    /// Gets or sets the <see cref="UserReference"/> of the <see cref="User"/> that created the <see cref="IDbTrackedEntity"/>.
     /// </summary>
     public UserReference CreatedBy { get; set; }
 
     /// <summary>
-    /// Obtient ou définit le moment de la mise à jour de l'entitée.
+    /// Gets or sets the updated date of the <see cref="IDbTrackedEntity"/>.
     /// </summary>
     [BsonRepresentation(BsonType.DateTime)]
     public DateTime Updated { get; set; }
 
     /// <summary>
-    /// Obtient ou définit l'utilisateur ayant effectué la mise à jour de l'entitée.
+    /// Gets or sets the <see cref="UserReference"/> of the <see cref="User"/> that updated the <see cref="IDbTrackedEntity"/>.
     /// </summary>
     public UserReference UpdatedBy { get; set; }
   }

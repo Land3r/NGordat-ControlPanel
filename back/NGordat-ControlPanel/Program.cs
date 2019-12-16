@@ -9,15 +9,15 @@ namespace NGordatControlPanel
   using NLog.Web;
 
   /// <summary>
-  /// Classe Program.
-  /// Point d'entrée de l'application.
+  /// <see cref="Program"/> class.
+  /// Application main entry point class.
   /// </summary>
   public static class Program
   {
     /// <summary>
-    /// Point d'entrée de l'application.
+    /// Entry point of the application.
     /// </summary>
-    /// <param name="args">Les arguments d'instanciation de l'application.</param>
+    /// <param name="args">The arguments passed to the application.</param>
     public static void Main(string[] args)
     {
       var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
@@ -41,10 +41,10 @@ namespace NGordatControlPanel
     }
 
     /// <summary>
-    /// Crée le host du serveur.
+    /// Creates the server host.
     /// </summary>
-    /// <param name="args">Les arguments d'instanciation de l'application.</param>
-    /// <returns>Le host à builder.</returns>
+    /// <param name="args">The arguments passed to the application.</param>
+    /// <returns>The host to build.</returns>
     public static IHostBuilder CreateHostBuilder(string[] args)
     {
       return Host.CreateDefaultBuilder(args)

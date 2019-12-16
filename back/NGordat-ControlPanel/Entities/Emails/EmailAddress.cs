@@ -1,18 +1,19 @@
 ﻿namespace NGordatControlPanel.Entities.Emails
 {
   /// <summary>
-  /// Classe <see cref="EmailAddress"/>.
-  /// Classe permettant de représenter une personne impliquée dans un echange email.
+  /// <see cref="EmailAddress"/> class.
+  /// Class representing a user implied in a email exchange.
+  /// It can be a recipient or sender.
   /// </summary>
   public class EmailAddress
   {
     /// <summary>
-    /// Obtient ou définit l'addresse de l'email.
+    /// Gets or sets the email address of the <see cref="EmailAddress"/>.
     /// </summary>
     public string Address { get; set; }
 
     /// <summary>
-    /// Obtient ou définit le nom de la personne.
+    /// Gets or sets the name of the <see cref="EmailAddress"/>.
     /// </summary>
     public string Name { get; set; }
   }

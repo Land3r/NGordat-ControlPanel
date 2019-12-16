@@ -4,13 +4,16 @@
   using System.Collections.Generic;
   using System.Globalization;
   using System.Net;
+
   using Microsoft.AspNetCore.Authorization;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.Extensions.Localization;
   using Microsoft.Extensions.Logging;
   using Microsoft.Extensions.Options;
-    using MongoDB.Driver;
-    using NGordatControlPanel.Entities.Groceries;
+
+  using MongoDB.Driver;
+
+  using NGordatControlPanel.Entities.Groceries;
   using NGordatControlPanel.Services.Groceries;
   using NGordatControlPanel.Settings;
 
@@ -188,7 +191,7 @@
       }
 
       this.logger.LogDebug(this.localizer["LogPostGroceryActionsSuccess"].Value);
-      return this.Created(new Uri(this.appSettings.Environment.BackUrl, $"api/groceryactions/{model.Id}"), result);
+      return this.Created(new Uri(this.appSettings.Environment.BackUrl, $"api/groceryactions/{model?.Id}"), result);
     }
 
     /// <summary>
@@ -239,10 +242,10 @@
     {
       this.logger.LogDebug(this.localizer["LogPatchGroceryActionsTry"].Value);
 
-      ReplaceOneResult result;
+      UpdateResult result;
       try
       {
-        result = this.groceryActionService.Update(id, model);
+        result = this.groceryActionService.UpdatePartially(id, model);
       }
       catch (Exception ex)
       {
@@ -263,10 +266,39 @@
       return this.Ok(result);
     }
 
-    // DELETE: api/ApiWithActions/5
+    /// <summary>
+    /// Deletes a <see cref="GroceryAction"/>.
+    /// DELETE: api/GroceryActions/1a1a61cb-1ce4-4b17-8817-75832c3bbb87.
+    /// </summary>
+    /// <param name="id">The id of the <see cref="GroceryAction"/> to delete.</param>
+    /// <returns>The operation result.</returns>
     [HttpDelete("{id}")]
-    public void Delete(int id)
+    public IActionResult Delete(Guid id)
     {
+      this.logger.LogDebug(this.localizer["LogDeleteGroceryActionsTry"].Value);
+
+      DeleteResult result;
+      try
+      {
+        result = this.groceryActionService.Remove(id);
+      }
+      catch (Exception ex)
+      {
+        this.logger.LogError(ex, this.localizer["LogDeleteGroceryActionsError"].Value);
+        return this.Problem(
+          statusCode: (int)HttpStatusCode.InternalServerError,
+          title: ex.ToString(),
+          detail: ex.StackTrace);
+      }
+
+      if (result == null)
+      {
+        this.logger.LogWarning(string.Format(CultureInfo.InvariantCulture, this.localizer["LogDeleteGroceryActionsNotFound"].Value));
+        return this.NotFound(string.Format(CultureInfo.InvariantCulture, this.localizer["LogDeleteGroceryActionsNotFound"].Value));
+      }
+
+      this.logger.LogDebug(this.localizer["LogDeleteGroceryActionsSuccess"].Value);
+      return this.Ok(result);
     }
   }
 }

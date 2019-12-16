@@ -5,13 +5,13 @@
   using MongoDB.Bson.Serialization.Attributes;
 
   /// <summary>
-  /// Classe abstraite ADbEntity.
-  /// Classe permettant de rajouter une identitée unique à une entitée dans la base.
+  /// <see cref="ADbEntity"/> abstract class.
+  /// Class representing an Entity stored in database. Provides access to the Id property of the Entity.
   /// </summary>
   public abstract class ADbEntity : IDbEntity
   {
     /// <summary>
-    /// Obtient ou définit l'id de l'entitée.
+    /// Gets or sets the if of the <see cref="ADbEntity"/>.
     /// </summary>
     [BsonId]
     public Guid Id { get; set; }

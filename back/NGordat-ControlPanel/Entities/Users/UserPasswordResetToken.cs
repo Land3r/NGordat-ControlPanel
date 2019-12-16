@@ -8,19 +8,19 @@
   using NGordatControlPanel.Entities.Db;
 
   /// <summary>
-  /// Classe <see cref="UserPasswordResetToken"/>.
-  /// Permet de demander une réinitialisation d'un compte utilisateur.
+  /// <see cref="UserPasswordResetToken"/> class.
+  /// Class representing a request from the <see cref="User"/> to reset it's password.
   /// </summary>
   public class UserPasswordResetToken : ADbTrackedEntity
   {
     /// <summary>
-    /// Obtient ou définit le token de réinitialisation du mot de passe d'un <see cref="User"/>.
+    /// Gets or sets the token value of the <see cref="UserPasswordResetToken"/>.
     /// </summary>
     [BsonRepresentation(BsonType.String)]
     public string Token { get; set; }
 
     /// <summary>
-    /// Obtient ou définit la date jusqu'à laquelle le token est valide.
+    /// Gets or sets the date at which the token becomes invalid (cause he expires).
     /// </summary>
     [BsonRepresentation(BsonType.DateTime)]
     public DateTime ValidUntil { get; set; }

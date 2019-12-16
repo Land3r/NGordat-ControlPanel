@@ -7,15 +7,15 @@
   using NGordatControlPanel.Entities.Users;
 
   /// <summary>
-  /// Collection de méthodes d'extensions pour la gestion des <see cref="User">Utilisateurs</see>.
+  /// Collection of helpers for dealing with <see cref="User"/>.
   /// </summary>
   public static class UserExtension
   {
     /// <summary>
-    /// Retire les mots de passe d'une collection d'<see cref="User">Utilisateurs</see>.
+    /// Removes the password of a collection of <see cref="User"/>.
     /// </summary>
-    /// <param name="users">La collection d'<see cref="User">Utilisateurs</see>.</param>
-    /// <returns>La collection d'<see cref="User">Utilisateurs</see> sans les mots de passe.</returns>
+    /// <param name="users">The collection of <see cref="User"/>.</param>
+    /// <returns>The collection of <see cref="User"/> without the password.</returns>
     public static IEnumerable<User> WithoutPasswords(this IEnumerable<User> users)
     {
       if (users == null)
@@ -29,10 +29,10 @@
     }
 
     /// <summary>
-    /// Retire le mot de passe d'un <see cref="User">Utilisateur</see>.
+    /// Removes the password of a <see cref="User"/>.
     /// </summary>
-    /// <param name="user">L'<see cref="User">Utilisateur</see>.</param>
-    /// <returns>L'<see cref="User">Utilisateur</see> sans le mots de passe.</returns>
+    /// <param name="user">The <see cref="User"/>.</param>
+    /// <returns>The <see cref="User"/> without the password.</returns>
     public static User WithoutPassword(this User user)
     {
       if (user == null)

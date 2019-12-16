@@ -2,20 +2,22 @@
 {
   using System.ComponentModel.DataAnnotations;
 
+  using NGordatControlPanel.Controllers;
+
   /// <summary>
-  /// Classe <see cref="UserAuthenticateModel"/>.
-  /// Classe permettant de venir s'authentifier auprès du service des Utilisateurs.
+  /// <see cref="UserAuthenticateModel"/> class.
+  /// Class representing the model to communicate with the auth endpoint of the <see cref="UsersController"/>.
   /// </summary>
   public class UserAuthenticateModel
   {
     /// <summary>
-    /// Le nom d'utilisateur de l'<see cref="User">Utilisateur</see> à authentifier.
+    /// Gets or sets the username of the <see cref="UserAuthenticateModel" /> to authenticate.
     /// </summary>
     [Required]
     public string Username { get; set; }
 
     /// <summary>
-    /// Le mot de passe de l'<see cref="User">Utilisateur</see> à authentifier.
+    /// Gets or sets the password of the <see cref="UserAuthenticateModel" /> to authenticate.
     /// </summary>
     [Required]
     public string Password { get; set; }

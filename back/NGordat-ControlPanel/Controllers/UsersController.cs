@@ -2,6 +2,7 @@
 {
   using System;
   using System.Globalization;
+  using System.Net;
 
   using Microsoft.AspNetCore.Authorization;
   using Microsoft.AspNetCore.Mvc;
@@ -19,8 +20,8 @@
   using NGordatControlPanel.Settings;
 
   /// <summary>
-  /// Classe de controlleur UsersController.
-  /// Controlleur pour les <see cref="User">Utilisateurs</see>.
+  /// <see cref="UsersController"/> class.
+  /// API Controller for user managment.
   /// </summary>
   [Authorize]
   [ApiController]
@@ -28,44 +29,44 @@
   public class UsersController : ControllerBase
   {
     /// <summary>
-    /// La configuration de l'application.
+    /// The application configuration.
     /// </summary>
     private readonly AppSettings appSettings;
 
     /// <summary>
-    /// Le Logger utilisé par le controller.
+    /// The logger.
     /// </summary>
     private readonly ILogger<UsersController> logger;
 
     /// <summary>
-    /// Les ressources de langue.
+    /// The localized ressources.
     /// </summary>
     private readonly IStringLocalizer<UsersController> localizer;
 
     /// <summary>
-    /// Le service des utilisateurs.
+    /// The <see cref="IUserService"/>.
     /// </summary>
     private readonly IUserService userService;
 
     /// <summary>
-    /// Le service de réinitialisation des mots de passes utilisateurs.
+    /// The <see cref="IUserPasswordResetTokenService"/>.
     /// </summary>
     private readonly IUserPasswordResetTokenService userPasswordResetTokenService;
 
     /// <summary>
-    /// Le service email.
+    /// The email service.
     /// </summary>
     private readonly IEmailService emailService;
 
     /// <summary>
-    /// Instancie une nouvelle instance de <see cref="UsersController"/>.
+    /// Initializes a new instance of the <see cref="UsersController"/> class.
     /// </summary>
-    /// <param name="appSettings">La configuration de l'application.</param>
-    /// <param name="userService">Le <see cref="IUserService"/>.</param>
-    /// <param name="userPasswordResetTokenService">Le <see cref="IUserPasswordResetTokenService"/>.</param>
-    /// <param name="emailService">Le <see cref="IEmailService"/>.</param>
-    /// <param name="logger">Le logger utilisé.</param>
-    /// <param name="localizer">Les ressources localisées.</param>
+    /// <param name="appSettings">The application configuration.</param>
+    /// <param name="logger">The logger to use.</param>
+    /// <param name="localizer">The localized ressources to use.</param>
+    /// <param name="userService">The <see cref="IUserService"/>.</param>
+    /// <param name="userPasswordResetTokenService">the <see cref="IUserPasswordResetTokenService"/>.</param>
+    /// <param name="emailService">The <see cref="IEmailService"/>.</param>
     public UsersController(
       IOptions<AppSettings> appSettings,
       ILogger<UsersController> logger,
@@ -130,10 +131,11 @@
     }
 
     /// <summary>
-    /// Authentifie un <see cref="User">Utilisateur</see>.
+    /// Authenticate a <see cref="User" />.
+    /// POST: api/Users/auth.
     /// </summary>
-    /// <param name="model">Le <see cref="UserAuthenticateModel"/> utilisé pour authentifier <see cref="User">Utilisateur</see>.</param>
-    /// <returns>L'<see cref="User">Utilisateur</see> si l'authentification est ok.</returns>
+    /// <param name="model">The <see cref="UserAuthenticateModel" /> used to authenticate the <see cref="User" />.</param>
+    /// <returns>The <see cref="User"/> if authentication is ok.</returns>
     [AllowAnonymous]
     [HttpPost("auth")]
     public IActionResult Authenticate([FromBody]UserAuthenticateModel model)
@@ -154,9 +156,10 @@
     }
 
     /// <summary>
-    /// Obtient l'utilisateur en cours, au travers du token JWT fourni.
+    /// Gets the current loggedin user, using the provided JWT token.
+    /// GET: api/Users.
     /// </summary>
-    /// <returns>L'<see cref="User">Utilisateur</see> si l'authentification est ok.</returns>
+    /// <returns>The loggedin <see cref="User"/>.</returns>
     [HttpGet]
     public IActionResult GetCurrentUser()
     {
@@ -176,10 +179,11 @@
     }
 
     /// <summary>
-    /// Enregistre un nouvel utilisateur.
+    /// Registers a new <see cref="User"/>.
+    /// POST: api/Users/register.
     /// </summary>
-    /// <param name="model">Les données de l'utilisateur à créer.</param>
-    /// <returns>Le résultat de l'opération.</returns>
+    /// <param name="model">The <see cref="User"/> to create.</param>
+    /// <returns>The <see cref="User"/> if created.</returns>
     [AllowAnonymous]
     [HttpPost("register")]
     public IActionResult Register([FromBody]User model)
@@ -196,15 +200,18 @@
       {
         user = this.userService.Register(model);
       }
+      catch (ArgumentException ex)
+      {
+        this.logger.LogWarning(string.Format(CultureInfo.InvariantCulture, ex.Message));
+        return this.Conflict(new { message = ex.Message });
+      }
       catch (Exception ex)
       {
-        if (ex.GetType() == typeof(ArgumentException))
-        {
-          this.logger.LogWarning(string.Format(CultureInfo.InvariantCulture, ex.Message));
-          return this.Conflict(new { message = ex.Message });
-        }
-
-        throw ex;
+        this.logger.LogError(ex, this.localizer["LogRegisterError"].Value);
+        return this.Problem(
+          statusCode: (int)HttpStatusCode.InternalServerError,
+          title: ex.ToString(),
+          detail: ex.StackTrace);
       }
 
       if (user == null)
@@ -225,15 +232,16 @@
           siteurl = this.appSettings.Environment.FrontUrl,
           unsubscribeurl = new Uri(this.appSettings.Environment.FrontUrl, "/unsubscribe").ToString(),
         });
-        return this.Ok(user);
+        return this.Created(new Uri(this.appSettings.Environment.BackUrl, $"api/users/{user.Id}"), user);
       }
     }
 
     /// <summary>
-    /// Active un utilisateur.
+    /// Activates a <see cref="User"/>.
+    /// GET: api/Users/activate/nKmiMw6kOR6pEUih94aUurcu.
     /// </summary>
-    /// <param name="token">Le token d'activation de l'utilisateur.</param>
-    /// <returns>Le résultat de l'opération.</returns>
+    /// <param name="token">The activation token of the <see cref="User"/>.</param>
+    /// <returns>The operation result.</returns>
     [AllowAnonymous]
     [HttpGet("activate/{token}")]
     public IActionResult Activate(string token)
@@ -257,10 +265,11 @@
     }
 
     /// <summary>
-    /// Génére un token de réinitialisation de mot de passe utilisateur.
+    /// Creates a new <see cref="UserPasswordResetToken"/> for the <see cref="User"/> to reset his password.
+    /// POST: api/Users/forgotpassword.
     /// </summary>
-    /// <param name="model">Les données de l'utilisateur dont le mot de passe doit être réinitialiser.</param>
-    /// <returns>Le résultat de l'opération.</returns>
+    /// <param name="model">The <see cref="UserPasswordLostModel"/> to retrieve user.</param>
+    /// <returns>The operation result.</returns>
     [AllowAnonymous]
     [HttpPost("forgotpassword")]
     public IActionResult ForgotPassword([FromBody]UserPasswordLostModel model)
@@ -316,7 +325,10 @@
       {
         // TODO: Gérer les exceptions, avec message localisé
         this.logger.LogError(string.Format(CultureInfo.InvariantCulture, this.localizer["LogPasswordLostTokenFailed"].Value));
-        throw ex;
+        return this.Problem(
+          statusCode: (int)HttpStatusCode.InternalServerError,
+          title: ex.ToString(),
+          detail: ex.StackTrace);
       }
 
       this.logger.LogDebug(string.Format(CultureInfo.InvariantCulture, this.localizer["LogPasswordLostTokenSuccess"].Value, new { value = model.Email ?? model.Username }));
@@ -324,52 +336,11 @@
     }
 
     /// <summary>
-    /// Réinitialise le mot de passe d'un utilisateur.
+    /// Checks if the provided reset token is valid.
+    /// POST: api/Users/resetpassword/nKmiMw6kOR6pEUih94aUurcu.
     /// </summary>
-    /// <param name="model">Les données de réinitialisation.</param>
-    /// <returns>Les informations de l'utilisateur, si le token est correct.</returns>
-    [AllowAnonymous]
-    [HttpPost("resetpassword")]
-    public IActionResult ResetPassword(UserResetPasswordModel model)
-    {
-      this.logger.LogDebug(string.Format(CultureInfo.InvariantCulture, this.localizer["LogResetPasswordTry"].Value));
-
-      if (model == null)
-      {
-        throw new ArgumentNullException(nameof(model));
-      }
-
-      // Token valide ?
-      IActionResult existsResult = this.ResetPasswordExists(model.ResetPasswordToken);
-      User user;
-
-      if (existsResult is OkObjectResult)
-      {
-        UserPasswordLostResponseModel result = (existsResult as OkObjectResult).Value as UserPasswordLostResponseModel;
-        if (result.Email == model.Email && result.Username == model.Username)
-        {
-          // Relié au bon utilisateur.
-          user = this.userService.GetByEmail(result.Email);
-          this.userService.UpdatePassword(user.Id, model.Password);
-
-          return this.Ok();
-        }
-        else
-        {
-          return this.Conflict(new { message = this.localizer["LogResetPasswordUserConflict"].Value });
-        }
-      }
-      else
-      {
-        return existsResult;
-      }
-    }
-
-    /// <summary>
-    /// Vérifie si le token fourni existe.
-    /// </summary>
-    /// <param name="token">Le token à valider.</param>
-    /// <returns>Les informations de l'utilisateur, si le token est correct.</returns>
+    /// <param name="token">The <see cref="UserPasswordResetToken"/>.</param>
+    /// <returns>The <see cref="User"/> data, if the reset token is valid.</returns>
     [AllowAnonymous]
     [HttpGet("resetpassword/{token}")]
     public IActionResult ResetPasswordExists(string token)
@@ -406,6 +377,49 @@
       else
       {
         return this.StatusCode(498, new { message = string.Format(CultureInfo.InvariantCulture, this.localizer["LogResetPasswordExistsNotValid"].Value) });
+      }
+    }
+
+    /// <summary>
+    /// Reset a the password of a <see cref="User"/> to the provided value.
+    /// POST: api/Users/resetpassword.
+    /// </summary>
+    /// <param name="model">The <see cref="UserResetPasswordModel"/> to reset the password.</param>
+    /// <returns>The <see cref="User"/> that the password was reset.</returns>
+    [AllowAnonymous]
+    [HttpPost("resetpassword")]
+    public IActionResult ResetPassword(UserResetPasswordModel model)
+    {
+      this.logger.LogDebug(string.Format(CultureInfo.InvariantCulture, this.localizer["LogResetPasswordTry"].Value));
+
+      if (model == null)
+      {
+        throw new ArgumentNullException(nameof(model));
+      }
+
+      // Token valide ?
+      IActionResult existsResult = this.ResetPasswordExists(model.ResetPasswordToken);
+      User user;
+
+      if (existsResult is OkObjectResult)
+      {
+        UserPasswordLostResponseModel result = (existsResult as OkObjectResult).Value as UserPasswordLostResponseModel;
+        if (result.Email == model.Email && result.Username == model.Username)
+        {
+          // Relié au bon utilisateur.
+          user = this.userService.GetByEmail(result.Email);
+          this.userService.UpdatePassword(user.Id, model.Password);
+
+          return this.Ok();
+        }
+        else
+        {
+          return this.Conflict(new { message = this.localizer["LogResetPasswordUserConflict"].Value });
+        }
+      }
+      else
+      {
+        return existsResult;
       }
     }
   }

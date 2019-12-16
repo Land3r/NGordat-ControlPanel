@@ -6,54 +6,56 @@
   using NGordatControlPanel.Entities.Db;
 
   /// <summary>
-  /// Représente un utilisateur.
+  /// <see cref="User"/> class.
+  /// Class representing a user.
   /// </summary>
   public class User : ADbEntity
   {
     /// <summary>
-    /// Obtient ou définit le Prénom de l'<see cref="User">Utilisateur</see>.
+    /// Gets or sets the firstname of the <see cref="User"/>.
     /// </summary>
     [BsonRepresentation(BsonType.String)]
     public string FirstName { get; set; }
 
     /// <summary>
-    /// Obtient ou définit de Nom de famille de l'<see cref="User">Utilisateur</see>.
+    /// Gets or sets the lastname of the <see cref="User"/>.
     /// </summary>
     [BsonRepresentation(BsonType.String)]
     public string LastName { get; set; }
 
     /// <summary>
-    /// Obtient ou définit le Nom d'utilisateur de l'<see cref="User">Utilisateur</see>.
+    /// Gets or sets the username of the <see cref="User"/>.
     /// </summary>
     [BsonRepresentation(BsonType.String)]
     public string Username { get; set; }
 
     /// <summary>
-    /// Obtient ou définit l'Email de l'<see cref="User">Utilisateur</see>.
+    /// Gets or sets the email of the <see cref="User"/>.
     /// </summary>
     [BsonRepresentation(BsonType.String)]
     public string Email { get; set; }
 
     /// <summary>
-    /// Obtient ou définit le Mot de passe de l'<see cref="User">Utilisateur</see>.
+    /// Gets or sets the password of the <see cref="User"/>.
     /// </summary>
     [BsonRepresentation(BsonType.String)]
     public string Password { get; set; }
 
     /// <summary>
-    /// Obtient ou définit si le compte utilisateur est actif ou non.
+    /// Gets or sets whether or not the <see cref="User"/> is active.
     /// </summary>
     [BsonRepresentation(BsonType.Boolean)]
     public bool? Active { get; set; }
 
     /// <summary>
-    /// Obtient ou définit le token d'activation du compte.
+    /// Gets or sets the activation token of the <see cref="User"/>.
     /// </summary>
     [BsonRepresentation(BsonType.String)]
     public string ActivationToken { get; set; }
 
     /// <summary>
-    /// Obtient ou définit le Token d'authentification utilisé par l'<see cref="User">Utilisateur</see>.
+    /// Gets or sets the token of the <see cref="User"/>.
+    /// Not an actual property of the <see cref="User"/>. It is injected into the entity for login.
     /// </summary>
     [BsonIgnore]
     public string Token { get; set; }

@@ -13,9 +13,9 @@ namespace NGordatControlPanel
 
   using NGordatControlPanel.Security;
   using NGordatControlPanel.Services.Emails;
-    using NGordatControlPanel.Services.Google;
-    using NGordatControlPanel.Services.Groceries;
-    using NGordatControlPanel.Services.Users;
+  using NGordatControlPanel.Services.Google;
+  using NGordatControlPanel.Services.Groceries;
+  using NGordatControlPanel.Services.Users;
   using NGordatControlPanel.Settings;
 
   /// <summary>

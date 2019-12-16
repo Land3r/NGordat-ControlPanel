@@ -7,21 +7,22 @@
   using System.Text;
 
   /// <summary>
-  /// Classe <see cref="CryptographicHelper"/>.
-  /// Collection d'helpers pour faciliter l'utilisation de fonctions cryptographiques.
+  /// <see cref="CryptographicHelper"/> class.
+  /// Collection of helpers for dealing with cryptography.
   /// </summary>
   public static class CryptographicHelper
   {
     /// <summary>
-    /// L'alphabet utilisé pour convertir en base62.
+    /// The alphabet used (base62).
     /// </summary>
     private const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.";
 
     /// <summary>
-    /// Génère un token de la longueur demandée pouvant être transmis via un paramètre GET sans necessiter d'encodage.
+    /// Gets a token tha can be safely provided to URI.
+    /// It can be transmitted over a GET parameter without any re-encoding.
     /// </summary>
-    /// <param name="length">La longueur du token à générer.</param>
-    /// <returns>Le token généré.</returns>
+    /// <param name="length">The length of the token to generate.</param>
+    /// <returns>The generated token.</returns>
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1055:Uri return values should not be strings", Justification = "This is not meant to produce Uri.")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0063:Use simple 'using' statement", Justification = "Simple design is too concive.")]
     public static string GetUrlSafeToken(int length)
@@ -40,15 +41,16 @@
                       .Range(0, length)
                       .Select(i => Alphabet[tokenBytes[i] % Alphabet.Length])
                       .ToArray();
+
         return new string(token);
       }
     }
 
     /// <summary>
-    /// Génère un hash d'une valeur.
+    /// Gets the hashed value of a byte array.
     /// </summary>
-    /// <param name="clear">La valeur en clair à hasher (sous forme binaire).</param>
-    /// <returns>La valeur hashée.</returns>
+    /// <param name="clear">The byte array to hash.</param>
+    /// <returns>The hashed value.</returns>
     public static byte[] GetHash(byte[] clear)
     {
       if (clear == null)
@@ -66,10 +68,10 @@
     }
 
     /// <summary>
-    /// Génère un hash d'une chaine de charactères en UTF8.
+    /// Gets the hashed value of a string in UTF8 format.
     /// </summary>
-    /// <param name="clear">La valeur en clair à hasher (sous forme de texte).</param>
-    /// <returns>La valeur hashée.</returns>
+    /// <param name="clear">The string to hash (in UTF8).</param>
+    /// <returns>The hashed value.</returns>
     public static string GetHash(string clear)
     {
       if (string.IsNullOrEmpty(clear))
@@ -84,11 +86,11 @@
     }
 
     /// <summary>
-    /// Génère un hash d'une valeur, prefixé par un salt.
+    /// Gets the hashed value of a byte array, using a salt.
     /// </summary>
-    /// <param name="clear">La valeur en clair à hasher (sous forme binaire).</param>
-    /// <param name="salt">Le salt à utiliser.</param>
-    /// <returns>La valeur hashée.</returns>
+    /// <param name="clear">The byte array to hash.</param>
+    /// <param name="salt">The salt byte array.</param>
+    /// <returns>The hashed value.</returns>
     public static byte[] GetHash(byte[] clear, byte[] salt)
     {
       byte[] data = clear.Concat(salt).ToArray();
@@ -98,11 +100,11 @@
     }
 
     /// <summary>
-    /// Génère un hash d'une chaine de charactères en UTF8.
+    /// Gets the hashed value of a string in UTF8 format, using a salt.
     /// </summary>
-    /// <param name="clear">La valeur en clair à hasher (sous forme de texte).</param>
-    /// <param name="salt">Le salt à utiliser.</param>
-    /// <returns>La valeur hashée.</returns>
+    /// <param name="clear">The string to hash (in UTF8).</param>
+    /// <param name="salt">The string to use as a salt.</param>
+    /// <returns>The hashed value.</returns>
     public static string GetHash(string clear, string salt)
     {
       string saltedclear = string.Concat(salt, clear);
@@ -113,10 +115,10 @@
     }
 
     /// <summary>
-    /// Convertie un tableau de byte en chaine de characteres.
+    /// Converts a byte array into an UTF8 string.
     /// </summary>
-    /// <param name="bytes">Le tableau de bytes.</param>
-    /// <returns>La chaine de characteres correspondant.</returns>
+    /// <param name="bytes">The byte array to convert.</param>
+    /// <returns>The UTF8 string equivalent to the byte array.</returns>
     private static string ByteArrayToString(byte[] bytes)
     {
       StringBuilder hex = new StringBuilder(bytes.Length * 2);

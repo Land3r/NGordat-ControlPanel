@@ -3,41 +3,48 @@
   using System;
   using System.IO;
   using System.Threading.Tasks;
+
   using Microsoft.AspNetCore.Authorization;
   using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.Extensions.Localization;
   using Microsoft.Extensions.Logging;
+
   using NGordatControlPanel.Services.Google;
 
+  /// <summary>
+  /// <see cref="SpeechToTextController"/> class.
+  /// API Controller for converting speech to text using cognitive services.
   [Authorize]
   [Route("api/[controller]")]
   [ApiController]
-  public class GroceryController : ControllerBase
+  public class SpeechToTextController : ControllerBase
   {
     /// <summary>
-    /// Le Logger utilisé par le controller.
+    /// The logger.
     /// </summary>
-    private readonly ILogger<GroceryController> logger;
+    private readonly ILogger<SpeechToTextController> logger;
 
     /// <summary>
-    /// Les ressources de langue.
+    /// The localized ressources.
     /// </summary>
-    private readonly IStringLocalizer<GroceryController> localizer;
+    private readonly IStringLocalizer<SpeechToTextController> localizer;
 
     /// <summary>
-    /// Le service SpeechToText.
+    /// The <see cref="ISpeechToTextService"/>.
     /// </summary>
     private readonly ISpeechToTextService speechToTextService;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="GroceryController"/> class.
+    /// Initializes a new instance of the <see cref="SpeechToTextController"/> class.
     /// API Controller for Grocery service.
     /// </summary>
+    /// <param name="logger">The logger to use.</param>
+    /// <param name="localizer">The localized ressources to use.</param>
     /// <param name="speechToTextService">The SpeechToTextService to use.</param>
-    public GroceryController(
-      ILogger<GroceryController> logger,
-      IStringLocalizer<GroceryController> localizer,
+    public SpeechToTextController(
+      ILogger<SpeechToTextController> logger,
+      IStringLocalizer<SpeechToTextController> localizer,
       ISpeechToTextService speechToTextService)
     {
       if (logger == null)
@@ -70,11 +77,12 @@
 
     /// <summary>
     /// Upload a sound file, for speech recognision.
+    /// POST: api/SpeechToText.
+    /// <remarks>The name of the parameter (blob here) MUST match the name of the field from the form.</remarks>
     /// </summary>
     /// <param name="blob">The binary value of the file.</param>
     /// <returns>The result of the operation.</returns>
     [HttpPost("upload")]
-    // attention name of formfile must be equal to the key u have used for formdata
     public async Task<IActionResult> UploadFileAsync([FromForm] IFormFile blob)
     {
       if (blob == null)
@@ -107,7 +115,7 @@
         return this.NotFound(new { message = "Transcript not found" });
       }
 
-      return Ok(new { message = result });
+      return this.Ok(new { message = result });
     }
   }
 }

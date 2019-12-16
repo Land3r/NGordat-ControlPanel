@@ -5,31 +5,33 @@
   using MongoDB.Bson;
   using MongoDB.Bson.Serialization.Attributes;
 
+  using NGordatControlPanel.Entities.Users;
+
   /// <summary>
-  /// Classe abstraite ADbTrackedEntity.
-  /// Classe permettant d'ajouter des fonctionnalitées de tracking à d'autres entitées.
+  /// <see cref="ADbTrackedEntity"/> abstract class.
+  /// Class representing a tracked Entity stored in database. Provides access to the Created and Updated properties of the Entity.
   /// </summary>
   public abstract class ADbTrackedEntity : ADbEntity, IDbTrackedEntity
   {
     /// <summary>
-    /// Obtient ou définit le moment de la création de l'entitée.
+    /// Gets or sets the creation date of the <see cref="ADbTrackedEntity"/>.
     /// </summary>
     [BsonRepresentation(BsonType.DateTime)]
     public DateTime Created { get; set; }
 
     /// <summary>
-    /// Obtient ou définit l'utilisateur ayant effectué la création de l'entitée.
+    /// Gets or sets the <see cref="UserReference"/> of the <see cref="User"/> that created the <see cref="ADbTrackedEntity"/>.
     /// </summary>
     public UserReference CreatedBy { get; set; }
 
     /// <summary>
-    /// Obtient ou définit le moment de la mise à jour de l'entitée.
+    /// Gets or sets the updated date of the <see cref="ADbTrackedEntity"/>.
     /// </summary>
     [BsonRepresentation(BsonType.DateTime)]
     public DateTime Updated { get; set; }
 
     /// <summary>
-    /// Obtient ou définit l'utilisateur ayant effectué la mise à jour de l'entitée.
+    /// Gets or sets the <see cref="UserReference"/> of the <see cref="User"/> that updated the <see cref="ADbTrackedEntity"/>.
     /// </summary>
     public UserReference UpdatedBy { get; set; }
   }

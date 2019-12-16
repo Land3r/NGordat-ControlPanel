@@ -1,11 +1,12 @@
 ﻿namespace NGordatControlPanel.Entities.Groceries
 {
   using System.Collections.Generic;
+
   using NGordatControlPanel.Entities.Db;
 
   /// <summary>
   /// <see cref="GroceryAction"/> class.
-  /// Represents a kind of action available on the shopping list.
+  /// Class representing a kind of action available on the shopping list.
   /// </summary>
   public class GroceryAction : ADbTrackedEntity
   {

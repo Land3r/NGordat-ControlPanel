@@ -6,17 +6,17 @@
   using NGordatControlPanel.Entities.Emails;
 
   /// <summary>
-  /// Collection de méthodes d'extensions pour la gestion des <see cref="EmailTemplate">templates emails</see>.
+  /// Collection of helpers for dealing with Emails.
   /// </summary>
   public static class EmailTemplateExtension
   {
     /// <summary>
-    /// Compile un template email avec les données spécifiques à cette instance d'email.
+    /// Compile an email using the provided <see cref="EmailTemplate"/> and parameters.
     /// </summary>
-    /// <param name="emailTemplate">Le template email à utiliser.</param>
-    /// <param name="values">Les données de l'email.</param>
-    /// <returns>Un <see cref="Tuple{string, string}"/> contenant le résultat compilé du Subject, puis du Body de l'email.</returns>
-    public static Tuple<string, string> Compile(this EmailTemplate emailTemplate, dynamic values)
+    /// <param name="emailTemplate">The <see cref="EmailTemplate"/> to compile.</param>
+    /// <param name="values">The collection of parameters to inject into the email.</param>
+    /// <returns>A <see cref="Tuple{string, string}"/> containing the compiled subject and body of the email.</returns>
+    public static (string subject, string body) Compile(this EmailTemplate emailTemplate, dynamic values)
     {
       if (emailTemplate == null)
       {
@@ -32,7 +32,7 @@
         bodyTemplate = bodyTemplate.Replace($"{{{prop.Name}}}", prop.GetValue(values, null));
       }
 
-      return new Tuple<string, string>(subjectTemplate, bodyTemplate);
+      return (subject: subjectTemplate, body: bodyTemplate);
     }
   }
 }

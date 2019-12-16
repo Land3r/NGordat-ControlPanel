@@ -5,13 +5,13 @@
   using MongoDB.Bson.Serialization.Attributes;
 
   /// <summary>
-  /// Interface IDbEntity.
-  /// Interface permettant de représenter une entitée en base.
+  /// <see cref="IDbEntity"/> interface.
+  /// Interface representing an Entity stored in database. Provides access to the Id property of the Entity.
   /// </summary>
   public interface IDbEntity
   {
     /// <summary>
-    /// Obtient ou définit l'id de l'entitée.
+    /// Gets or sets the id of the <see cref="IDbEntity"/>.
     /// </summary>
     [BsonId]
     public Guid Id { get; set; }

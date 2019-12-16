@@ -1,6 +1,7 @@
 ﻿namespace NGordatControlPanel.Entities.Groceries
 {
   using System.Collections.Generic;
+
   using NGordatControlPanel.Entities.Db;
 
   /// <summary>
