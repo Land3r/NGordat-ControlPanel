@@ -130,7 +130,7 @@
     /// </summary>
     /// <param name="id">The id of the <see cref="GroceryAction"/>.</param>
     /// <returns>The operation result.</returns>
-    [HttpGet("{id}", Name = "Get")]
+    [HttpGet("{id}")]
     public IActionResult Get(Guid id)
     {
       this.logger.LogDebug(this.localizer["LogGetItemGroceryActionsTry"].Value);
