@@ -1,18 +1,18 @@
 ﻿namespace NGordatControlPanel.Settings.Emails
 {
   /// <summary>
-  /// Classe <see cref="EmailSettings"/>.
-  /// Classe de configuration pour les emails de l'applications.
+  /// <see cref="EmailSettings"/> class.
+  /// Class used to retrieve configuration for the emails.
   /// </summary>
   public class EmailSettings
   {
     /// <summary>
-    /// Obtient ou définit la configuration SMTP utilisée pour l'envoi des emails.
+    /// Gets or sets the <see cref="SmtpSettings"/> of the <see cref="EmailSettings"/>.
     /// </summary>
     public SmtpSettings Smtp { get; set; }
 
     /// <summary>
-    /// Obtient ou définit les informations de l'email envoyant l'email.
+    /// Gets or sets the <see cref="EmailFromSettings"/> of the <see cref="EmailSettings"/>.
     /// </summary>
     public EmailFromSettings From { get; set; }
   }

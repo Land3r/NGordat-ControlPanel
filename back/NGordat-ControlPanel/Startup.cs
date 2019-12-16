@@ -19,30 +19,31 @@ namespace NGordatControlPanel
   using NGordatControlPanel.Settings;
 
   /// <summary>
-  /// Classe Startup
-  /// Classe permettant la configuration du projet.
+  /// <see cref="Startup"/> class.
+  /// Class used to configure the asp.net core pipeline.
   /// </summary>
   public class Startup
   {
     /// <summary>
-    /// Instancie une nouvelle instance de la classe <see cref="Startup"/>.
+    /// Initializes a new instance of the <see cref="Startup"/> class.
     /// </summary>
-    /// <param name="configuration">La configuration de l'application.</param>
+    /// <param name="configuration">The application configuration.</param>
     public Startup(IConfiguration configuration)
     {
       this.Configuration = configuration;
     }
 
     /// <summary>
-    /// Obtient la configuration de l'application.
+    /// Gets the application configuration.
     /// </summary>
     public IConfiguration Configuration { get; }
 
     /// <summary>
-    /// Cette méthode est appelée par le runtime. Elle sert à configurer le traitement des requêtes HTTP.
+    /// Configures the HTTP pipeline.
     /// </summary>
-    /// <param name="app">Le builder d'application.</param>
-    /// <param name="env">Le builder de l'hôte web.</param>
+    /// <remarks>This method is called by asp.net core runtime.</remarks>
+    /// <param name="app">The application builder.</param>
+    /// <param name="env">The environment builder.</param>
     public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       CorsConfiguration.Configure(app, env);
@@ -81,9 +82,10 @@ namespace NGordatControlPanel
     }
 
     /// <summary>
-    /// Cette méthode est appellé par le runtime. Elle sert à ajouter des service au conteneur.
+    /// Configures the services added to the container.
     /// </summary>
-    /// <param name="services">La collection des services.</param>
+    /// <remarks>This method is called by asp.net core runtime.</remarks>
+    /// <param name="services">The service collection.</param>
     public void ConfigureServices(IServiceCollection services)
     {
       CorsConfiguration.ConfigureServices(services);
@@ -95,11 +97,11 @@ namespace NGordatControlPanel
 
       services.AddControllers();
 
-      // configure strongly typed settings objects
+      // Configure strongly typed settings objects
       var appSettingsSection = this.Configuration.GetSection("AppSettings");
       services.Configure<AppSettings>(appSettingsSection);
 
-      // configure jwt authentication
+      // Configure jwt authentication
       var appSettings = appSettingsSection.Get<AppSettings>();
       var key = Encoding.ASCII.GetBytes(appSettings.Security.JWT.Secret);
       services.AddAuthentication(x =>
@@ -120,7 +122,7 @@ namespace NGordatControlPanel
         };
       });
 
-      // configure DI for application services
+      // Configure DI for application services
       services.AddScoped<IUserService, UserService>();
       services.AddScoped<IUserPasswordResetTokenService, UserPasswordResetTokenService>();
       services.AddScoped<IEmailService, EmailService>();

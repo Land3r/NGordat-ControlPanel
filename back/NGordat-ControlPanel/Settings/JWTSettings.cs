@@ -1,18 +1,18 @@
 ﻿namespace NGordatControlPanel.Settings
 {
   /// <summary>
-  /// Classe JWTSettings.
-  /// Classe permettant d'obtenir la configuration utilisée pour configurer l'authentification JWT.
+  /// <see cref="JWTSettings"/> class.
+  /// Class used to retrieve configuration for JWT token.
   /// </summary>
   public class JWTSettings
   {
     /// <summary>
-    /// Obtient ou définit le Secret utilisé pour le JWT.
+    /// Gets or sets the secret key used for generating JWT tokens of the <see cref="JWTSettings"/>.
     /// </summary>
     public string Secret { get; set; }
 
     /// <summary>
-    /// Obtient ou définit la durée de validitée du Token JWT après sa génération.
+    /// Gets or sets the JWT token valid duration (in days) of the <see cref="JWTSettings"/>.
     /// </summary>
     public int DurationInDays { get; set; }
   }

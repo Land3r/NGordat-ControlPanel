@@ -3,23 +3,23 @@
   using System;
 
   /// <summary>
-  /// Classe <see cref="EnvironmentSettings"/>.
-  /// Classe permettant de récupérer la configuration de l'environnement de l'application.
+  /// <see cref="EnvironmentSettings"/> class.
+  /// Class used to retrieve configuration for the environment.
   /// </summary>
   public class EnvironmentSettings
   {
     /// <summary>
-    /// Gets or sets the name of the environment.
+    /// Gets or sets the name of the environment of the <see cref="EnvironmentSettings"/>.
     /// </summary>
     public string Name { get; set; }
 
     /// <summary>
-    /// Gets or sets the frontend url.
+    /// Gets or sets the frontend url of the <see cref="EnvironmentSettings"/>.
     /// </summary>
     public Uri FrontUrl { get; set; }
 
     /// <summary>
-    /// Gets or sets the backend url.
+    /// Gets or sets the backend url of the <see cref="EnvironmentSettings"/>.
     /// </summary>
     public Uri BackUrl { get; set; }
   }

@@ -1,12 +1,13 @@
 ﻿namespace NGordatControlPanel.Settings.Google
 {
   /// <summary>
-  /// Classe de configuration <see cref="SpeechToTextSettings"/>.
+  /// <see cref="EnvironmentSettings"/> class.
+  /// Class used to retrieve configuration for the environment.
   /// </summary>
   public class SpeechToTextSettings
   {
     /// <summary>
-    /// Obtient ou définit le code de language à fournir à la reconnaissance vocale.
+    /// Gets or sets the expected language code of the speech to transcript of the <see cref="SpeechToTextSettings"/>.
     /// </summary>
     public string LanguageCode { get; set; }
   }

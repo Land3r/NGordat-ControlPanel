@@ -4,33 +4,33 @@
   using NGordatControlPanel.Settings.Google;
 
   /// <summary>
-  /// Classe de configuration <see cref="AppSettings"/>.
-  /// Classe permettant de récupérer les valeurs de configuration de l'application.
+  /// <see cref="SecuritySettings"/> class.
+  /// Class used to retrieve all the application related configuration.
   /// </summary>
   public class AppSettings
   {
     /// <summary>
-    /// Obtient ou définit la configuration de l'environnement.
+    /// Gets or sets the <see cref="EnvironmentSettings"/> of the <see cref="AppSettings"/>.
     /// </summary>
     public EnvironmentSettings Environment { get; set; }
 
     /// <summary>
-    /// Obtient ou définit la configuration utilisée pour configurer la connection à la base de données.
+    /// Gets or sets the <see cref="MongoDbSettings"/> of the <see cref="AppSettings"/>.
     /// </summary>
     public MongoDbSettings MongoDb { get; set; }
 
     /// <summary>
-    /// Obtient ou définit la configuration utilisée pour envoyer des emails.
+    /// Gets or sets the <see cref="EmailSettings"/> of the <see cref="AppSettings"/>.
     /// </summary>
     public EmailSettings Email { get; set; }
 
     /// <summary>
-    /// Obtient ou définit la configuration utilisée pour les aspects sécuritaires.
+    /// Gets or sets the <see cref="SecuritySettings"/> of the <see cref="AppSettings"/>.
     /// </summary>
     public SecuritySettings Security { get; set; }
 
     /// <summary>
-    /// Obtient ou définit la configuration utilisée vis à vis des services Google.
+    /// Gets or sets the <see cref="GoogleSettings"/> of the <see cref="AppSettings"/>.
     /// </summary>
     public GoogleSettings Google { get; set; }
   }

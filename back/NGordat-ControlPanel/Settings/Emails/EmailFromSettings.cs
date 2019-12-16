@@ -1,18 +1,18 @@
 ﻿namespace NGordatControlPanel.Settings.Emails
 {
   /// <summary>
-  /// Classe <see cref="EmailFromSettings"/>.
-  /// Classe permettant de récupérer les informations du champs "To" de la configuration email.
+  /// <see cref="EmailFromSettings"/> class.
+  /// Class used to retrieve configuration for the from field for emails.
   /// </summary>
   public class EmailFromSettings
   {
     /// <summary>
-    /// Obtient ou définit l'addresse de l'email utilisé pour l'envoi des emails.
+    /// Gets or sets the address of the from field of the <see cref="EmailFromSettings"/>.
     /// </summary>
     public string Address { get; set; }
 
     /// <summary>
-    /// Obtient ou définit le nom d'affichage utilisé pour l'envoi des emails.
+    /// Gets or sets the name of the from field of the <see cref="EmailFromSettings"/>.
     /// </summary>
     public string Name { get; set; }
   }

@@ -1,23 +1,23 @@
 ﻿namespace NGordatControlPanel.Settings
 {
   /// <summary>
-  /// Classe <see cref="SecuritySettings"/>.
-  /// Classe permettant de récupérer les configurations sécuritaires de l'application.
+  /// <see cref="SecuritySettings"/> class.
+  /// Class used to retrieve configuration for security.
   /// </summary>
   public class SecuritySettings
   {
     /// <summary>
-    /// Obtient ou définit le hash utilisé dans la génération des hashs.
+    /// Gets or sets the salt used for hash protocols of the <see cref="SecuritySettings"/>.
     /// </summary>
     public string HashSalt { get; set; }
 
     /// <summary>
-    /// Obtient ou définit la durée de validitée du token de réinitialisation du mot de passe.
+    /// Gets or sets the reset password token duration (in minutes) of the <see cref="SecuritySettings"/>.
     /// </summary>
     public int ResetPasswordTokenDurationInMinutes { get; set; }
 
     /// <summary>
-    /// Obtient ou définit la configuration utilisée pour configurer l'authentification JWT.
+    /// Gets or sets the <see cref="JWTSettings"/> of the <see cref="SecuritySettings"/>.
     /// </summary>
     public JWTSettings JWT { get; set; }
   }

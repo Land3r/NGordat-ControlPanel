@@ -3,12 +3,12 @@
   using System;
   using System.Collections.Generic;
   using System.Linq;
-    using System.Text.Json;
-    using Microsoft.AspNetCore.Mvc;
+  using System.Text.Json;
+  using Microsoft.AspNetCore.Mvc;
   using Microsoft.Extensions.Logging;
   using Microsoft.Extensions.Options;
-    using MongoDB.Bson;
-    using MongoDB.Driver;
+  using MongoDB.Bson;
+  using MongoDB.Driver;
 
   using NGordatControlPanel.Entities.Db;
   using NGordatControlPanel.Settings;

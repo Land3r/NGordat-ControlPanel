@@ -1,27 +1,28 @@
 ﻿namespace NGordatControlPanel.Settings.Emails
 {
   /// <summary>
-  /// Classe SmtpSettings.
-  /// Classe permettant d'obtenir la configuration utilisée pour se connecter auprès du SMTP.
+  /// <see cref="SmtpSettings"/> class.
+  /// Class used to retrieve configuration for the email SMTP.
+  /// </summary>
   public class SmtpSettings
   {
     /// <summary>
-    /// Obtient ou définit le host du serveur SMTP utilisé pour l'envoi d'emails.
+    /// Gets or sets the host of the <see cref="SmtpSettings"/> to connect to the SMTP.
     /// </summary>
     public string Host { get; set; }
 
     /// <summary>
-    /// Obtient ou définit le Port du serveur SMTP utilisé pour l'envoi d'emails.
+    /// Gets or sets the port of the <see cref="SmtpSettings"/> to connect to the SMTP.
     /// </summary>
     public int Port { get; set; }
 
     /// <summary>
-    /// Obtient ou définit le nom d'utilisateur utilisé pour s'authentifier auprès du serveur SMTP.
+    /// Gets or sets the username of the <see cref="SmtpSettings"/> to authenticate against SMTP.
     /// </summary>
     public string Username { get; set; }
 
     /// <summary>
-    /// Obtient ou définit le mot de passe utilisé pour s'authentifier auprès du serveur SMTP.
+    /// Gets or sets the password of the <see cref="SmtpSettings"/> to authenticate against SMTP.
     /// </summary>
     public string Password { get; set; }
   }
