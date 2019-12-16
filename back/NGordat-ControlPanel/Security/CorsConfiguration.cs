@@ -62,7 +62,7 @@
           {
             builder.WithOrigins("http://*.ngordat.net", "https://*.ngordat.net")
               .AllowAnyHeader()
-              .WithMethods(HttpMethods.Get, HttpMethods.Post, HttpMethods.Put, HttpMethods.Delete, HttpMethods.Options)
+              .WithMethods(HttpMethods.Get, HttpMethods.Post, HttpMethods.Put, HttpMethods.Patch, HttpMethods.Delete, HttpMethods.Options)
               .AllowCredentials()
               .SetIsOriginAllowedToAllowWildcardSubdomains();
           });
