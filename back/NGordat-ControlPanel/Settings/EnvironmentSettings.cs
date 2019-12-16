@@ -1,5 +1,7 @@
 ﻿namespace NGordatControlPanel.Settings
 {
+  using System;
+
   /// <summary>
   /// Classe <see cref="EnvironmentSettings"/>.
   /// Classe permettant de récupérer la configuration de l'environnement de l'application.
@@ -7,18 +9,18 @@
   public class EnvironmentSettings
   {
     /// <summary>
-    /// Obtient ou définit le nom de l'environement.
+    /// Gets or sets the name of the environment.
     /// </summary>
     public string Name { get; set; }
 
     /// <summary>
-    /// Obtient ou définit l'url du front.
+    /// Gets or sets the frontend url.
     /// </summary>
-    public string FrontUrl { get; set; }
+    public Uri FrontUrl { get; set; }
 
     /// <summary>
-    /// Obtient ou définit l'url du back.
+    /// Gets or sets the backend url.
     /// </summary>
-    public string BackUrl { get; set; }
+    public Uri BackUrl { get; set; }
   }
 }

@@ -33,6 +33,16 @@
     private readonly AppSettings appSettings;
 
     /// <summary>
+    /// Le Logger utilisé par le controller.
+    /// </summary>
+    private readonly ILogger<UsersController> logger;
+
+    /// <summary>
+    /// Les ressources de langue.
+    /// </summary>
+    private readonly IStringLocalizer<UsersController> localizer;
+
+    /// <summary>
     /// Le service des utilisateurs.
     /// </summary>
     private readonly IUserService userService;
@@ -48,16 +58,6 @@
     private readonly IEmailService emailService;
 
     /// <summary>
-    /// Le Logger utilisé par le controller.
-    /// </summary>
-    private readonly ILogger<UsersController> logger;
-
-    /// <summary>
-    /// Les ressources de langue.
-    /// </summary>
-    private readonly IStringLocalizer<UsersController> localizer;
-
-    /// <summary>
     /// Instancie une nouvelle instance de <see cref="UsersController"/>.
     /// </summary>
     /// <param name="appSettings">La configuration de l'application.</param>
@@ -68,18 +68,65 @@
     /// <param name="localizer">Les ressources localisées.</param>
     public UsersController(
       IOptions<AppSettings> appSettings,
+      ILogger<UsersController> logger,
+      IStringLocalizer<UsersController> localizer,
       IUserService userService,
       IUserPasswordResetTokenService userPasswordResetTokenService,
-      IEmailService emailService,
-      ILogger<UsersController> logger,
-      IStringLocalizer<UsersController> localizer)
+      IEmailService emailService)
     {
-      this.appSettings = appSettings?.Value;
-      this.userService = userService;
-      this.userPasswordResetTokenService = userPasswordResetTokenService;
-      this.emailService = emailService;
-      this.logger = logger;
-      this.localizer = localizer;
+      if (appSettings == null)
+      {
+        throw new ArgumentNullException(nameof(appSettings));
+      }
+      else
+      {
+        this.appSettings = appSettings?.Value;
+      }
+
+      if (logger == null)
+      {
+        throw new ArgumentNullException(nameof(logger));
+      }
+      else
+      {
+        this.logger = logger;
+      }
+
+      if (localizer == null)
+      {
+        throw new ArgumentNullException(nameof(localizer));
+      }
+      else
+      {
+        this.localizer = localizer;
+      }
+
+      if (userService == null)
+      {
+        throw new ArgumentNullException(nameof(userService));
+      }
+      else
+      {
+        this.userService = userService;
+      }
+
+      if (userPasswordResetTokenService == null)
+      {
+        throw new ArgumentNullException(nameof(userPasswordResetTokenService));
+      }
+      else
+      {
+        this.userPasswordResetTokenService = userPasswordResetTokenService;
+      }
+
+      if (emailService == null)
+      {
+        throw new ArgumentNullException(nameof(emailService));
+      }
+      else
+      {
+        this.emailService = emailService;
+      }
     }
 
     /// <summary>
@@ -173,10 +220,10 @@
         this.emailService.SendTemplate(new EmailAddress() { Address = model.Email, Name = model.Username }, "Register", new
         {
           username = user.Username,
-          activateaccountlink = $"{new Uri(new Uri(this.appSettings.Environment.FrontUrl), $"#/user/activate/{user.ActivationToken}")}",
+          activateaccountlink = $"{new Uri(this.appSettings.Environment.FrontUrl, $"#/user/activate/{user.ActivationToken}")}",
           sitename = this.appSettings.Environment.Name,
           siteurl = this.appSettings.Environment.FrontUrl,
-          unsubscribeurl = new Uri(new Uri(this.appSettings.Environment.FrontUrl), "/unsubscribe").ToString(),
+          unsubscribeurl = new Uri(this.appSettings.Environment.FrontUrl, "/unsubscribe").ToString(),
         });
         return this.Ok(user);
       }
@@ -259,10 +306,10 @@
         this.emailService.SendTemplate(new EmailAddress() { Address = user.Email, Name = user.Username }, "PasswordLost", new
         {
           username = user.Username,
-          resetpasswordlink = $"{new Uri(new Uri(this.appSettings.Environment.FrontUrl), $"#/resetpassword/{token}")}",
+          resetpasswordlink = $"{new Uri(this.appSettings.Environment.FrontUrl, $"#/resetpassword/{token}")}",
           sitename = this.appSettings.Environment.Name,
           siteurl = this.appSettings.Environment.FrontUrl,
-          unsubscribeurl = new Uri(new Uri(this.appSettings.Environment.FrontUrl), "/unsubscribe").ToString(),
+          unsubscribeurl = new Uri(this.appSettings.Environment.FrontUrl, "/unsubscribe").ToString(),
         });
       }
       catch (Exception ex)

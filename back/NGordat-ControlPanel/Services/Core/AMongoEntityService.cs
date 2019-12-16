@@ -158,6 +158,17 @@
     }
 
     /// <summary>
+    /// Mets à jour une entitée dans la collection.
+    /// </summary>
+    /// <param name="id">L'id de l'entitée à mettre à jour.</param>
+    /// <param name="elmIn">Les données de l'entitée mise à jour.</param>
+    /// <returns>Le résultat de l'opération.</returns>
+    public virtual ReplaceOneResult UpdatePartially(Guid id, TEntity elmIn)
+    {
+      throw new NotImplementedException();
+    }
+
+    /// <summary>
     /// Supprime une entitée de la collection.
     /// </summary>
     /// <param name="elmIn">L'élement à supprimer.</param>

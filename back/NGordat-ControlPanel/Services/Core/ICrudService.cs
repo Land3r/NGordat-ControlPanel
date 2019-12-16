@@ -56,6 +56,14 @@
     public ReplaceOneResult Update(Guid id, TEntity elmIn);
 
     /// <summary>
+    /// Partially updates the entity.
+    /// </summary>
+    /// <param name="id">L'id de l'entitée à mettre à jour.</param>
+    /// <param name="elmIn">Les données de l'entitée mise à jour.</param>
+    /// <returns>Le résultat de l'opération.</returns>
+    public ReplaceOneResult UpdatePartially(Guid id, TEntity elmIn);
+
+    /// <summary>
     /// Supprime une entitée de la collection.
     /// </summary>
     /// <param name="elmIn">L'élement à supprimer.</param>
