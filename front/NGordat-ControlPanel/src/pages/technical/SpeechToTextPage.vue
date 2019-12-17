@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-px-md">
-    <h3>{{$t('groceriesindexpage.title')}}</h3>
+    <h3>{{$t('speechtotextpage.title')}}</h3>
     <br />
     <VueRecordAudio
       class="float-right"
@@ -8,9 +8,6 @@
       :mimeType="recordingMimeType"
       @result="onAudioRecorded" />
       <app-typedspan :text="SexyTranscript" :repeat="repeat" />
-      <q-page-sticky position="bottom-right" :offset="[18, 18]">
-        <q-btn fab icon="fas fa-cog" color="accent" :to="{ name: 'GroceriesReferentialPage' }"/>
-      </q-page-sticky>
   </q-page>
 </template>
 
@@ -19,7 +16,7 @@ import AudioRecorderPolyfill from 'audio-recorder-polyfill'
 import xss from 'xss'
 import { NotifySuccess, NotifyFailure } from 'data/notify'
 
-import GroceryService from 'services/GroceryService'
+import SpeechToTextService from 'services/SpeechToTextService'
 import TypedSpan from 'components/common/presentation/TypedSpan'
 
 // const supportedTypes = [
@@ -30,7 +27,7 @@ import TypedSpan from 'components/common/presentation/TypedSpan'
 // ]
 
 export default {
-  name: 'GroceriesIndexPage',
+  name: 'SpeechToTextPage',
   components: {
     'app-typedspan': TypedSpan
   },
@@ -45,12 +42,12 @@ export default {
   },
   methods: {
     onAudioRecorded (blob) {
-      const groceryService = new GroceryService()
-      groceryService.doUpload(blob).then((response) => {
+      const speechToTextService = new SpeechToTextService()
+      speechToTextService.doUpload(blob).then((response) => {
         this.transcript = xss(response.message)
-        this.$q.notify({ ...NotifySuccess, message: this.$t('groceriesindexpage.success.transcriptsuccess', { transcript: xss(response.message) }) })
+        this.$q.notify({ ...NotifySuccess, message: this.$t('speechtotextpage.success.transcriptsuccess', { transcript: xss(response.message) }) })
       }).catch((response) => {
-        this.$q.notify({ ...NotifyFailure, message: this.$t('groceriesindexpage.error.transcriptfailure') })
+        this.$q.notify({ ...NotifyFailure, message: this.$t('speechtotextpage.error.transcriptfailure') })
       })
     }
   },

@@ -8,9 +8,10 @@ export const baseUrl = process.env.BACKEND_BASE_URL + process.env.BACKEND_API_PR
  */
 export const API = {
   USER: 'users',
-  SPEECHTOTEXT: 'speechtotext',
+  GROCERY: 'grocery',
   GROCERYACTION: 'groceryactions',
-  GROCERYITEM: 'groceryitems'
+  GROCERYITEM: 'groceryitems',
+  SPEECHTOTEXT: 'speechtotext'
 }
 
 /**

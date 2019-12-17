@@ -1,5 +1,5 @@
 export default {
-  title: 'Courses',
+  title: 'Transcription voix -> texte',
   success: {
     transcriptsuccess: 'Texte détecté: {transcript}.'
   },

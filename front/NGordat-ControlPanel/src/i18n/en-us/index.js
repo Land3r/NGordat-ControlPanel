@@ -12,6 +12,8 @@ import activatepage from './pages/user/activatepage'
 import groceriesindexpage from './pages/groceries/indexpage'
 import groceriesreferentialpage from './pages/groceries/referentialpage'
 
+import speechtotextpage from './pages/technical/speechtotextpage'
+
 export default {
   ...common,
 
@@ -41,5 +43,8 @@ export default {
   },
   groceriesreferentialpage: {
     ...groceriesreferentialpage
+  },
+  speechtotextpage: {
+    ...speechtotextpage
   }
 }

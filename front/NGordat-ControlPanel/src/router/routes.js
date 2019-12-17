@@ -73,6 +73,20 @@ const routes = [
     ]
   },
   {
+    path: '/technical',
+    component: () => import('layouts/MainLayout.vue'),
+    meta: {
+      requiresAuth: true
+    },
+    children: [
+      {
+        name: 'SpeechToTextPage',
+        path: '/speechtotext',
+        component: () => import('pages/technical/SpeechToTextPage.vue')
+      }
+    ]
+  },
+  {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     meta: {

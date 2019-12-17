@@ -1,5 +1,5 @@
 export default {
-  title: 'Groceries',
+  title: 'Speech to text',
   success: {
     transcriptsuccess: 'Detected text: {transcript}.'
   },

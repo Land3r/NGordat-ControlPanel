@@ -70,7 +70,23 @@
             <q-item-label>Courses</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item-label header>Quasar Links</q-item-label>
+        <q-item-label header>Admin</q-item-label>
+        <q-expansion-item
+          expand-separator
+          icon="build"
+          label="Pages"
+          caption="Technical pages"
+        >
+          <q-item clickable :to="{ name: 'SpeechToTextPage' }">
+            <q-item-section avatar>
+              <q-icon name="keyboard_voice" />
+            </q-item-section>
+            <q-item-section>
+              <q-item-label>SpeechToText</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-expansion-item>
+        <q-separator />
         <q-item clickable tag="a" target="_blank" href="https://quasar.dev">
           <q-item-section avatar>
             <q-icon name="school" />
