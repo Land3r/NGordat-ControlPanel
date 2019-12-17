@@ -3,5 +3,5 @@ import frFr from './fr-fr'
 
 export default {
   'en-us': enUS,
-  'fr-fr': frFr
+  'fr': frFr
 }

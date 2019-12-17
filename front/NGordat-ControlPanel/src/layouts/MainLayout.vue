@@ -15,7 +15,9 @@
           {{title}}
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>
+          <app-languageselector />
+        </div>
         <div>
           <q-btn flat>
             <q-avatar>
@@ -153,8 +155,13 @@
 <script>
 import UserService from 'services/UserService'
 
+import LanguageSelector from 'components/layout/LanguageSelector'
+
 export default {
   name: 'MainLayout',
+  components: {
+    'app-languageselector': LanguageSelector
+  },
   data () {
     return {
       leftDrawerOpen: false
