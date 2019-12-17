@@ -14,5 +14,12 @@ export default {
   network: {
     noresponse: 'Could not communicate with the backend.',
     errorresponse: 'Network error: HTTP {code}: {message}.'
+  },
+  validationerror: {
+    required: '{field} is required.',
+    minlength: '{field} must be {length} characters or more.',
+    maxlength: '{field} must be {length} characters or less.',
+    validemail: 'This should be a valid email.',
+    mustmatch: '{field} values should match.'
   }
 }

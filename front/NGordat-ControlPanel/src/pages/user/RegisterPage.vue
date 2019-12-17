@@ -13,26 +13,48 @@
             {{$t('registerpage.text.description')}}
           </div>
           <q-form>
-            <q-input color="primary" type="text" v-model="form.username" :label="$t('registerpage.form.username')" clearable clear-icon="close">
+            <q-input color="primary" type="text" v-model="form.username" :label="$t('registerpage.form.username')" clearable clear-icon="close" lazy-rules
+              :rules="[
+                val => !!val || $t('validationerror.required', {field: $t('registerpage.form.username')}),
+                val => val.length >= 3 || $t('validationerror.minlength', {field: $t('registerpage.form.username'), length: 3})
+            ]">
               <template v-slot:prepend>
                 <q-icon name="perm_identity" />
               </template>
             </q-input>
-            <q-input color="primary" type="text" v-model="form.firstname" :label="$t('registerpage.form.firstname')" clearable clear-icon="close" />
-            <q-input color="primary" type="text" v-model="form.lastname" :label="$t('registerpage.form.lastname')" clearable clear-icon="close" />
+            <q-input color="primary" type="text" v-model="form.firstname" :label="$t('registerpage.form.firstname')" clearable clear-icon="close"  lazy-rules
+              :rules="[
+                val => !!val || $t('validationerror.required', {field: $t('registerpage.form.firstname')})
+            ]" />
+            <q-input color="primary" type="text" v-model="form.lastname" :label="$t('registerpage.form.lastname')" clearable clear-icon="close" lazy-rules
+              :rules="[
+                val => !!val || $t('validationerror.required', {field: $t('registerpage.form.lastname')})
+            ]" />
             <br />
-            <q-input color="primary" type="text" v-model="form.email" :label="$t('registerpage.form.email')" clearable clear-icon="close">
+            <q-input color="primary" type="text" v-model="form.email" :label="$t('registerpage.form.email')" clearable clear-icon="close" lazy-rules
+              :rules="[
+                val => !!val || $t('validationerror.required', {field: 'Email'}),
+                val => emailValidator.validate(val) || $t('validationerror.validemail'),
+            ]">
               <template v-slot:prepend>
                 <q-icon name="mail" />
               </template>
             </q-input>
-            <q-input color="primary" type="text" v-model="form.email2" :label="$t('registerpage.form.email2')" clearable clear-icon="close">
+            <q-input color="primary" type="text" v-model="form.email2" :label="$t('registerpage.form.email2')" clearable clear-icon="close" lazy-rules
+              :rules="[
+                val => !!val || $t('validationerror.required', {field: 'Email'}),
+                val => emailValidator.validate(val) || $t('validationerror.validemail'),
+                val => val == this.form.email || $t('validationerror.mustmatch', {field: 'Email'})
+            ]">
               <template v-slot:prepend>
                 <q-icon name="mail" />
               </template>
             </q-input>
             <br />
-            <q-input color="primary" v-model="form.password" :label="$t('registerpage.form.password')" :type="showPassword ? 'text' : 'password'" >
+            <q-input color="primary" v-model="form.password" :label="$t('registerpage.form.password')" :type="showPassword ? 'text' : 'password'" lazy-rules
+              :rules="[
+                val => !!val || $t('validationerror.required', {field: $t('registerpage.form.password')}),
+            ]">
               <template v-slot:append>
                 <q-icon
                   :name="showPassword ? 'visibility_off' : 'visibility'"
@@ -41,7 +63,11 @@
                 />
               </template>
             </q-input>
-            <q-input color="primary" v-model="form.password2" :label="$t('registerpage.form.password2')" :type="showPassword2 ? 'text' : 'password'" >
+            <q-input color="primary" v-model="form.password2" :label="$t('registerpage.form.password2')" :type="showPassword2 ? 'text' : 'password'" lazy-rules
+              :rules="[
+                val => !!val || $t('validationerror.required', {field: $t('registerpage.form.password')}),
+                val => val == this.form.password || $t('validationerror.mustmatch', {field: $t('registerpage.form.password')})
+            ]">
               <template v-slot:append>
                 <q-icon
                   :name="showPassword2 ? 'visibility_off' : 'visibility'"
@@ -63,6 +89,7 @@
 
 <script>
 import xss from 'xss'
+import EmailValidator from 'email-validator'
 import { NotifySuccess, NotifyFailure } from 'data/notify'
 
 import UserService from 'services/UserService'
@@ -77,6 +104,7 @@ export default {
   },
   data: function () {
     return {
+      emailValidator: EmailValidator,
       isLoading: false,
       showPassword: false,
       showPassword2: false,
