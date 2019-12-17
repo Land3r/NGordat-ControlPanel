@@ -229,7 +229,7 @@
           username = user.Username,
           activateaccountlink = $"{new Uri(this.appSettings.Environment.FrontUrl, $"#/user/activate/{user.ActivationToken}")}",
           sitename = this.appSettings.Environment.Name,
-          siteurl = this.appSettings.Environment.FrontUrl,
+          siteurl = this.appSettings.Environment.FrontUrl.ToString(),
           unsubscribeurl = new Uri(this.appSettings.Environment.FrontUrl, "/unsubscribe").ToString(),
         });
         return this.Created(new Uri(this.appSettings.Environment.BackUrl, $"api/users/{user.Id}"), user);
@@ -317,7 +317,7 @@
           username = user.Username,
           resetpasswordlink = $"{new Uri(this.appSettings.Environment.FrontUrl, $"#/resetpassword/{token}")}",
           sitename = this.appSettings.Environment.Name,
-          siteurl = this.appSettings.Environment.FrontUrl,
+          siteurl = this.appSettings.Environment.FrontUrl.ToString(),
           unsubscribeurl = new Uri(this.appSettings.Environment.FrontUrl, "/unsubscribe").ToString(),
         });
       }
