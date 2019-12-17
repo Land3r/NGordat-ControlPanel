@@ -8,13 +8,19 @@
         <q-separator />
         <q-card-section>
           <q-form @submit="doLogin">
-            <q-input color="primary" type="text" v-model="form.username" :label="$t('loginpage.form.username')" clearable clear-icon="close">
+            <q-input color="primary" type="text" v-model="form.username" :label="$t('loginpage.form.username')" clearable clear-icon="close" lazy-rules
+              :rules="[
+                val => !!val || $t('validationerror.required', {field: $t('loginpage.form.username')}),
+            ]">
               <template v-slot:prepend>
                 <q-icon name="perm_identity" />
               </template>
             </q-input>
             <q-space />
-            <q-input color="primary" v-model="form.password" :label="$t('loginpage.form.password')" :type="showPassword ? 'text' : 'password'" >
+            <q-input color="primary" v-model="form.password" :label="$t('loginpage.form.password')" :type="showPassword ? 'text' : 'password'" lazy-rules
+              :rules="[
+                val => !!val || $t('validationerror.required', {field: $t('loginpage.form.password')}),
+            ]">
               <template v-slot:append>
                 <q-icon
                   :name="showPassword ? 'visibility_off' : 'visibility'"
