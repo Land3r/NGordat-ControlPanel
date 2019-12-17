@@ -21,7 +21,11 @@
               </template>
             </q-input>
             <br />
-            <q-input color="primary" v-model="form.newpassword" :label="$t('resetpasswordpage.form.newpassword')" :type="showNewPassword ? 'text' : 'password'" >
+            <q-input color="primary" v-model="form.newpassword" :label="$t('resetpasswordpage.form.newpassword')" :type="showNewPassword ? 'text' : 'password'" lazy-rules
+              :rules="[
+                val => !!val || $t('validationerror.required', {field: $t('resetpasswordpage.form.newpassword')}),
+                val => val.length >= 6 || $t('validationerror.minlength', {field: $t('resetpasswordpage.form.newpassword'), length: 6})
+            ]">
               <template v-slot:append>
                 <q-icon
                   :name="showNewPassword ? 'visibility_off' : 'visibility'"
@@ -30,7 +34,12 @@
                 />
               </template>
             </q-input>
-            <q-input color="primary" v-model="form.newpassword2" :label="$t('resetpasswordpage.form.newpassword2')" :type="showNewPassword2 ? 'text' : 'password'" >
+            <q-input color="primary" v-model="form.newpassword2" :label="$t('resetpasswordpage.form.newpassword2')" :type="showNewPassword2 ? 'text' : 'password'" lazy-rules
+              :rules="[
+                val => !!val || $t('validationerror.required', {field: $t('resetpasswordpage.form.newpassword')}),
+                val => val.length >= 6 || $t('validationerror.minlength', {field: $t('resetpasswordpage.form.newpassword'), length: 6}),
+                val => val == this.form.newpassword || $t('validationerror.mustmatch', {field: $t('resetpasswordpage.form.newpassword')})
+            ]">
               <template v-slot:append>
                 <q-icon
                   :name="showNewPassword2 ? 'visibility_off' : 'visibility'"
