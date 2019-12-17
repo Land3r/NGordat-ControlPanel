@@ -107,8 +107,10 @@ namespace NGordatControlPanel.Services.Emails
       }
 
       // We need to call explicitly the extension method because it uses dynamic type parameters.
-      Tuple<string, string> email = EmailTemplateExtension.Compile(emailTemplate, values);
+      var email = EmailTemplateExtension.Compile(emailTemplate, values);
 
+      // Item1 is the email subject.
+      // Item2 is the email body.
       this.Send(address, email.Item1, email.Item2);
     }
 

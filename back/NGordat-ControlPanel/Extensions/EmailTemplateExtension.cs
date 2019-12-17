@@ -16,7 +16,7 @@
     /// <param name="emailTemplate">The <see cref="EmailTemplate"/> to compile.</param>
     /// <param name="values">The collection of parameters to inject into the email.</param>
     /// <returns>A <see cref="Tuple{string, string}"/> containing the compiled subject and body of the email.</returns>
-    public static (string subject, string body) Compile(this EmailTemplate emailTemplate, dynamic values)
+    public static (string Subject, string Body) Compile(this EmailTemplate emailTemplate, dynamic values)
     {
       if (emailTemplate == null)
       {
@@ -33,7 +33,7 @@
         bodyTemplate = bodyTemplate.Replace($"{{{prop.Name}}}", prop.GetValue(values, null));
       }
 
-      return (subject: subjectTemplate, body: bodyTemplate);
+      return (subjectTemplate, bodyTemplate);
     }
   }
 }
