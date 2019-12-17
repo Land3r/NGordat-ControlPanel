@@ -230,7 +230,7 @@
           activateaccountlink = $"{new Uri(this.appSettings.Environment.FrontUrl, $"#/user/activate/{user.ActivationToken}")}",
           sitename = this.appSettings.Environment.Name,
           siteurl = this.appSettings.Environment.FrontUrl.ToString(),
-          unsubscribeurl = new Uri(this.appSettings.Environment.FrontUrl, "/unsubscribe").ToString(),
+          unsubscribeurl = new Uri(this.appSettings.Environment.FrontUrl, "/user/unsubscribe").ToString(),
         });
         return this.Created(new Uri(this.appSettings.Environment.BackUrl, $"api/users/{user.Id}"), user);
       }
@@ -315,10 +315,10 @@
         this.emailService.SendTemplate(new EmailAddress() { Address = user.Email, Name = user.Username }, "PasswordLost", new
         {
           username = user.Username,
-          resetpasswordlink = $"{new Uri(this.appSettings.Environment.FrontUrl, $"#/resetpassword/{token}")}",
+          resetpasswordlink = $"{new Uri(this.appSettings.Environment.FrontUrl, $"#/user/resetpassword/{token}")}",
           sitename = this.appSettings.Environment.Name,
           siteurl = this.appSettings.Environment.FrontUrl.ToString(),
-          unsubscribeurl = new Uri(this.appSettings.Environment.FrontUrl, "/unsubscribe").ToString(),
+          unsubscribeurl = new Uri(this.appSettings.Environment.FrontUrl, "/user/unsubscribe").ToString(),
         });
       }
       catch (Exception ex)
