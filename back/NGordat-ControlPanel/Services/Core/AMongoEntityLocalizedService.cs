@@ -11,21 +11,21 @@
   using NGordatControlPanel.Settings;
 
   /// <summary>
-  /// Classe abstraite <see cref="AMongoEntityLocalizedService{TEntity, TService}"/>.
-  /// Classe permettant d'utiliser un service de localisation de ressources, en plus du CRUD sur une entitée.
+  /// <see cref="AMongoEntityLocalizedService{TEntity, TService}"/> abstract class.
+  /// Class to implement a service using a logger, localized ressources and a mongodb collection with CRUD operations.
   /// </summary>
-  /// <typeparam name="TEntity">Le type de l'entitée.</typeparam>
-  /// <typeparam name="TService">Le type du service.</typeparam>
+  /// <typeparam name="TEntity">The underlying type of the mongodb entity.</typeparam>
+  /// <typeparam name="TService">The underlying type of the service to log and localize.</typeparam>
   public abstract class AMongoEntityLocalizedService<TEntity, TService> : AMongoEntityService<TEntity, TService>, ILocalizedService<TService>
     where TEntity : IDbEntity
   {
     /// <summary>
-    /// Instancie une nouvelle instance de la classe <see cref="AMongoEntityService{T}"/>.
+    /// Initializes a new instance of the <see cref="AMongoEntityLocalizedService{TEntity, TService}"/> class.
     /// </summary>
-    /// <param name="appSettings">La configuration de l'application.</param>
-    /// <param name="collectionName">Le nom de la collection en base.</param>
-    /// <param name="localizer">Les ressources de localisation.</param>
-    /// <param name="logger">Le logger utilisé.</param>
+    /// <param name="appSettings">The application configuration.</param>
+    /// <param name="collectionName">The name of the mongodb collection.</param>
+    /// <param name="logger">The logger.</param>
+    /// <param name="localizer">The localized ressources.</param>
     public AMongoEntityLocalizedService(
       IOptions<AppSettings> appSettings,
       string collectionName,
@@ -44,7 +44,7 @@
     }
 
     /// <summary>
-    /// Les ressources de langue.
+    /// Gets the localized ressources.
     /// </summary>
     public IStringLocalizer<TService> Localizer { get; private set; }
   }

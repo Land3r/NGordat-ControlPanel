@@ -55,8 +55,8 @@
 
     /// <summary>
     /// Gets or sets the token of the <see cref="User"/>.
-    /// Not an actual property of the <see cref="User"/>. It is injected into the entity for login.
     /// </summary>
+    /// <remarks>Not an actual property of the <see cref="User"/>. It is injected into the entity for login.</remarks>
     [BsonIgnore]
     public string Token { get; set; }
   }

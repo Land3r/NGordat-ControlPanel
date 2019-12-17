@@ -1,16 +1,17 @@
 ﻿namespace NGordatControlPanel.Services.Google
 {
   /// <summary>
-  /// Interface <see cref="ISpeechToTextService"/>.
-  /// Interface permettant d'intéragir avec les fonctionnalitées SpeechToText de Google.
+  /// <see cref="ISpeechToTextService"/> interface.
+  /// Interface service for google speech-to-text API.
   /// </summary>
   public interface ISpeechToTextService
   {
     /// <summary>
-    /// Demande la transcription d'un fichier audio (format WAV ou FLAC).
+    /// Transcripts the provided audio file.
     /// </summary>
-    /// <param name="filepath">Le chemin du fichier audio.</param>
-    /// <returns>Le transcript detecté.</returns>
+    /// <remarks>WAV format is currently required.</remarks>
+    /// <param name="filepath">The path to the audio file.</param>
+    /// <returns>The transcript retrieved, if any.</returns>
     string SpeechToText(string filepath);
   }
 }

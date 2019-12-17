@@ -26,6 +26,7 @@
       string subjectTemplate = emailTemplate.Subject;
       string bodyTemplate = emailTemplate.Body;
 
+      // Inject token values into placeholders.
       foreach (var prop in values.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))
       {
         subjectTemplate = subjectTemplate.Replace($"{{{prop.Name}}}", prop.GetValue(values, null));

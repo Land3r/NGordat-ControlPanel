@@ -4,23 +4,24 @@
   using NGordatControlPanel.Services.Core;
 
   /// <summary>
-  /// Interface <see cref="IUserPasswordResetTokenService"/>.
-  /// Service permettant un utilisateur de gérer les tokens de réinitilisations de mot de passes.
+  /// <see cref="IUserPasswordResetTokenService"/> class.
+  /// Class service CRUD for <see cref="UserPasswordResetToken"/>.
   /// </summary>
   public interface IUserPasswordResetTokenService : ICrudService<UserPasswordResetToken>
   {
     /// <summary>
-    /// Obtient le token de réinitialisation du mot de passe, via le token fourni.
+    /// Gets a <see cref="UserPasswordResetToken"/>, based on it's token value.
     /// </summary>
-    /// <param name="token">La valeur du token a trouver.</param>
-    /// <returns>Le <see cref="UserPasswordResetToken"/> si trouvé.</returns>
+    /// <remarks>Note that the token is hashed before being stored in database.</remarks>
+    /// <param name="token">The token value of the <see cref="UserPasswordResetToken"/>.</param>
+    /// <returns>The <see cref="UserPasswordResetToken"/>, if found.</returns>
     UserPasswordResetToken GetByToken(string token);
 
     /// <summary>
-    /// Retourne si le <see cref="UserPasswordResetToken"/> fourni est valide.
+    /// Gets whether or not the <see cref="UserPasswordResetToken"/> is valid.
     /// </summary>
-    /// <param name="userPasswordResetToken">Le <see cref="UserPasswordResetToken"/> à valider.</param>
-    /// <returns>Si le <see cref="UserPasswordResetToken"/> est valide ou non.</returns>
+    /// <param name="userPasswordResetToken">The <see cref="UserPasswordResetToken"/> to validate.</param>
+    /// <returns>Whether or not the <see cref="UserPasswordResetToken"/> is valid.</returns>
     bool IsValid(UserPasswordResetToken userPasswordResetToken);
   }
 }

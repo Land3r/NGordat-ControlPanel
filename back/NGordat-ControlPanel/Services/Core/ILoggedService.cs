@@ -3,15 +3,15 @@
   using Microsoft.Extensions.Logging;
 
   /// <summary>
-  /// Interface ILoggedService.
-  /// Permet d'acceder aux fonctionnalitées de log d'un service.
+  /// <see cref="ILoggedService{TService}"/> interface.
+  /// Interface used to access a service with a logger.
   /// </summary>
-  /// <typeparam name="T">Le type du service loggué.</typeparam>
-  public interface ILoggedService<T>
+  /// <typeparam name="TService">The underlying type of the service to log.</typeparam>
+  public interface ILoggedService<TService>
   {
     /// <summary>
-    /// Obtient l'instance du logger.
+    /// Gets the logger.
     /// </summary>
-    ILogger<T> Logger { get; }
+    ILogger<TService> Logger { get; }
   }
 }

@@ -12,35 +12,35 @@
   using NGordatControlPanel.Settings;
 
   /// <summary>
-  /// Classe <see cref="EmailTemplateService"/>.
-  /// Service CRUD pour les <see cref="EmailTemplate"/>.
+  /// <see cref="EmailTemplateService"/> class.
+  /// Class service CRUD for <see cref="EmailTemplate"/>.
   /// </summary>
   public class EmailTemplateService : AMongoEntityLocalizedService<EmailTemplate, EmailTemplateService>, IEmailTemplateService
   {
     /// <summary>
-    /// Le nom de la collection mongo.
+    /// The name of the mongodb collection.
     /// </summary>
     private const string CollectionName = "EmailTemplates";
 
     /// <summary>
-    /// Initialise une nouvelle instance de la classe <see cref="EmailTemplateService"/>.
+    /// Initializes a new instance of the <see cref="EmailTemplateService"/> class.
     /// </summary>
-    /// <param name="localizer">Les ressources de localisation.</param>
-    /// <param name="appSettings">La configuration de l'application.</param>
-    /// <param name="logger">Le logger utilisé par le service.</param>
+    /// <param name="appSettings">The application configuration.</param>
+    /// <param name="localizer">The localized ressources.</param>
+    /// <param name="logger">The logger.</param>
     public EmailTemplateService(
-      [FromServices]IStringLocalizer<EmailTemplateService> localizer,
       IOptions<AppSettings> appSettings,
+      [FromServices]IStringLocalizer<EmailTemplateService> localizer,
       [FromServices] ILogger<EmailTemplateService> logger)
       : base(appSettings, CollectionName, logger, localizer)
     {
     }
 
     /// <summary>
-    /// Obtient un <see cref="EmailTemplate"/> par son nom.
+    /// Gets a <see cref="EmailTemplate"/>, based on it's name.
     /// </summary>
-    /// <param name="templateName">Le nom du template email.</param>
-    /// <returns>Le <see cref="EmailTemplate"/> si trouvé.</returns>
+    /// <param name="templateName">The name of the <see cref="EmailTemplate"/>.</param>
+    /// <returns>The <see cref="EmailTemplate"/>, if found.</returns>
     public EmailTemplate GetByName(string templateName)
     {
       return this.Entities.Find(template => template.Name == templateName).FirstOrDefault();

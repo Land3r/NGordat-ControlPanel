@@ -4,16 +4,16 @@
   using NGordatControlPanel.Services.Core;
 
   /// <summary>
-  /// Interface <see cref="IEmailTemplateService"/>.
-  /// Interfaces permettant d'intéragir de manière CRUD avec les <see cref="EmailTemplate"/>.
+  /// <see cref="IEmailTemplateService"/> interface.
+  /// Interface service CRUD for <see cref="EmailTemplate"/>.
   /// </summary>
   public interface IEmailTemplateService : ICrudService<EmailTemplate>
   {
     /// <summary>
-    /// Obtient l'<see cref="EmailTemplate"/> par son nom.
+    /// Gets a <see cref="EmailTemplate"/>, based on it's name.
     /// </summary>
-    /// <param name="templateName">Le nom du template email.</param>
-    /// <returns>Le <see cref="EmailTemplate"/>, si trouvé.</returns>
+    /// <param name="templateName">The name of the <see cref="EmailTemplate"/>.</param>
+    /// <returns>The <see cref="EmailTemplate"/>, if found.</returns>
     EmailTemplate GetByName(string templateName);
   }
 }

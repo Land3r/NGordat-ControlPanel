@@ -104,10 +104,11 @@
         }
       }
 
-      // now save the file on the filesystem
+      // Save the sound file on the filesystem.
       string filePath = Path.GetTempFileName();
       System.IO.File.WriteAllBytes(filePath, fileBytes);
 
+      // Requires transciption of the sound file.
       string result = this.speechToTextService.SpeechToText(filePath);
       if (string.IsNullOrEmpty(result))
       {

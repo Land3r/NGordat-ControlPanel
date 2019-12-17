@@ -223,7 +223,7 @@
       {
         this.logger.LogInformation(string.Format(CultureInfo.InvariantCulture, this.localizer["LogRegisterSuccess"].Value, model?.Username));
 
-        // Envoi de l'email d'activation.
+        // Sending activation email.
         this.emailService.SendTemplate(new EmailAddress() { Address = model.Email, Name = model.Username }, "Register", new
         {
           username = user.Username,
@@ -311,7 +311,7 @@
         };
         userPasswordResetToken = this.userPasswordResetTokenService.Create(userPasswordResetToken);
 
-        // Envoie de l'email, avec le token en clair.
+        // Sending reset password email, with token in clear value.
         this.emailService.SendTemplate(new EmailAddress() { Address = user.Email, Name = user.Username }, "PasswordLost", new
         {
           username = user.Username,
@@ -397,16 +397,17 @@
         throw new ArgumentNullException(nameof(model));
       }
 
-      // Token valide ?
+      // Is the token valid ?
       IActionResult existsResult = this.ResetPasswordExists(model.ResetPasswordToken);
       User user;
 
       if (existsResult is OkObjectResult)
       {
         UserPasswordLostResponseModel result = (existsResult as OkObjectResult).Value as UserPasswordLostResponseModel;
+
+        // Is the token related to the provided user ?
         if (result.Email == model.Email && result.Username == model.Username)
         {
-          // Relié au bon utilisateur.
           user = this.userService.GetByEmail(result.Email);
           this.userService.UpdatePassword(user.Id, model.Password);
 

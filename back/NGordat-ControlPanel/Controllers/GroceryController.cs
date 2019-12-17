@@ -122,16 +122,19 @@
         }
       }
 
-      // now save the file on the filesystem
+      // Save the sound file on the filesystem.
       string filePath = Path.GetTempFileName();
       System.IO.File.WriteAllBytes(filePath, fileBytes);
 
+      // Requires transciption of the sound file.
       string result = this.speechToTextService.SpeechToText(filePath);
       if (string.IsNullOrEmpty(result))
       {
         // TODO: Resx
         return this.NotFound(new { message = "Transcript not found" });
       }
+
+      // TODO: Parse the results using groceryactions etc.
 
       return this.Ok(new { message = result });
     }

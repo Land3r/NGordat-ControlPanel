@@ -6,17 +6,16 @@
   using Microsoft.Extensions.Logging;
 
   /// <summary>
-  /// Classe abstraite <see cref="ALoggedService{TEntity}"/>.
-  /// Classe permettant d'ajouter des fonctionnalitées de logger à un service.
+  /// <see cref="ALoggedService{TService}"/> abstract class.
+  /// Class to implement a service using a logger.
   /// </summary>
-  /// <typeparam name="TService">Le type du service.</typeparam>
+  /// <typeparam name="TService">The underlying type of the service to log.</typeparam>
   public abstract class ALoggedService<TService> : ILoggedService<TService>
   {
     /// <summary>
-    /// Initialise une nouvelle instance de <see cref="ALoggedService{T}"/>.
+    /// Initializes a new instance of the <see cref="ALoggedService{TService}"/> class.
     /// </summary>
-    /// <param name="logger">Le logger utilisé.</param>
-    /// <param name="T">Le type du logger à utiliser.</param>
+    /// <param name="logger">The logger.</param>
     public ALoggedService([FromServices] ILogger<TService> logger)
     {
       if (logger == null)
@@ -30,7 +29,7 @@
     }
 
     /// <summary>
-    /// Le Logger utilisé par le controller.
+    /// Gets the logger.
     /// </summary>
     public ILogger<TService> Logger { get; private set; }
   }

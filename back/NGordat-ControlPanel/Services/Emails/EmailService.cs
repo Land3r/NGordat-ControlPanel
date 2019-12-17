@@ -18,38 +18,38 @@ namespace NGordatControlPanel.Services.Emails
   using NGordatControlPanel.Settings;
 
   /// <summary>
-  /// Classe <see cref="EmailService"/>.
-  /// Service permettant de gérer les échanges emails de l'application.
+  /// <see cref="EmailService"/> class.
+  /// Class service to handle email exchanges.
   /// </summary>
   public class EmailService : ALoggedLocalizedService<EmailService>, IEmailService, IDisposable
   {
     /// <summary>
-    /// La configuration de l'application.
+    /// The application configuration.
     /// </summary>
     private readonly AppSettings appSettings;
 
     /// <summary>
-    /// Le service des templates emails.
+    /// The <see cref="IEmailTemplateService"/>.
     /// </summary>
     private readonly IEmailTemplateService emailTemplateService;
 
     /// <summary>
-    /// L'instance du client smtp.
+    /// The <see cref="SmtpClient"/>.
     /// </summary>
     private readonly SmtpClient smtpClient = new SmtpClient();
 
     /// <summary>
-    /// Initialise une nouvelle instance de <see cref="EmailService"/>.
+    /// Initializes a new instance of the <see cref="EmailService"/> class.
     /// </summary>
-    /// <param name="localizer">Les ressources localisées.</param>
-    /// <param name="appSettings">La configuration de l'application.</param>
-    /// <param name="emailTemplateService">Le service de template emails.</param>
-    /// <param name="logger">Le logger utilisé.</param>
+    /// <param name="appSettings">The application configuration.</param>
+    /// <param name="localizer">The localized ressources.</param>
+    /// <param name="logger">The logger.</param>
+    /// <param name="emailTemplateService">The <see cref="IEmailTemplateService"/> to use.</param>
     public EmailService(
-      [FromServices]IStringLocalizer<EmailService> localizer,
       IOptions<AppSettings> appSettings,
-      IEmailTemplateService emailTemplateService,
-      [FromServices] ILogger<EmailService> logger)
+      [FromServices]IStringLocalizer<EmailService> localizer,
+      [FromServices] ILogger<EmailService> logger,
+      IEmailTemplateService emailTemplateService)
       : base(logger, localizer)
     {
       if (appSettings == null)
@@ -72,7 +72,7 @@ namespace NGordatControlPanel.Services.Emails
     }
 
     /// <summary>
-    /// Destructeur de l'instance de la classe.
+    /// Finalizes an instance of the <see cref="EmailService"/> class.
     /// </summary>
     ~EmailService()
     {
@@ -80,7 +80,7 @@ namespace NGordatControlPanel.Services.Emails
     }
 
     /// <summary>
-    /// Obtient si le service est connecté au smtp.
+    /// Gets a value indicating whether the service is connected to the SMTP Server.
     /// </summary>
     private bool IsConnected
     {
@@ -88,11 +88,11 @@ namespace NGordatControlPanel.Services.Emails
     }
 
     /// <summary>
-    /// Envoie un email, basé sur un template HTML.
+    /// Sends an email, based on an html template.
     /// </summary>
-    /// <param name="address">L'<see cref="EmailAddress"/> de la personne a contacter.</param>
-    /// <param name="templateName">Le nom du template email.</param>
-    /// <param name="values">Les valeurs à injecter dans le template.</param>
+    /// <param name="address">The <see cref="EmailAddress"/> of the person to send email to.</param>
+    /// <param name="templateName">The name of the <see cref="EmailTemplate"/>.</param>
+    /// <param name="values">The values to inject into template for compiling.</param>
     public void SendTemplate(EmailAddress address, string templateName, dynamic values)
     {
       if (string.IsNullOrEmpty(templateName))
@@ -113,11 +113,11 @@ namespace NGordatControlPanel.Services.Emails
     }
 
     /// <summary>
-    /// Envoie un email.
+    /// Sends an email.
     /// </summary>
-    /// <param name="address">L'<see cref="EmailAddress"/> de la personne a contacter.</param>
-    /// <param name="subject">Le sujet de l'email.</param>
-    /// <param name="body">Le body de l'email (au format html).</param>
+    /// <param name="address">The <see cref="EmailAddress"/> of the person to send email to.</param>
+    /// <param name="subject">The subject of the email.</param>
+    /// <param name="body">The body of the email.</param>
     public void Send(EmailAddress address, string subject, string body)
     {
       if (address == null)
@@ -160,19 +160,19 @@ namespace NGordatControlPanel.Services.Emails
 
       if (!this.IsConnected)
       {
-        this.TryConnect();
+        this.Connect();
       }
 
       this.smtpClient.Send(message);
     }
 
     /// <summary>
-    /// Essaie d'envoyer un email.
+    /// Try to sends an email.
     /// </summary>
-    /// <param name="address">L'<see cref="EmailAddress"/> de la personne a contacter.</param>
-    /// <param name="subject">Le sujet de l'email.</param>
-    /// <param name="body">Le body de l'email (au format html).</param>
-    /// <returns>Si l'envoi d'email a reussi ou non.</returns>
+    /// <param name="address">The <see cref="EmailAddress"/> of the person to send email to.</param>
+    /// <param name="subject">The subject of the email.</param>
+    /// <param name="body">The body of the email.</param>
+    /// <returns>Whether or not the operation was successfull.</returns>
     public bool TrySend(EmailAddress address, string subject, string body)
     {
       try
@@ -189,12 +189,12 @@ namespace NGordatControlPanel.Services.Emails
     }
 
     /// <summary>
-    /// Essaie d'envoyer un email, basé sur un template HTML.
+    /// Try to sends an email, based on an html template.
     /// </summary>
-    /// <param name="address">L'<see cref="EmailAddress"/> de la personne a contacter.</param>
-    /// <param name="templateName">Le nom du template email.</param>
-    /// <param name="values">Les valeurs à injecter dans le template.</param>
-    /// <returns>Si l'envoi d'email a reussi ou non.</returns>
+    /// <param name="address">The <see cref="EmailAddress"/> of the person to send email to.</param>
+    /// <param name="templateName">The name of the <see cref="EmailTemplate"/>.</param>
+    /// <param name="values">The values to inject into template for compiling.</param>
+    /// <returns>Whether or not the operation was successfull.</returns>
     public bool TrySendTemplate(EmailAddress address, string templateName, dynamic values)
     {
       try
@@ -204,13 +204,14 @@ namespace NGordatControlPanel.Services.Emails
       }
       catch (SmtpCommandException ex)
       {
+        // TODO: Localiser
         this.Logger.LogCritical(ex, "Error while sending email.");
         return false;
       }
     }
 
     /// <summary>
-    /// Dispose les éléments en mémoire de cette instance de <see cref="EmailService"/>.
+    /// Asks for the dispose of the elements from this <see cref="EmailService"/> instance from memory.
     /// </summary>
     public void Dispose()
     {
@@ -219,9 +220,9 @@ namespace NGordatControlPanel.Services.Emails
     }
 
     /// <summary>
-    /// Dispose les éléments en mémoire de cette instance de <see cref="EmailService"/>.
+    /// Dispose the elements from this <see cref="EmailService"/> instance from memory.
     /// </summary>
-    /// <param name="disposing">Permet de valider le fait de disposer les ressources.</param>
+    /// <param name="disposing">Whether or not the instance of <see cref="EmailService"/> is disposing.</param>
     protected virtual void Dispose(bool disposing)
     {
       if (this.IsConnected)
@@ -233,9 +234,9 @@ namespace NGordatControlPanel.Services.Emails
     }
 
     /// <summary>
-    /// Se connecter au serveur smtp.
+    /// Connects to the SMPT Server.
     /// </summary>
-    private void TryConnect()
+    private void Connect()
     {
       if (!this.IsConnected)
       {

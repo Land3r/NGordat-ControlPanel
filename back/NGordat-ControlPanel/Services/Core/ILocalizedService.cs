@@ -6,22 +6,22 @@
   using Microsoft.Extensions.Localization;
 
   /// <summary>
-  /// Interface <see cref="ILocalizedService{T}"/>.
-  /// Interface permettant à une classe d'accéder à des ressources localisées.
+  /// <see cref="ILocalizedService{TService}"/> interface.
+  /// Interface used to access a service using localized ressources.
   /// </summary>
-  /// <typeparam name="T">Le type du service à localiser.</typeparam>
-  public interface ILocalizedService<T>
+  /// <typeparam name="TService">Le type du service à localiser.</typeparam>
+  public interface ILocalizedService<TService>
   {
     /// <summary>
-    /// Obtient les ressources localisées.
+    /// Gets the localized ressources.
     /// </summary>
-    IStringLocalizer<T> Localizer { get; }
+    IStringLocalizer<TService> Localizer { get; }
 
     /// <summary>
-    /// Obtient la ressource texte demandée, dans la culture courante.
+    /// Gets the localized ressource value in the current culture.
     /// </summary>
-    /// <param name="key">Le nom de la clé de ressource.</param>
-    /// <returns>Le texte correspondant à cette clé, dans la culture en cours.</returns>
+    /// <param name="key">The name of the localisation key.</param>
+    /// <returns>The corresponding text that matches the key.</returns>
     public string GetLocalized(string key)
     {
       string result = this.Localizer[key]?.Value;
@@ -37,11 +37,11 @@
     }
 
     /// <summary>
-    /// Obtient la ressource texte demandée, dans la culture courante.
+    /// Gets the localized ressource value in the current culture.
     /// </summary>
-    /// <param name="key">Le nom de la clé de ressource.</param>
-    /// <param name="args">Les arguments à passer au string.Format.</param>
-    /// <returns>Le texte correspondant à cette clé, dans la culture en cours.</returns>
+    /// <param name="key">The name of the localisation key.</param>
+    /// <param name="args">The args to give to the string.Format to format message.</param>
+    /// <returns>The corresponding text that matches the key.</returns>
     public string GetLocalized(string key, params string[] args)
     {
       string result = this.Localizer[key]?.Value;

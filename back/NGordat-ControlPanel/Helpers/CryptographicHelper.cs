@@ -18,7 +18,7 @@
     private const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-.";
 
     /// <summary>
-    /// Gets a token tha can be safely provided to URI.
+    /// Gets a token that can be safely provided to URI.
     /// It can be transmitted over a GET parameter without any re-encoding.
     /// </summary>
     /// <param name="length">The length of the token to generate.</param>

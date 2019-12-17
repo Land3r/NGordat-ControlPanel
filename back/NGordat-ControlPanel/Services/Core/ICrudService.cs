@@ -8,80 +8,80 @@
   using NGordatControlPanel.Entities.Db;
 
   /// <summary>
-  /// Interface <see cref="ICrudService{TEntity}"/>.
-  /// Interface permettant d'accéder aux fonctionnalitées CRUD du service.
+  /// <see cref="ICrudService{TEntity}"/> interface.
+  /// Interface used to access a service a mongodb collection with CRUD operations.
   /// </summary>
-  /// <typeparam name="TEntity">LE type d'entitée manipulée par le service.</typeparam>
+  /// <typeparam name="TEntity">The underlying type of the mongodb entity.</typeparam>
   public interface ICrudService<TEntity>
     where TEntity : IDbEntity
   {
     /// <summary>
-    /// Obtient la collection des entitées en base.
+    /// Gets the collection of <see cref="TEntity"/>.
     /// </summary>
     IMongoCollection<TEntity> Entities { get; }
 
     /// <summary>
-    /// Obtient toutes les entitées de la collection.
+    /// Gets all the <see cref="TEntity"/> from the collection.
     /// </summary>
-    /// <returns>La liste de toutes les entitées.</returns>
+    /// <returns>The list of all <see cref="TEntity"/>.</returns>
     public IEnumerable<TEntity> Get();
 
     /// <summary>
-    /// Obtient une entitée, basé sur son Id.
+    /// Gets an <see cref="TEntity"/> from the collection, based on it's id.
     /// </summary>
-    /// <param name="id">L'id de l'entitée à récupérer.</param>
-    /// <returns>L'entitée ou null si aucune n'a été trouvée.</returns>
+    /// <param name="id">The id of the <see cref="TEntity"/> to find.</param>
+    /// <returns>The <see cref="TEntity"/> with the provided id, if found.</returns>
     public TEntity Get(Guid id);
 
     /// <summary>
-    /// Ajoute une entitée à la collection.
+    /// Creates a new <see cref="TEntity"/> in the collection.
     /// </summary>
-    /// <param name="elm">L'entitée à ajouter à la collection.</param>
-    /// <returns>L'entitée créée.</returns>
+    /// <param name="elm">The <see cref="TEntity"/> to create.</param>
+    /// <returns>The created <see cref="TEntity"/>.</returns>
     public TEntity Create(TEntity elm);
 
     /// <summary>
-    /// Mets à jour une entitée dans la collection.
+    /// Updates an <see cref="TEntity"/> from the collection.
     /// </summary>
-    /// <param name="elmIn">Les données de l'entitée mise à jour.</param>
-    /// <returns>Le résultat de l'opération.</returns>
+    /// <param name="elmIn">The <see cref="TEntity"/> to update.</param>
+    /// <returns>The operation result.</returns>
     public ReplaceOneResult Update(TEntity elmIn);
 
     /// <summary>
-    /// Mets à jour une entitée dans la collection.
+    /// Updates an <see cref="TEntity"/> from the collection, based on it's id.
     /// </summary>
-    /// <param name="id">L'id de l'entitée à mettre à jour.</param>
-    /// <param name="elmIn">Les données de l'entitée mise à jour.</param>
-    /// <returns>Le résultat de l'opération.</returns>
+    /// <param name="id">The id of the <see cref="TEntity"/> to update.</param>
+    /// <param name="elmIn">The <see cref="TEntity"/> to update.</param>
+    /// <returns>The operation result.</returns>
     public ReplaceOneResult Update(Guid id, TEntity elmIn);
 
     /// <summary>
-    /// Partially updates the entity.
+    /// Updates partially (only the provided properties) an <see cref="TEntity"/>.
     /// </summary>
-    /// <param name="elmIn">Les données de l'entitée mise à jour.</param>
-    /// <returns>Le résultat de l'opération.</returns>
+    /// <param name="elmIn">The new data of the <see cref="TEntity"/>.</param>
+    /// <returns>The operation result.</returns>
     public UpdateResult UpdatePartially(TEntity elmIn);
 
     /// <summary>
-    /// Partially updates the entity.
+    /// Updates partially (only the provided properties) an <see cref="TEntity"/>.
     /// </summary>
-    /// <param name="id">L'id de l'entitée à mettre à jour.</param>
-    /// <param name="elmIn">Les données de l'entitée mise à jour.</param>
-    /// <returns>Le résultat de l'opération.</returns>
+    /// <param name="id">The if of the <see cref="TEntity"/>.</param>
+    /// <param name="elmIn">The new data of the <see cref="TEntity"/>.</param>
+    /// <returns>The operation result.</returns>
     public UpdateResult UpdatePartially(Guid id, TEntity elmIn);
 
     /// <summary>
-    /// Supprime une entitée de la collection.
+    /// Deletes an <see cref="TEntity"/> from the collection.
     /// </summary>
-    /// <param name="elmIn">L'élement à supprimer.</param>
-    /// <returns>Le résultat de l'opération.</returns>
+    /// <param name="elmIn">The <see cref="TEntity"/> to delete.</param>
+    /// <returns>The operation result.</returns>
     public DeleteResult Remove(TEntity elmIn);
 
     /// <summary>
-    /// Supprime une entitée de la collection, par son Id.
+    /// Deletes an <see cref="TEntity"/> from the collection, based on it's id.
     /// </summary>
-    /// <param name="id">L'élement à supprimer.</param>
-    /// <returns>Le résultat de l'opération.</returns>
+    /// <param name="id">The id of the <see cref="TEntity"/> to delete.</param>
+    /// <returns>The operation result.</returns>
     public DeleteResult Remove(Guid id);
   }
 }

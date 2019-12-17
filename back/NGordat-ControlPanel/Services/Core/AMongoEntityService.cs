@@ -4,9 +4,11 @@
   using System.Collections.Generic;
   using System.Linq;
   using System.Text.Json;
+
   using Microsoft.AspNetCore.Mvc;
   using Microsoft.Extensions.Logging;
   using Microsoft.Extensions.Options;
+
   using MongoDB.Bson;
   using MongoDB.Driver;
 
@@ -14,20 +16,20 @@
   using NGordatControlPanel.Settings;
 
   /// <summary>
-  /// Classe abstraite AMongoEntityService.
-  /// Classe permettant de rajouter des interactions CRUD avec une collection de base de données.
+  /// <see cref="AMongoEntityService{TEntity, TService}"/> abstract class.
+  /// Class to implement a service using a logger and a mongodb collection with CRUD operations.
   /// </summary>
-  /// <typeparam name="TEntity">Le type de l'entitée.</typeparam>
-  /// <typeparam name="TService">Le type du service.</typeparam>
+  /// <typeparam name="TEntity">The underlying type of the mongodb entity.</typeparam>
+  /// <typeparam name="TService">The underlying type of the service to log and localize.</typeparam>
   public abstract class AMongoEntityService<TEntity, TService> : ALoggedService<TService>, ICrudService<TEntity>
     where TEntity : IDbEntity
   {
     /// <summary>
-    /// Instancie une nouvelle instance de la classe <see cref="AMongoEntityService{T}"/>.
+    /// Initializes a new instance of the <see cref="AMongoEntityService{TEntity, TService}"/> class.
     /// </summary>
-    /// <param name="appSettings">La configuration de l'application.</param>
-    /// <param name="collectionName">Le nom de la collection en base.</param>
-    /// <param name="logger">Le logger à utiliser.</param>
+    /// <param name="appSettings">The application configuration.</param>
+    /// <param name="collectionName">The name of the mongodb collection.</param>
+    /// <param name="logger">The logger.</param>
     public AMongoEntityService(
       IOptions<AppSettings> appSettings,
       string collectionName,
@@ -50,34 +52,34 @@
     }
 
     /// <summary>
-    /// Obtient la collection des entitées en base.
+    /// Gets the collection of <see cref="TEntity"/>.
     /// </summary>
     public IMongoCollection<TEntity> Entities { get; private set; }
 
     /// <summary>
-    /// Obtient toutes les entitées de la collection.
+    /// Gets all the <see cref="TEntity"/> from the collection.
     /// </summary>
-    /// <returns>La liste de toutes les entitées.</returns>
+    /// <returns>The list of all <see cref="TEntity"/>.</returns>
     public virtual IEnumerable<TEntity> Get()
     {
       return this.Entities.Find(elm => true).ToEnumerable();
     }
 
     /// <summary>
-    /// Obtient une entitée, basé sur son Id.
+    /// Gets an <see cref="TEntity"/> from the collection, based on it's id.
     /// </summary>
-    /// <param name="id">L'id de l'entitée à récupérer.</param>
-    /// <returns>L'entitée ou null si aucune n'a été trouvée.</returns>
+    /// <param name="id">The id of the <see cref="TEntity"/> to find.</param>
+    /// <returns>The <see cref="TEntity"/> with the provided id, if found.</returns>
     public virtual TEntity Get(Guid id)
     {
       return this.Entities.Find<TEntity>(elm => elm.Id == id).FirstOrDefault();
     }
 
     /// <summary>
-    /// Ajoute une entitée à la collection.
+    /// Creates a new <see cref="TEntity"/> in the collection.
     /// </summary>
-    /// <param name="elm">L'entitée à ajouter à la collection.</param>
-    /// <returns>L'entitée créée.</returns>
+    /// <param name="elm">The <see cref="TEntity"/> to create.</param>
+    /// <returns>The created <see cref="TEntity"/>.</returns>
     public virtual TEntity Create(TEntity elm)
     {
       if (elm is IDbTrackedEntity)
@@ -115,21 +117,21 @@
     }
 
     /// <summary>
-    /// Mets à jour une entitée dans la collection.
+    /// Updates an <see cref="TEntity"/> from the collection.
     /// </summary>
-    /// <param name="elmIn">Les données de l'entitée mise à jour.</param>
-    /// <returns>Le résultat de l'opération.</returns>
+    /// <param name="elmIn">The <see cref="TEntity"/> to update.</param>
+    /// <returns>The operation result.</returns>
     public virtual ReplaceOneResult Update(TEntity elmIn)
     {
       return this.Update(elmIn.Id, elmIn);
     }
 
     /// <summary>
-    /// Mets à jour une entitée dans la collection.
+    /// Updates an <see cref="TEntity"/> from the collection, based on it's id.
     /// </summary>
-    /// <param name="id">L'id de l'entitée à mettre à jour.</param>
-    /// <param name="elmIn">Les données de l'entitée mise à jour.</param>
-    /// <returns>Le résultat de l'opération.</returns>
+    /// <param name="id">The id of the <see cref="TEntity"/> to update.</param>
+    /// <param name="elmIn">The <see cref="TEntity"/> to update.</param>
+    /// <returns>The operation result.</returns>
     public virtual ReplaceOneResult Update(Guid id, TEntity elmIn)
     {
       if (elmIn is IDbTrackedEntity)
@@ -147,7 +149,7 @@
     }
 
     /// <summary>
-    /// Updates partially (only the provided properties) an entity.
+    /// Updates partially (only the provided properties) an <see cref="TEntity"/>.
     /// </summary>
     /// <param name="elmIn">The new data of the <see cref="TEntity"/>.</param>
     /// <returns>The operation result.</returns>
@@ -157,7 +159,7 @@
     }
 
     /// <summary>
-    /// Updates partially (only the provided properties) an entity.
+    /// Updates partially (only the provided properties) an <see cref="TEntity"/>.
     /// </summary>
     /// <param name="id">The if of the <see cref="TEntity"/>.</param>
     /// <param name="elmIn">The new data of the <see cref="TEntity"/>.</param>
@@ -183,32 +185,30 @@
         }
       }
 
-      // Following 3 lines are for debugging purposes only
-      // var registry = BsonSerializer.SerializerRegistry;
-      // var serializer = registry.GetSerializer<BsonDocument>();
-      // var rendered = update.Render(serializer, registry).ToJson();
-
-      //you can also use the simpler form below if you're OK with bypassing the UpdateDefinitionBuilder (and trust the JSON string to be fully correct)
-      //update = new BsonDocumentUpdateDefinition<BsonDocument>(new BsonDocument("$set", changesDocument));
+      /* Following 3 lines are for debugging purposes only
+       * var registry = BsonSerializer.SerializerRegistry;
+       * var serializer = registry.GetSerializer<BsonDocument>();
+       * var rendered = update.Render(serializer, registry).ToJson();
+      */
 
       return this.Entities.UpdateOne(filter, update);
     }
 
     /// <summary>
-    /// Supprime une entitée de la collection.
+    /// Deletes an <see cref="TEntity"/> from the collection.
     /// </summary>
-    /// <param name="elmIn">L'élement à supprimer.</param>
-    /// <returns>Le résultat de l'opération.</returns>
+    /// <param name="elmIn">The <see cref="TEntity"/> to delete.</param>
+    /// <returns>The operation result.</returns>
     public virtual DeleteResult Remove(TEntity elmIn)
     {
       return this.Entities.DeleteOne(book => book.Id == elmIn.Id);
     }
 
     /// <summary>
-    /// Supprime une entitée de la collection, par son Id.
+    /// Deletes an <see cref="TEntity"/> from the collection, based on it's id.
     /// </summary>
-    /// <param name="id">L'id de l'élément à supprimer.</param>
-    /// <returns>Le résultat de l'opération.</returns>
+    /// <param name="id">The id of the <see cref="TEntity"/> to delete.</param>
+    /// <returns>The operation result.</returns>
     public virtual DeleteResult Remove(Guid id)
     {
       return this.Entities.DeleteOne(book => book.Id == id);

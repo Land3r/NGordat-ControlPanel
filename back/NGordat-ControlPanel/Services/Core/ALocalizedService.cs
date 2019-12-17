@@ -6,16 +6,17 @@
   using Microsoft.Extensions.Localization;
 
   /// <summary>
-  /// Classe abstraite <see cref="ALocalizedService{T}"/>.
+  /// <see cref="ALocalizedService{T}"/> abstract class.
+  /// Class to implement a service using localized ressources.
   /// </summary>
-  /// <typeparam name="T">Le type sous jaccent du namespace a localiser.</typeparam>
-  public abstract class ALocalizedService<T> : ILocalizedService<T>
+  /// <typeparam name="TService">The underlying type of the service to localize.</typeparam>
+  public abstract class ALocalizedService<TService> : ILocalizedService<TService>
   {
     /// <summary>
-    /// Initialise une nouvelle instance de <see cref="ALocalizedService{T}"/>.
+    /// Initializes a new instance of the <see cref="ALocalizedService{T}"/> class.
     /// </summary>
-    /// <param name="localizer">Les ressources de localisation.</param>
-    public ALocalizedService([FromServices] IStringLocalizer<T> localizer)
+    /// <param name="localizer">The localized ressources.</param>
+    public ALocalizedService([FromServices] IStringLocalizer<TService> localizer)
     {
       if (localizer == null)
       {
@@ -28,8 +29,8 @@
     }
 
     /// <summary>
-    /// Obtient les ressources localisées.
+    /// Gets the localized ressources.
     /// </summary>
-    public IStringLocalizer<T> Localizer { get; private set; }
+    public IStringLocalizer<TService> Localizer { get; private set; }
   }
 }

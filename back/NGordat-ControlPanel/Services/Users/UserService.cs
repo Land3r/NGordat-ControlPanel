@@ -1,60 +1,61 @@
 ﻿namespace NGordatControlPanel.Services.Users
 {
-    using System;
-    using System.Globalization;
-    using System.IdentityModel.Tokens.Jwt;
-    using System.Linq;
-    using System.Security.Claims;
-    using System.Text;
-    using Microsoft.AspNetCore.Identity;
-    using System.Web;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Localization;
-    using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Options;
-    using Microsoft.IdentityModel.Tokens;
-    using MongoDB.Driver;
-    using NGordatControlPanel.Entities.Users;
-    using NGordatControlPanel.Extensions;
-    using NGordatControlPanel.Helpers;
-    using NGordatControlPanel.Models.Users;
-    using NGordatControlPanel.Services.Core;
-    using NGordatControlPanel.Settings;
-    using Microsoft.AspNetCore.Http;
+  using System;
+  using System.Globalization;
+  using System.IdentityModel.Tokens.Jwt;
+  using System.Linq;
+  using System.Security.Claims;
+  using System.Text;
 
-    /// <summary>
-    /// Classe UserService.
-    /// Service pour la gestion des utilisateurs.
-    /// </summary>
-    public class UserService : AMongoEntityLocalizedService<User, UserService>, IUserService
+  using Microsoft.AspNetCore.Http;
+  using Microsoft.AspNetCore.Mvc;
+  using Microsoft.Extensions.Localization;
+  using Microsoft.Extensions.Logging;
+  using Microsoft.Extensions.Options;
+  using Microsoft.IdentityModel.Tokens;
+
+  using MongoDB.Driver;
+
+  using NGordatControlPanel.Entities.Users;
+  using NGordatControlPanel.Extensions;
+  using NGordatControlPanel.Helpers;
+  using NGordatControlPanel.Models.Users;
+  using NGordatControlPanel.Services.Core;
+  using NGordatControlPanel.Settings;
+
+  /// <summary>
+  /// <see cref="UserService"/> class.
+  /// Class service for handling <see cref="User"/>.
+  /// </summary>
+  public class UserService : AMongoEntityLocalizedService<User, UserService>, IUserService
   {
     /// <summary>
-    /// Le nom de la collection mongo.
+    /// The name of the mongodb collection.
     /// </summary>
     private const string CollectionName = "Users";
 
     /// <summary>
-    /// La configuration de l'application.
+    /// The application configuration.
     /// </summary>
     private readonly AppSettings appSettings;
 
     /// <summary>
-    /// Le service de contexte http.
+    /// The <see cref="IHttpContextAccessor"/>.
     /// </summary>
     private readonly IHttpContextAccessor httpContext;
 
     /// <summary>
-    /// Instancie une nouvelle instance de la classe <see cref="UserService"/>.
+    /// Initializes a new instance of the <see cref="UserService"/> class.
     /// </summary>
-    /// <param name="appSettings">La configuration de l'application.</param>
+    /// <param name="appSettings">The application configuration.</param>
+    /// <param name="localizer">The localized ressources.</param>
+    /// <param name="logger">The logger.</param>
     /// <param name="httpContext">Le contexte http.</param>
-    /// <param name="localizer">Les ressources de localisation.</param>
-    /// <param name="logger">Le logger utilisé par le service.</param>
     public UserService(
-      [FromServices]IStringLocalizer<UserService> localizer,
-      [FromServices]IHttpContextAccessor httpContext,
       IOptions<AppSettings> appSettings,
-      [FromServices] ILogger<UserService> logger)
+      [FromServices]IStringLocalizer<UserService> localizer,
+      [FromServices] ILogger<UserService> logger,
+      [FromServices]IHttpContextAccessor httpContext)
       : base(appSettings, CollectionName, logger, localizer)
     {
       if (appSettings == null)
@@ -77,10 +78,10 @@
     }
 
     /// <summary>
-    /// Authentifie un <see cref="User"/>, basé sur le <see cref="UserAuthenticateModel"/> fourni.
+    /// Authenticates a <see cref="User"/>, based on the provided <see cref="UserAuthenticateModel"/>.
     /// </summary>
-    /// <param name="model">Le <see cref="UserAuthenticateModel"/> à utiliser pour authentifier l'<see cref="Utilisateur"/>.</param>
-    /// <returns>L'<see cref="User">Utilisateur</see> authentifié.</returns>
+    /// <param name="model">The <see cref="UserAuthenticateModel"/> to use to authenticate the <see cref="User"/>.</param>
+    /// <returns>The <see cref="User" /> in an authenticated state (with token values).</returns>
     public User Authenticate(UserAuthenticateModel model)
     {
       if (model == null)
@@ -97,13 +98,13 @@
       }
       else
       {
+        // Is user active ?
         if (user.Active == false)
         {
-          // Account is not active.
           return null;
         }
 
-        // Generation du token JWT.
+        // JWT token generation.
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(this.appSettings.Security.JWT.Secret);
         var tokenDescriptor = new SecurityTokenDescriptor
@@ -124,9 +125,9 @@
     }
 
     /// <summary>
-    /// Obtient l'utilisateur authentifié.
+    /// Gets the current <see cref="User"/>.
     /// </summary>
-    /// <returns>L'utilisateur en cours.</returns>
+    /// <returns>The current <see cref="User"/>.</returns>
     public User GetCurrentUser()
     {
       if (this.httpContext.HttpContext.User != null)
@@ -141,10 +142,10 @@
     }
 
     /// <summary>
-    /// Obtient un <see cref="User"/>, basé sur le username fourni.
+    /// Gets a <see cref="User"/>, based on it's username.
     /// </summary>
-    /// <param name="username">Le nom d'utilisateur à utiliser pour authentifier l'<see cref="Utilisateur"/>.</param>
-    /// <returns>L'<see cref="User">Utilisateur</see>.</returns>
+    /// <param name="username">The username of the <see cref="User"/> to find.</param>
+    /// <returns>The <see cref="User"/>, if found.</returns>
     public User GetByUsername(string username)
     {
       if (string.IsNullOrEmpty(username))
@@ -156,10 +157,10 @@
     }
 
     /// <summary>
-    /// Obtient un <see cref="User"/>, basé sur l'email fourni.
+    /// Gets a <see cref="User"/>, based on it's email.
     /// </summary>
-    /// <param name="email">L'email à utiliser pour authentifier l'<see cref="Utilisateur"/>.</param>
-    /// <returns>L'<see cref="User">Utilisateur</see>.</returns>
+    /// <param name="email">The email value of the <see cref="User"/> to find.</param>
+    /// <returns>The <see cref="User"/>, if found.</returns>
     public User GetByEmail(string email)
     {
       if (string.IsNullOrEmpty(email))
@@ -171,10 +172,10 @@
     }
 
     /// <summary>
-    /// Enregistre un nouvel <see cref="User"/>.
+    /// Registers a new <see cref="User"/>.
     /// </summary>
-    /// <param name="model">L'<see cref="User"/> a créé.</param>
-    /// <returns>L'utilisateur créé.</returns>
+    /// <param name="model">The <see cref="User"/> to create.</param>
+    /// <returns>The created <see cref="User"/>.</returns>
     public User Register(User model)
     {
       if (model == null)
@@ -182,13 +183,13 @@
         throw new ArgumentNullException(nameof(model));
       }
 
-      // Le nom d'utilisateur doit être unique.
+      // The username of the user should be unique.
       if (this.GetByUsername(model.Username) != null)
       {
         throw new ArgumentException((this as ILocalizedService<UserService>).GetLocalized("RegisterErrorUserUsernameAlreadyExists", model.Username));
       }
 
-      // L'email doit être unique.
+      // The email of the user should be unique.
       else if (this.GetByEmail(model.Email) != null)
       {
         throw new ArgumentException((this as ILocalizedService<UserService>).GetLocalized("RegisterErrorUserEmailAlreadyExists", model.Email));
@@ -201,10 +202,10 @@
     }
 
     /// <summary>
-    /// Active un compte utilisateur.
+    /// Activates a <see cref="User"/>.
     /// </summary>
-    /// <param name="token">Le token d'initialisation du compte utilisateur.</param>
-    /// <returns>L'utilisateur si correctement activé.</returns>
+    /// <param name="token">The activation token of the <see cref="User"/>.</param>
+    /// <returns>The activated <see cref="User"/>.</returns>
     public User Activate(string token)
     {
       User user = this.Entities.Find(elm => elm.ActivationToken == token).FirstOrDefault();
@@ -224,10 +225,11 @@
     }
 
     /// <summary>
-    /// Crée un <see cref="User"/>.
+    /// Creates a <see cref="User"/>.
     /// </summary>
-    /// <param name="elm">Les données de le <see cref="User"/> a créé.</param>
-    /// <returns>L'utilisateur créé.</returns>
+    /// <remarks>Note that the password is hashed before being stored in database.</remarks>
+    /// <param name="elm">The <see cref="User"/> to create.</param>
+    /// <returns>The created <see cref="User"/>.</returns>
     public override User Create(User elm)
     {
       if (elm == null)
@@ -242,11 +244,12 @@
     }
 
     /// <summary>
-    /// Mets à jour un utilisateur avec un nouveau mot de passe.
+    /// Updates the password of a <see cref="User"/>.
     /// </summary>
-    /// <param name="id">L'id de l'utilisateur à mettre à jour.</param>
-    /// <param name="clearPassword">Le mot de passe en clair, avant encryption.</param>
-    /// <returns>Le résultat de la mise à jour.</returns>
+    /// <remarks>Note that the password is hashed before being stored in database.</remarks>
+    /// <param name="id">The is of the <see cref="User"/> to update.</param>
+    /// <param name="clearPassword">The password in clear text to set to the <see cref="User"/>.</param>
+    /// <returns>The operation result.</returns>
     public ReplaceOneResult UpdatePassword(Guid id, string clearPassword)
     {
       User user = this.Get(id);

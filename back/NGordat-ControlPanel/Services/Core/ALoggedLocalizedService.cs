@@ -7,17 +7,17 @@
   using Microsoft.Extensions.Logging;
 
   /// <summary>
-  /// Classe abstraite <see cref="ALoggedLocalizedService{TService}"/>.
-  /// Classe permettant d'obtenir des fonctionnalitées de logger et de localisation sur un service.
+  /// <see cref="ALoggedLocalizedService{TService}"/> abstract class.
+  /// Class to implement a service using a logger and localized ressources.
   /// </summary>
-  /// <typeparam name="TService">Le type du service.</typeparam>
+  /// <typeparam name="TService">The underlying type of the service to log and localize.</typeparam>
   public abstract class ALoggedLocalizedService<TService> : ALoggedService<TService>, ILocalizedService<TService>
   {
     /// <summary>
-    /// Initialise une nouvelle instance de la classe <see cref="ALoggedLocalizedService{TService}"/>.
+    /// Initializes a new instance of the <see cref="ALoggedLocalizedService{TService}"/> class.
     /// </summary>
-    /// <param name="logger">Le logger à utiliser.</param>
-    /// <param name="localizer">Les ressouces localisées à utiliser.</param>
+    /// <param name="logger">The logger.</param>
+    /// <param name="localizer">The localized ressources.</param>
     public ALoggedLocalizedService(
       ILogger<TService> logger,
       [FromServices]IStringLocalizer<TService> localizer)
@@ -34,7 +34,7 @@
     }
 
     /// <summary>
-    /// Obtient les ressources localisées.
+    /// Gets the localized ressources.
     /// </summary>
     public IStringLocalizer<TService> Localizer { get; private set; }
   }

@@ -16,36 +16,36 @@
   using NGordatControlPanel.Settings;
 
   /// <summary>
-  /// Classe <see cref="UserPasswordResetTokenService"/>.
-  /// Classe permettant à un utilisateur de demander a réinitialiser son mot de passe.
+  /// <see cref="UserPasswordResetTokenService"/> class.
+  /// Class service CRUD for <see cref="UserPasswordResetToken"/>.
   /// </summary>
   public class UserPasswordResetTokenService : AMongoEntityLocalizedService<UserPasswordResetToken, UserPasswordResetTokenService>, IUserPasswordResetTokenService
   {
     /// <summary>
-    /// Le nom de la collection mongo.
+    /// The name of the mongodb collection.
     /// </summary>
     private const string CollectionName = "UserPasswordResetToken";
 
     /// <summary>
-    /// Initialise une nouvelle instance de la classe <see cref="UserPasswordResetTokenService"/>.
+    /// Initializes a new instance of the <see cref="UserPasswordResetTokenService"/> class.
     /// </summary>
-    /// <param name="localizer">Les ressources de localisation.</param>
-    /// <param name="appSettings">La configuration de l'application.</param>
-    /// <param name="logger">Le logger utilisé par le service.</param>
+    /// <param name="appSettings">The application configuration.</param>
+    /// <param name="localizer">The localized ressources.</param>
+    /// <param name="logger">The logger.</param>
     public UserPasswordResetTokenService(
-      [FromServices]IStringLocalizer<UserPasswordResetTokenService> localizer,
       IOptions<AppSettings> appSettings,
+      [FromServices]IStringLocalizer<UserPasswordResetTokenService> localizer,
       [FromServices] ILogger<UserPasswordResetTokenService> logger)
       : base(appSettings, CollectionName, logger, localizer)
     {
     }
 
     /// <summary>
-    /// Obtient un <see cref="UserPasswordResetToken"/>, basé sur la valeur du token.
-    /// Notez que le token est hashé avant d'être comparé en base.
+    /// Gets a <see cref="UserPasswordResetToken"/>, based on it's token value.
     /// </summary>
-    /// <param name="token">La valeur du token à rechercher.</param>
-    /// <returns>Le <see cref="UserPasswordResetToken"/>, si trouvé.</returns>
+    /// <remarks>Note that the token is hashed before being stored in database.</remarks>
+    /// <param name="token">The token value of the <see cref="UserPasswordResetToken"/>.</param>
+    /// <returns>The <see cref="UserPasswordResetToken"/>, if found.</returns>
     public UserPasswordResetToken GetByToken(string token)
     {
       if (string.IsNullOrEmpty(token))
@@ -62,10 +62,11 @@
     }
 
     /// <summary>
-    /// Crée un <see cref="UserPasswordResetToken"/>, avec gestion du hashage en base.
+    /// Creates a <see cref="UserPasswordResetToken"/>.
     /// </summary>
-    /// <param name="elm">Le <see cref="UserPasswordResetToken"/> à créer.</param>
-    /// <returns>L'élément créé.</returns>
+    /// <remarks>Note that the token is hashed before being stored in database.</remarks>
+    /// <param name="elm">The <see cref="UserPasswordResetToken"/> to create.</param>
+    /// <returns>The created <see cref="UserPasswordResetToken"/>.</returns>
     public override UserPasswordResetToken Create(UserPasswordResetToken elm)
     {
       // We are using a hash function for storing reset password token for security reasons.
@@ -78,10 +79,10 @@
     }
 
     /// <summary>
-    /// Obtient si le token de réinitialisation de mot de passe est valide.
+    /// Gets whether or not the <see cref="UserPasswordResetToken"/> is valid.
     /// </summary>
-    /// <param name="userPasswordResetToken">Le token a valider.</param>
-    /// <returns>Si le token est valide ou non.</returns>
+    /// <param name="userPasswordResetToken">The <see cref="UserPasswordResetToken"/> to validate.</param>
+    /// <returns>Whether or not the <see cref="UserPasswordResetToken"/> is valid.</returns>
     public bool IsValid(UserPasswordResetToken userPasswordResetToken)
     {
       if (userPasswordResetToken == null)

@@ -5,7 +5,7 @@
 
   /// <summary>
   /// <see cref="IGroceryItemService"/> interface.
-  /// Contract for operating with <see cref="GroceryItem"/>.
+  /// Interface service CRUD for <see cref="GroceryItem"/>.
   /// </summary>
   public interface IGroceryItemService : ICrudService<GroceryItem>
   {
