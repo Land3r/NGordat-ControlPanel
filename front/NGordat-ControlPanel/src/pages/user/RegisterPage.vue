@@ -54,6 +54,7 @@
             <q-input color="primary" v-model="form.password" :label="$t('registerpage.form.password')" :type="showPassword ? 'text' : 'password'" lazy-rules
               :rules="[
                 val => !!val || $t('validationerror.required', {field: $t('registerpage.form.password')}),
+                val => val.length >= 6 || $t('validationerror.minlength', {field: $t('registerpage.form.password'), length: 6})
             ]">
               <template v-slot:append>
                 <q-icon
@@ -66,6 +67,7 @@
             <q-input color="primary" v-model="form.password2" :label="$t('registerpage.form.password2')" :type="showPassword2 ? 'text' : 'password'" lazy-rules
               :rules="[
                 val => !!val || $t('validationerror.required', {field: $t('registerpage.form.password')}),
+                val => val.length >= 6 || $t('validationerror.minlength', {field: $t('registerpage.form.password'), length: 6}),
                 val => val == this.form.password || $t('validationerror.mustmatch', {field: $t('registerpage.form.password')})
             ]">
               <template v-slot:append>
