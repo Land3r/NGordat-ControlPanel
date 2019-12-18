@@ -8,7 +8,7 @@
         <q-separator />
         <q-card-section>
           <q-form @submit="doLogin">
-            <q-input color="primary" type="text" v-model="form.username" :label="$t('loginpage.form.username')" clearable clear-icon="close" lazy-rules
+            <q-input color="primary" type="text" v-model="form.username" :label="$t('loginpage.form.username')" clearable clear-icon="close" autofocus lazy-rules
               :rules="[
                 val => !!val || $t('validationerror.required', {field: $t('loginpage.form.username')}),
             ]">
