@@ -15,35 +15,13 @@
           {{title}}
         </q-toolbar-title>
 
-        <div>
-          <app-languageselector />
-        </div>
-        <div>
-          <q-btn flat>
-            <q-avatar>
-              <q-icon name="perm_identity" />
-            </q-avatar>
-            <q-menu
-              transition-show="jump-down"
-              transition-hide="jump-up"
-            >
-              <q-list style="min-width: 100px">
-                <q-item clickable>
-                  <q-item-section avatar>
-                    <q-icon color="primary" name="perm_identity" />
-                  </q-item-section>
-                  <q-item-section>{{$t('mainlayout.user.profile')}}</q-item-section>
-                </q-item>
-                <q-separator />
-                <q-item clickable @click="doDisconnect">
-                  <q-item-section avatar>
-                    <q-icon color="negative" name="close" />
-                  </q-item-section>
-                  <q-item-section>{{$t('mainlayout.user.disconnect')}}</q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
+        <div class="self-stretch row no-wrap">
+          <div>
+            <app-usermenuwidget />
+          </div>
+          <div>
+            <app-languageselectorwidget />
+          </div>
         </div>
       </q-toolbar>
     </q-header>
@@ -155,12 +133,14 @@
 <script>
 import UserService from 'services/UserService'
 
-import LanguageSelector from 'components/layout/LanguageSelector'
+import LanguageSelectorWidget from 'components/layout/LanguageSelectorWidget'
+import UserMenuWidget from 'components/layout/UserMenuWidget'
 
 export default {
   name: 'MainLayout',
   components: {
-    'app-languageselector': LanguageSelector
+    'app-languageselectorwidget': LanguageSelectorWidget,
+    'app-usermenuwidget': UserMenuWidget
   },
   data () {
     return {

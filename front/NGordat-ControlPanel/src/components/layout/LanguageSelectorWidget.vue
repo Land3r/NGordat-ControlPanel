@@ -33,7 +33,7 @@
 import { availableLanguages } from 'data/languages'
 
 export default {
-  name: 'LanguageSelector',
+  name: 'LanguageSelectorWidget',
   data: function () {
     return {
       langs: [

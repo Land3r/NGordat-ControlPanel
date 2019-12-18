@@ -13,3 +13,7 @@ export const availableLanguages = [
     icon: 'fr.png'
   }
 ]
+
+export const defaultLanguage = {
+  ...availableLanguages.find(lang => lang.value === 'en-us')
+}
