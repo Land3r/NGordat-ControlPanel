@@ -9,7 +9,7 @@
         <q-separator />
         <q-card-section>
           <q-form>
-            <q-input color="primary" type="text" v-model="form.username" :label="$t('forgotpasswordpage.form.username')" clearable clear-icon="close" autofocus>
+            <q-input color="primary" type="text" v-model="form.username" :label="$t('forgotpasswordpage.form.username')" clearable clear-icon="close">
               <template v-slot:prepend>
                 <q-icon name="perm_identity" />
               </template>

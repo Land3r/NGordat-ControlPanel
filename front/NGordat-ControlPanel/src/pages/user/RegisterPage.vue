@@ -13,7 +13,7 @@
             {{$t('registerpage.text.description')}}
           </div>
           <q-form>
-            <q-input color="primary" type="text" v-model="form.username" :label="$t('registerpage.form.username')" clearable clear-icon="close" autofocus lazy-rules
+            <q-input color="primary" type="text" v-model="form.username" :label="$t('registerpage.form.username')" clearable clear-icon="close" lazy-rules
               :rules="[
                 val => !!val || $t('validationerror.required', {field: $t('registerpage.form.username')}),
                 val => val.length >= 3 || $t('validationerror.minlength', {field: $t('registerpage.form.username'), length: 3})
