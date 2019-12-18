@@ -21,7 +21,7 @@
               </template>
             </q-input>
             <br />
-            <q-input color="primary" v-model="form.newpassword" :label="$t('resetpasswordpage.form.newpassword')" :type="showNewPassword ? 'text' : 'password'" lazy-rules
+            <q-input color="primary" v-model="form.newpassword" :label="$t('resetpasswordpage.form.newpassword')" :type="showNewPassword ? 'text' : 'password'" autofocus lazy-rules
               :rules="[
                 val => !!val || $t('validationerror.required', {field: $t('resetpasswordpage.form.newpassword')}),
                 val => val.length >= 6 || $t('validationerror.minlength', {field: $t('resetpasswordpage.form.newpassword'), length: 6})
