@@ -8,7 +8,7 @@
   "author": "Nicolas Gordat <nicolas.gordat@some-email-provider.com>",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext .js,.vue src --fix",
+    "lint": "eslint --ext .js,.vue src --fix --format node_modules/eslint-plugin-i18n-json/formatter.js src/i18n/",
     "test": "echo \"No test specified\" && exit 0",
     "build_electron": "quasar build -m electron",
     "publish_electron": "@powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./scripts/publishElectronToSite.ps1"
@@ -39,6 +39,7 @@
     "electron-devtools-installer": "^2.2.4",
     "eslint": "^5.10.0",
     "eslint-loader": "^2.1.1",
+    "eslint-plugin-i18n-json": "^2.4.4",
     "eslint-plugin-vue": "^5.0.0"
   },
   "engines": {
