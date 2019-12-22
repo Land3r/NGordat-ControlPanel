@@ -123,8 +123,8 @@
 <script>
 import UserService from 'services/UserService'
 
-import LanguageSelectorWidget from 'components/layout/LanguageSelectorWidget'
-import UserMenuWidget from 'components/layout/UserMenuWidget'
+import LanguageSelectorWidget from 'components/layout/widgets/LanguageSelectorWidget'
+import UserMenuWidget from 'components/layout/widgets/UserMenuWidget'
 
 export default {
   name: 'MainLayout',

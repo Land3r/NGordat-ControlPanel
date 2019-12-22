@@ -5,5 +5,8 @@ export default {
   },
   error: {
     transcriptfailure: 'No text was detected with enough confidence.'
+  },
+  test: {
+    dsq: 'dsqdqs'
   }
 }

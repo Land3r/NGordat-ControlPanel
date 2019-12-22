@@ -28,7 +28,7 @@
 
 <script>
 import AudioRecorderPolyfill from 'audio-recorder-polyfill'
-import xss from 'xss'
+// import xss from 'xss'
 import { NotifySuccess, NotifyFailure } from 'data/notify'
 
 import GroceryService from 'services/GroceryService'
@@ -70,8 +70,9 @@ export default {
     onAudioRecorded (blob) {
       const groceryService = new GroceryService()
       groceryService.doUpload(blob).then((response) => {
-        this.transcript = xss(response.message)
-        this.$q.notify({ ...NotifySuccess, message: this.$t('groceriesindexpage.success.transcriptsuccess', { transcript: xss(response.message) }) })
+        // TODO: (temp) this.transcript = xss(response.message)
+        console.dir(response)
+        this.$q.notify({ ...NotifySuccess, message: this.$t('groceriesindexpage.success.transcriptsuccess', { transcript: response.message }) })
       }).catch((response) => {
         this.$q.notify({ ...NotifyFailure, message: this.$t('groceriesindexpage.error.transcriptfailure') })
       })

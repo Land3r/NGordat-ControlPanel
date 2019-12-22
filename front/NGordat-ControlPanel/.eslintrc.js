@@ -15,7 +15,7 @@ module.exports = {
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
     'plugin:vue/recommended',
     '@vue/standard',
-    'plugin:i18n-json/recommended',
+    // 'plugin:vue-i18n/recommended',
   ],
 
   // required to lint *.vue files
@@ -52,5 +52,11 @@ module.exports = {
 
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
-  }
+  },
+
+  // settings: {
+  //   'vue-i18n': {
+  //     localeDir: './src/i18n/*/*.js'
+  //   }
+  // }
 }

@@ -3,6 +3,7 @@
   using System;
   using System.IO;
   using System.Threading.Tasks;
+  using System.Linq;
 
   using Microsoft.AspNetCore.Authorization;
   using Microsoft.AspNetCore.Http;
@@ -12,13 +13,15 @@
   using Microsoft.Extensions.Options;
 
   using NGordatControlPanel.Services.Google;
-  using NGordatControlPanel.Settings;
+    using NGordatControlPanel.Services.Groceries;
+    using NGordatControlPanel.Settings;
+    using MongoDB.Driver;
 
-  /// <summary>
-  /// <see cref="GroceryController"/> class.
-  /// API controller for interacting with the groceries.
-  /// </summary>
-  [Authorize]
+    /// <summary>
+    /// <see cref="GroceryController"/> class.
+    /// API controller for interacting with the groceries.
+    /// </summary>
+    [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class GroceryController : ControllerBase
@@ -44,6 +47,16 @@
     private readonly ISpeechToTextService speechToTextService;
 
     /// <summary>
+    /// The <see cref="IGroceryActionService"/>.
+    /// </summary>
+    private readonly IGroceryActionService groceryActionService;
+
+    /// <summary>
+    /// The <see cref="IGroceryItemService"/>.
+    /// </summary>
+    private readonly IGroceryItemService groceryItemService;
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="GroceryController"/> class.
     /// </summary>
     /// <param name="appSettings">The application configuration.</param>
@@ -54,43 +67,46 @@
       IOptions<AppSettings> appSettings,
       ILogger<GroceryController> logger,
       IStringLocalizer<GroceryController> localizer,
-      ISpeechToTextService speechToTextService)
+      ISpeechToTextService speechToTextService,
+      IGroceryActionService groceryActionService,
+      IGroceryItemService groceryItemService)
     {
       if (appSettings == null)
       {
         throw new ArgumentNullException(nameof(appSettings));
-      }
-      else
-      {
-        this.appSettings = appSettings.Value;
       }
 
       if (logger == null)
       {
         throw new ArgumentNullException(nameof(logger));
       }
-      else
-      {
-        this.logger = logger;
-      }
 
       if (localizer == null)
       {
         throw new ArgumentNullException(nameof(localizer));
-      }
-      else
-      {
-        this.localizer = localizer;
       }
 
       if (speechToTextService == null)
       {
         throw new ArgumentNullException(nameof(speechToTextService));
       }
-      else
+
+      if (groceryActionService == null)
       {
-        this.speechToTextService = speechToTextService;
+        throw new ArgumentNullException(nameof(groceryActionService));
       }
+
+      if (groceryItemService == null)
+      {
+        throw new ArgumentNullException(nameof(groceryItemService));
+      }
+
+      this.appSettings = appSettings.Value;
+      this.logger = logger;
+      this.localizer = localizer;
+      this.speechToTextService = speechToTextService;
+      this.groceryActionService = groceryActionService;
+      this.groceryItemService = groceryItemService;
     }
 
     /// <summary>
@@ -103,40 +119,52 @@
     [HttpPost("upload")]
     public async Task<IActionResult> UploadFileAsync([FromForm] IFormFile blob)
     {
-      if (blob == null)
-      {
-        throw new ArgumentNullException(nameof(blob));
-      }
+      // TEMP: Bouchon
 
-      var totalSize = blob.Length;
-      var fileBytes = new byte[blob.Length];
+      //if (blob == null)
+      //{
+      //  throw new ArgumentNullException(nameof(blob));
+      //}
 
-      using (var fileStream = blob.OpenReadStream())
-      {
-        var offset = 0;
+      //var totalSize = blob.Length;
+      //var fileBytes = new byte[blob.Length];
 
-        while (offset < blob.Length)
-        {
-          var chunkSize = totalSize - offset < 8192 ? (int)totalSize - offset : 8192;
-          offset += await fileStream.ReadAsync(fileBytes, offset, chunkSize).ConfigureAwait(true);
-        }
-      }
+      //using (var fileStream = blob.OpenReadStream())
+      //{
+      //  var offset = 0;
 
-      // Save the sound file on the filesystem.
-      string filePath = Path.GetTempFileName();
-      System.IO.File.WriteAllBytes(filePath, fileBytes);
+      //  while (offset < blob.Length)
+      //  {
+      //    var chunkSize = totalSize - offset < 8192 ? (int)totalSize - offset : 8192;
+      //    offset += await fileStream.ReadAsync(fileBytes, offset, chunkSize).ConfigureAwait(true);
+      //  }
+      //}
 
-      // Requires transciption of the sound file.
-      string result = this.speechToTextService.SpeechToText(filePath);
-      if (string.IsNullOrEmpty(result))
-      {
-        // TODO: Resx
-        return this.NotFound(new { message = "Transcript not found" });
-      }
+      //// Save the sound file on the filesystem.
+      //string filePath = Path.GetTempFileName();
+      //System.IO.File.WriteAllBytes(filePath, fileBytes);
 
-      // TODO: Parse the results using groceryactions etc.
+      //// Requires transciption of the sound file.
+      //string result = this.speechToTextService.SpeechToText(filePath);
+      //if (string.IsNullOrEmpty(result))
+      //{
+      //  // TODO: Resx
+      //  return this.NotFound(new { message = "Transcript not found" });
+      //}
 
-      return this.Ok(new { message = result });
+      //// TODO: Parse the results using groceryactions etc.
+
+      //return this.Ok(new { message = result });
+
+      string result = "Ajoute des pommes de terres";
+      return Ok(Analyze(result));
+    }
+
+    private object Analyze(string input)
+    {
+      string[] words = input.Trim().Split(' ');
+
+      return words;
     }
   }
 }

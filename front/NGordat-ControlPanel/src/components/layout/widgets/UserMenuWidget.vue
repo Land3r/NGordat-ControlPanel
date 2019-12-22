@@ -15,21 +15,6 @@
       </q-item-label>
       <q-item
         clickable
-        to="/start/release-notes"
-        tag="a"
-      >
-        <q-item-section
-          avatar
-          text-teal
-        >
-          <q-icon name="assignment" />
-        </q-item-section>
-        <q-item-section>
-          Release notes
-        </q-item-section>
-      </q-item>
-      <q-item
-        clickable
         tag="a"
         :to="{name: 'UserProfile' }"
       >
