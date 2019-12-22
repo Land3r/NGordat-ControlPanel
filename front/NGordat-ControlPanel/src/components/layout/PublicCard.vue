@@ -1,6 +1,10 @@
 <template>
-  <q-card class="app-transparent-85 app-popout" transition-show="slide-down" transition-hide="slide-up">
-    <slot></slot>
+  <q-card
+    class="app-transparent-85 app-popout"
+    transition-show="slide-down"
+    transition-hide="slide-up"
+  >
+    <slot />
   </q-card>
 </template>
 

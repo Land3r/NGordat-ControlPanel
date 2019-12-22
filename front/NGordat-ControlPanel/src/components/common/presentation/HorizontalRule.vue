@@ -1,7 +1,7 @@
 <template>
   <div class="app-strike">
     <span>
-      <slot></slot>
+      <slot />
     </span>
   </div>
 </template>

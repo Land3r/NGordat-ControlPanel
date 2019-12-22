@@ -1,14 +1,19 @@
 <template>
   <q-page class="q-px-md">
-    <h3>{{$t('indexpage.title')}}</h3>
-    <p>{{$t('indexpage.description')}}</p>
-    <q-btn color="white" text-color="black" :label="$t('indexpage.btn.testApi')" @click="doTestApi" />
-    <br />
-    <br />
+    <h3>{{ $t('indexpage.title') }}</h3>
+    <p>{{ $t('indexpage.description') }}</p>
+    <q-btn
+      color="white"
+      text-color="black"
+      :label="$t('indexpage.btn.testApi')"
+      @click="doTestApi"
+    />
+    <br>
+    <br>
     Result:
     <div>
       <code>
-      {{result}}
+        {{ result }}
       </code>
     </div>
   </q-page>

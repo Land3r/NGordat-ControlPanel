@@ -1,10 +1,11 @@
 <template>
-  <q-layout view="hHh lpR fFf" class="bg-space">
-
+  <q-layout
+    view="hHh lpR fFf"
+    class="bg-space"
+  >
     <q-page-container>
       <router-view />
     </q-page-container>
-
   </q-layout>
 </template>
 

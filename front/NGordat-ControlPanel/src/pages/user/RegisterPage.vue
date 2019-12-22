@@ -4,58 +4,111 @@
     <app-transition>
       <app-publiccard>
         <q-card-section class="bg-primary text-white">
-          <div class="text-h6"><q-icon name="account_circle" size="md" left/>{{$t('registerpage.title')}}</div>
+          <div class="text-h6">
+            <q-icon
+              name="account_circle"
+              size="md"
+              left
+            />{{ $t('registerpage.title') }}
+          </div>
         </q-card-section>
 
         <q-separator />
         <q-card-section>
           <div class="text-center">
-            {{$t('registerpage.text.description')}}
+            {{ $t('registerpage.text.description') }}
           </div>
           <q-form>
-            <q-input color="primary" type="text" v-model="form.username" :label="$t('registerpage.form.username')" clearable clear-icon="close" autofocus lazy-rules
+            <q-input
+              v-model="form.username"
+              color="primary"
+              type="text"
+              :label="$t('registerpage.form.username')"
+              clearable
+              clear-icon="close"
+              autofocus
+              lazy-rules
               :rules="[
                 val => !!val || $t('validationerror.required', {field: $t('registerpage.form.username')}),
                 val => val.length >= 3 || $t('validationerror.minlength', {field: $t('registerpage.form.username'), length: 3})
-            ]">
+              ]"
+            >
               <template v-slot:prepend>
                 <q-icon name="perm_identity" />
               </template>
             </q-input>
-            <q-input color="primary" type="text" v-model="form.firstname" :label="$t('registerpage.form.firstname')" clearable clear-icon="close"  lazy-rules
+            <q-input
+              v-model="form.firstname"
+              color="primary"
+              type="text"
+              :label="$t('registerpage.form.firstname')"
+              clearable
+              clear-icon="close"
+              lazy-rules
               :rules="[
                 val => !!val || $t('validationerror.required', {field: $t('registerpage.form.firstname')})
-            ]" />
-            <q-input color="primary" type="text" v-model="form.lastname" :label="$t('registerpage.form.lastname')" clearable clear-icon="close" lazy-rules
+              ]"
+            />
+            <q-input
+              v-model="form.lastname"
+              color="primary"
+              type="text"
+              :label="$t('registerpage.form.lastname')"
+              clearable
+              clear-icon="close"
+              lazy-rules
               :rules="[
                 val => !!val || $t('validationerror.required', {field: $t('registerpage.form.lastname')})
-            ]" />
-            <br />
-            <q-input color="primary" type="text" v-model="form.email" :label="$t('registerpage.form.email')" clearable clear-icon="close" lazy-rules
+              ]"
+            />
+            <br>
+            <q-input
+              v-model="form.email"
+              color="primary"
+              type="text"
+              :label="$t('registerpage.form.email')"
+              clearable
+              clear-icon="close"
+              lazy-rules
               :rules="[
                 val => !!val || $t('validationerror.required', {field: 'Email'}),
                 val => emailValidator.validate(val) || $t('validationerror.validemail'),
-            ]">
+              ]"
+            >
               <template v-slot:prepend>
                 <q-icon name="mail" />
               </template>
             </q-input>
-            <q-input color="primary" type="text" v-model="form.email2" :label="$t('registerpage.form.email2')" clearable clear-icon="close" lazy-rules
+            <q-input
+              v-model="form.email2"
+              color="primary"
+              type="text"
+              :label="$t('registerpage.form.email2')"
+              clearable
+              clear-icon="close"
+              lazy-rules
               :rules="[
                 val => !!val || $t('validationerror.required', {field: 'Email'}),
                 val => emailValidator.validate(val) || $t('validationerror.validemail'),
-                val => val == this.form.email || $t('validationerror.mustmatch', {field: 'Email'})
-            ]">
+                val => val == form.email || $t('validationerror.mustmatch', {field: 'Email'})
+              ]"
+            >
               <template v-slot:prepend>
                 <q-icon name="mail" />
               </template>
             </q-input>
-            <br />
-            <q-input color="primary" v-model="form.password" :label="$t('registerpage.form.password')" :type="showPassword ? 'text' : 'password'" lazy-rules
+            <br>
+            <q-input
+              v-model="form.password"
+              color="primary"
+              :label="$t('registerpage.form.password')"
+              :type="showPassword ? 'text' : 'password'"
+              lazy-rules
               :rules="[
                 val => !!val || $t('validationerror.required', {field: $t('registerpage.form.password')}),
                 val => val.length >= 6 || $t('validationerror.minlength', {field: $t('registerpage.form.password'), length: 6})
-            ]">
+              ]"
+            >
               <template v-slot:append>
                 <q-icon
                   :name="showPassword ? 'visibility_off' : 'visibility'"
@@ -64,12 +117,18 @@
                 />
               </template>
             </q-input>
-            <q-input color="primary" v-model="form.password2" :label="$t('registerpage.form.password2')" :type="showPassword2 ? 'text' : 'password'" lazy-rules
+            <q-input
+              v-model="form.password2"
+              color="primary"
+              :label="$t('registerpage.form.password2')"
+              :type="showPassword2 ? 'text' : 'password'"
+              lazy-rules
               :rules="[
                 val => !!val || $t('validationerror.required', {field: $t('registerpage.form.password')}),
                 val => val.length >= 6 || $t('validationerror.minlength', {field: $t('registerpage.form.password'), length: 6}),
-                val => val == this.form.password || $t('validationerror.mustmatch', {field: $t('registerpage.form.password')})
-            ]">
+                val => val == form.password || $t('validationerror.mustmatch', {field: $t('registerpage.form.password')})
+              ]"
+            >
               <template v-slot:append>
                 <q-icon
                   :name="showPassword2 ? 'visibility_off' : 'visibility'"
@@ -78,11 +137,24 @@
                 />
               </template>
             </q-input>
-            <br />
-            <q-btn class="bg-primary text-white full-width" type="submit" @click="doRegister" :loading="isLoading" :disable="isLoading || !isFormValid">{{$t('registerpage.btn.register')}}</q-btn>
+            <br>
+            <q-btn
+              class="bg-primary text-white full-width"
+              type="submit"
+              :loading="isLoading"
+              :disable="isLoading || !isFormValid"
+              @click="doRegister"
+            >
+              {{ $t('registerpage.btn.register') }}
+            </q-btn>
           </q-form>
-          <br />
-          <q-btn class="bg-secondary text-white full-width" :to="{ name: 'LoginPage' }">{{$t('registerpage.btn.cancel')}}</q-btn>
+          <br>
+          <q-btn
+            class="bg-secondary text-white full-width"
+            :to="{ name: 'LoginPage' }"
+          >
+            {{ $t('registerpage.btn.cancel') }}
+          </q-btn>
         </q-card-section>
       </app-publiccard>
     </app-transition>
@@ -121,17 +193,6 @@ export default {
       }
     }
   },
-  mounted: function () {
-    // // If the user hits this page and is already loggedin, we should set the token for requests and redirects him to his homepage.
-    // const userservice = new UserService()
-    // if (userservice.isConnected()) {
-    //   const user = userservice.getUser()
-    //   const token = userservice.getToken()
-
-    //   userservice.connect({ ...user, token: token, password: null })
-    //   this.$router.push({ name: 'IndexPage' })
-    // }
-  },
   computed: {
     isFormValid: function () {
       return this.form.username != null && this.form.username.length !== 0 &&
@@ -144,6 +205,17 @@ export default {
         this.form.password2 != null && this.form.password2.length !== 0 &&
         this.form.password === this.form.password2
     }
+  },
+  mounted: function () {
+    // // If the user hits this page and is already loggedin, we should set the token for requests and redirects him to his homepage.
+    // const userservice = new UserService()
+    // if (userservice.isConnected()) {
+    //   const user = userservice.getUser()
+    //   const token = userservice.getToken()
+
+    //   userservice.connect({ ...user, token: token, password: null })
+    //   this.$router.push({ name: 'IndexPage' })
+    // }
   },
   methods: {
     doRegister: function () {

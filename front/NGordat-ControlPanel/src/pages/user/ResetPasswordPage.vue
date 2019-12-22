@@ -3,29 +3,56 @@
     <app-transition>
       <app-publiccard>
         <q-card-section class="bg-primary text-white">
-          <div class="text-h6"><q-icon name="security" size="md" left/>{{$t('resetpasswordpage.title')}}</div>
+          <div class="text-h6">
+            <q-icon
+              name="security"
+              size="md"
+              left
+            />{{ $t('resetpasswordpage.title') }}
+          </div>
         </q-card-section>
 
         <q-separator />
         <q-card-section>
           <q-form>
-            <q-input color="primary" type="text" v-model="form.username" :label="$t('resetpasswordpage.form.username')" clear-icon="close" readonly>
+            <q-input
+              v-model="form.username"
+              color="primary"
+              type="text"
+              :label="$t('resetpasswordpage.form.username')"
+              clear-icon="close"
+              readonly
+            >
               <template v-slot:prepend>
                 <q-icon name="perm_identity" />
               </template>
             </q-input>
-            <br />
-            <q-input color="primary" v-model="form.email" :label="$t('resetpasswordpage.form.email')" type="email" clear-icon="close" readonly>
+            <br>
+            <q-input
+              v-model="form.email"
+              color="primary"
+              :label="$t('resetpasswordpage.form.email')"
+              type="email"
+              clear-icon="close"
+              readonly
+            >
               <template v-slot:prepend>
                 <q-icon name="mail" />
               </template>
             </q-input>
-            <br />
-            <q-input color="primary" v-model="form.newpassword" :label="$t('resetpasswordpage.form.newpassword')" :type="showNewPassword ? 'text' : 'password'" autofocus lazy-rules
+            <br>
+            <q-input
+              v-model="form.newpassword"
+              color="primary"
+              :label="$t('resetpasswordpage.form.newpassword')"
+              :type="showNewPassword ? 'text' : 'password'"
+              autofocus
+              lazy-rules
               :rules="[
                 val => !!val || $t('validationerror.required', {field: $t('resetpasswordpage.form.newpassword')}),
                 val => val.length >= 6 || $t('validationerror.minlength', {field: $t('resetpasswordpage.form.newpassword'), length: 6})
-            ]">
+              ]"
+            >
               <template v-slot:append>
                 <q-icon
                   :name="showNewPassword ? 'visibility_off' : 'visibility'"
@@ -34,12 +61,18 @@
                 />
               </template>
             </q-input>
-            <q-input color="primary" v-model="form.newpassword2" :label="$t('resetpasswordpage.form.newpassword2')" :type="showNewPassword2 ? 'text' : 'password'" lazy-rules
+            <q-input
+              v-model="form.newpassword2"
+              color="primary"
+              :label="$t('resetpasswordpage.form.newpassword2')"
+              :type="showNewPassword2 ? 'text' : 'password'"
+              lazy-rules
               :rules="[
                 val => !!val || $t('validationerror.required', {field: $t('resetpasswordpage.form.newpassword')}),
                 val => val.length >= 6 || $t('validationerror.minlength', {field: $t('resetpasswordpage.form.newpassword'), length: 6}),
-                val => val == this.form.newpassword || $t('validationerror.mustmatch', {field: $t('resetpasswordpage.form.newpassword')})
-            ]">
+                val => val == form.newpassword || $t('validationerror.mustmatch', {field: $t('resetpasswordpage.form.newpassword')})
+              ]"
+            >
               <template v-slot:append>
                 <q-icon
                   :name="showNewPassword2 ? 'visibility_off' : 'visibility'"
@@ -48,11 +81,24 @@
                 />
               </template>
             </q-input>
-            <br />
-            <br />
-            <q-btn class="bg-primary text-white full-width" type="submit" @click="doResetPassword" :loading="isLoading" :disable="isLoading || !isFormValid">{{$t('resetpasswordpage.btn.confirm')}}</q-btn>
+            <br>
+            <br>
+            <q-btn
+              class="bg-primary text-white full-width"
+              type="submit"
+              :loading="isLoading"
+              :disable="isLoading || !isFormValid"
+              @click="doResetPassword"
+            >
+              {{ $t('resetpasswordpage.btn.confirm') }}
+            </q-btn>
           </q-form>
-          <q-btn class="bg-secondary text-white full-width q-mt-md q-mb-xs" :to="{ name: 'LoginPage' }">{{$t('resetpasswordpage.btn.login')}}</q-btn>
+          <q-btn
+            class="bg-secondary text-white full-width q-mt-md q-mb-xs"
+            :to="{ name: 'LoginPage' }"
+          >
+            {{ $t('resetpasswordpage.btn.login') }}
+          </q-btn>
         </q-card-section>
       </app-publiccard>
     </app-transition>
@@ -86,6 +132,13 @@ export default {
       }
     }
   },
+  computed: {
+    isFormValid: function () {
+      return (this.form.newpassword != null && this.form.newpassword.length !== 0) &&
+              (this.form.newpassword2 != null && this.form.newpassword2.length !== 0) &&
+              (this.form.newpassword === this.form.newpassword2)
+    }
+  },
   created: function () {
     if (this.$route.params.resetpasswordtoken != null) {
       this.resetpasswordtoken = this.$route.params.resetpasswordtoken
@@ -103,13 +156,6 @@ export default {
     } else {
       this.$q.notify({ ...NotifyFailure, message: this.$t('resetpasswordpage.error.tokennotfound') })
       this.$router.push({ name: 'LoginPage' })
-    }
-  },
-  computed: {
-    isFormValid: function () {
-      return (this.form.newpassword != null && this.form.newpassword.length !== 0) &&
-              (this.form.newpassword2 != null && this.form.newpassword2.length !== 0) &&
-              (this.form.newpassword === this.form.newpassword2)
     }
   },
   methods: {

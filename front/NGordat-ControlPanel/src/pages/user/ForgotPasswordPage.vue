@@ -3,31 +3,67 @@
     <app-transition>
       <app-publiccard>
         <q-card-section class="bg-primary text-white">
-          <div class="text-h6"><q-icon name="security" size="md" left/>{{$t('forgotpasswordpage.title')}}</div>
+          <div class="text-h6">
+            <q-icon
+              name="security"
+              size="md"
+              left
+            />{{ $t('forgotpasswordpage.title') }}
+          </div>
         </q-card-section>
 
         <q-separator />
         <q-card-section>
           <q-form>
-            <q-input color="primary" type="text" v-model="form.username" :label="$t('forgotpasswordpage.form.username')" clearable clear-icon="close" autofocus>
+            <q-input
+              v-model="form.username"
+              color="primary"
+              type="text"
+              :label="$t('forgotpasswordpage.form.username')"
+              clearable
+              clear-icon="close"
+              autofocus
+            >
               <template v-slot:prepend>
                 <q-icon name="perm_identity" />
               </template>
             </q-input>
             <div class="text-center q-mt-md text-uppercase">
-              {{$t('forgotpasswordpage.text.or')}}
+              {{ $t('forgotpasswordpage.text.or') }}
             </div>
-            <q-input color="primary" v-model="form.email" :label="$t('forgotpasswordpage.form.email')" type="email" clearable clear-icon="close">
+            <q-input
+              v-model="form.email"
+              color="primary"
+              :label="$t('forgotpasswordpage.form.email')"
+              type="email"
+              clearable
+              clear-icon="close"
+            >
               <template v-slot:prepend>
                 <q-icon name="mail" />
               </template>
             </q-input>
-            <br />
-            <div class="text-center">{{$t('forgotpasswordpage.text.description', {duration: 15})}}</div>
-            <br />
-            <q-btn class="bg-primary text-white full-width" type="submit" @click="doForgotPassword" :loading="isLoading" :disable="isLoading || !isFormValid">{{$t('forgotpasswordpage.btn.send')}}</q-btn>
+            <br>
+            <div class="text-center">
+              {{ $t('forgotpasswordpage.text.description', {duration: 15}) }}
+            </div>
+            <br>
+            <q-btn
+              class="bg-primary text-white full-width"
+              type="submit"
+              :loading="isLoading"
+              :disable="isLoading || !isFormValid"
+              @click="doForgotPassword"
+            >
+              {{ $t('forgotpasswordpage.btn.send') }}
+            </q-btn>
           </q-form>
-          <q-btn class="bg-secondary text-white full-width q-mt-md q-mb-xs" :to="{ name: 'LoginPage' }">{{$t('forgotpasswordpage.btn.login')}}</q-btn>
+          <q-btn
+            class="bg-secondary text-white full-width q-mt-md q-mb-xs"
+            :to="{ name: 'LoginPage' }"
+          >
+            {{ $t('forgotpasswordpage.btn.login') }}
+          </q-btn>
         </q-card-section>
       </app-publiccard>
     </app-transition>

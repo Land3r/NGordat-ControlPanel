@@ -1,32 +1,38 @@
 <template>
-  <q-select v-model="lang" map-options :options="langs">
-    <template v-slot:selected="selected">
-      <q-item
-        v-bind="selected.itemProps"
-        v-on="selected.itemEvents"
-      >
-        <q-img
-          :src="selectedLangFlag"
-          :ratio="16/9"
-          style="width:48px;"
-          transition="flip-down"
-         />
-      </q-item>
+  <q-btn-dropdown
+    text-bold
+    align="center"
+    flat
+    no-caps
+    stretch
+    auto-close
+  >
+    <template v-slot:label>
+      <q-img
+        :src="selectedLangFlag"
+        :ratio="16/9"
+        style="width:48px;"
+        transition="flip-down"
+      />
     </template>
-    <template v-slot:option="scope">
+    <q-list>
       <q-item
-        v-bind="scope.itemProps"
-        v-on="scope.itemEvents"
+        v-for="optionLang in langs"
+        :key="optionLang.value"
+        clickable
+        tag="a"
+        @click="setLang(optionLang)"
       >
         <q-item-section>
-          <q-img :src="'statics/flags/'+scope.opt.icon" />
+          <q-img
+            :ratio="16/9"
+            :src="'statics/flags/' + optionLang.icon"
+            style="width:60%;margin-left:auto;margin-right:auto;"
+          />
         </q-item-section>
-        <!-- <q-item-section>
-          <q-item-label v-html="scope.opt.label" />
-        </q-item-section> -->
       </q-item>
-    </template>
-  </q-select>
+    </q-list>
+  </q-btn-dropdown>
 </template>
 
 <script>
@@ -42,17 +48,8 @@ export default {
       lang: null
     }
   },
-  created: function () {
-    this.lang = this.langs.find(lang => lang.value === this.$i18n.locale)
-    console.dir(this.lang)
-  },
   computed: {
     selectedLangFlag: function () {
-      console.log('returning ' + 'statics/flags/' + this.lang.icon)
-      // console.log('flag updated')
-      // console.log('current lang:', this.lang)
-      // console.log('lang found', JSON.stringify(this.langs.find(lang => lang.value === this.lang)))
-      // let icon = this.langs.find(lang => lang.value === this.lang).icon
       return 'statics/flags/' + this.lang.icon
     },
     selectedLangValue: function () {
@@ -69,6 +66,14 @@ export default {
       import(`quasar/lang/${lang.value}`).then(language => {
         this.$q.lang.set(language.default)
       })
+    }
+  },
+  created: function () {
+    this.lang = this.langs.find(lang => lang.value === this.$i18n.locale)
+  },
+  methods: {
+    setLang (lang) {
+      this.lang = lang
     }
   }
 }

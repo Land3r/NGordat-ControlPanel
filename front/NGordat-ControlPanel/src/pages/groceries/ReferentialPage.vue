@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-px-md">
-    <h3>{{$t('groceriesreferentialpage.title')}}</h3>
+    <h3>{{ $t('groceriesreferentialpage.title') }}</h3>
     <q-tabs
       v-model="activeTab"
       dense
@@ -9,42 +9,83 @@
       active-bg-color="primary"
       indicator-color="primary"
       align="justify"
-      >
-      <q-tab name="actions" label="Actions" icon="add_shopping_cart" />
-      <q-tab name="items" label="Items" icon="shopping_cart"/>
+    >
+      <q-tab
+        name="actions"
+        label="Actions"
+        icon="add_shopping_cart"
+      />
+      <q-tab
+        name="items"
+        label="Items"
+        icon="shopping_cart"
+      />
     </q-tabs>
 
     <q-separator />
 
-    <q-tab-panels v-model="activeTab" animated>
+    <q-tab-panels
+      v-model="activeTab"
+      animated
+    >
       <q-tab-panel name="actions">
-        <div class="text-h6"><q-icon name="add_shopping_cart" />Actions</div>
-        <q-list bordered separator>
-          <q-item clickable v-ripple v-for="item in actions" :key="item.Id">
+        <div class="text-h6">
+          <q-icon name="add_shopping_cart" />Actions
+        </div>
+        <q-list
+          bordered
+          separator
+        >
+          <q-item
+            v-for="item in actions"
+            :key="item.Id"
+            v-ripple
+            clickable
+          >
             <q-item-section avatar>
-              <q-icon color="primary" :name="item.icon" />
+              <q-icon
+                color="primary"
+                :name="item.icon"
+              />
             </q-item-section>
-            <q-item-section>{{item.name}}</q-item-section>
+            <q-item-section>{{ item.name }}</q-item-section>
             <q-item-section side>
-              <q-item-label caption>aka: {{item.aliases}}</q-item-label>
+              <q-item-label caption>
+                aka: {{ item.aliases }}
+              </q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
       </q-tab-panel>
 
       <q-tab-panel name="items">
-        <div class="text-h6"><q-icon name="shopping_cart" />Items</div>
-        <q-list bordered separator>
-          <q-item clickable v-ripple v-for="item in items" :key="item.Id">
+        <div class="text-h6">
+          <q-icon name="shopping_cart" />Items
+        </div>
+        <q-list
+          bordered
+          separator
+        >
+          <q-item
+            v-for="item in items"
+            :key="item.Id"
+            v-ripple
+            clickable
+          >
             <q-item-section avatar>
-              <q-icon color="primary" :name="item.icon" />
+              <q-icon
+                color="primary"
+                :name="item.icon"
+              />
             </q-item-section>
-            <q-item-section>{{item.name}}</q-item-section>
+            <q-item-section>{{ item.name }}</q-item-section>
             <q-item-section side>
-              <q-item-label caption>aka: {{item.aliases}}</q-item-label>
+              <q-item-label caption>
+                aka: {{ item.aliases }}
+              </q-item-label>
             </q-item-section>
           </q-item>
-          </q-list>
+        </q-list>
       </q-tab-panel>
     </q-tab-panels>
   </q-page>
@@ -68,8 +109,6 @@ export default {
       items: []
     }
   },
-  methods: {
-  },
   created: function () {
     const groceryActionService = new GroceryActionService()
     groceryActionService.doGet().then((response) => {
@@ -84,6 +123,8 @@ export default {
     }).catch((response) => {
       console.log('Error')
     })
+  },
+  methods: {
   }
 }
 </script>

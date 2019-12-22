@@ -3,7 +3,7 @@
     appear
     enter-active-class="animated flipInX"
   >
-    <slot></slot>
+    <slot />
   </q-slide-transition>
 </template>
 

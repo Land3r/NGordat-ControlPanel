@@ -6,16 +6,16 @@
           <vue-typer
             :text="text"
             :repeat="repeat"
-            :shuffle='true'
-            :pre-type-delay='200'
-            :type-delay='50'
-            :pre-erase-delay='2000'
-            :erase-delay='250'
-            :erase-on-complete='false'
-            initial-action='typing'
-            erase-style='select-all'
-            caret-animation='blink'>
-          </vue-typer>
+            :shuffle="true"
+            :pre-type-delay="200"
+            :type-delay="50"
+            :pre-erase-delay="2000"
+            :erase-delay="250"
+            :erase-on-complete="false"
+            initial-action="typing"
+            erase-style="select-all"
+            caret-animation="blink"
+          />
         </p>
       </blockquote>
       <!-- <cite><span>Kristi Bruno</span><br>
@@ -35,12 +35,18 @@ import { VueTyper } from 'vue-typer'
  */
 export default {
   name: 'TypedSpan',
-  props: {
-    text: String,
-    repeat: Number
-  },
   components: {
     'vue-typer': VueTyper
+  },
+  props: {
+    text: {
+      type: String,
+      required: true
+    },
+    repeat: {
+      type: Number,
+      required: true
+    }
   }
 }
 </script>
