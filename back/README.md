@@ -86,9 +86,7 @@ A Google account is required if you want to send emails.
 >:warning: An unsecure method is applied for sending emails:
 [https://support.google.com/cloudidentity/answer/6260879?hl=en](https://support.google.com/cloudidentity/answer/6260879?hl=en)
 
-<br />
-
-Note that the following [restrictions](https://support.google.com/a/answer/166852?hl=en) are applied to sending emails through Google.
+>:information_source: Note that the following [restrictions](https://support.google.com/a/answer/166852?hl=en) are applied to sending emails through Google.
 
 ### 5. Google Cloud Platform
 
