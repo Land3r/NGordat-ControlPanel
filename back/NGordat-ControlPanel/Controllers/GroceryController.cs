@@ -162,7 +162,16 @@
 
     private object Analyze(string input)
     {
+      // Split des mots
       string[] words = input.Trim().Split(' ');
+
+      // Process:
+      // Essaie de trouver un pattern d'action sur le premier mot, l'étends au maximum.
+      // Si pattern trouvé,
+        // on recherche un nouveau pattern après.
+        // Si pas de nouveaux pattern, on recherche un étendeur de qté ou produit.
+
+      // Si pas de pattern trouvé, on avance d'un mot et on recherche encore.
 
       return words;
     }
