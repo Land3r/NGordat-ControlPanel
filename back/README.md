@@ -74,6 +74,7 @@ use DATABASE_NAME
 You should then set the chosen name in the `appsettings.json` file, under `AppSettings.MongoDb.DatabaseName`.
 
 - [OPTIONAL] Populate database
+
 >Execute the scripts in (/back/database) to initialy populate the database.
 <aside class="">You can refer to the README in back/database folder in order to know more about running the scripts against the MongoDb instance.</aside>
 
@@ -96,8 +97,14 @@ Note that the following [restrictions](https://support.google.com/a/answer/16685
 This software uses Google Cloud Platform (GCP) for using SpeechToText features ([Cloud Speech-to-Text API](https://cloud.google.com/speech-to-text/docs/reference/rest/)).
 A Google account with a configured Google Cloud Platform account configured is required.
 
-You must create a service account under GCP, [enable the speech to text api] for this user(https://cloud.google.com/speech-to-text/), and [generate the credentials for the service account and register it on the host platform](https://todo)
-
 <aside class="warning">
 Note that you will need a credit card to register, despite the free credit provided.
 </aside>
+
+You must create a service account under GCP, [enable the speech to text api](https://cloud.google.com/speech-to-text/) for this user, and [generate the credentials for the service account](https://todo)
+
+Finally register the OAuth service account on the host platform
+>Store the file in a secure filepath on the host filesystem.
+>Register the file path in an environment variable named **GOOGLE_APPLICATION_CREDENTIALS** :
+>>Example:
+>>GOOGLE_APPLICATION_CREDENTIALS | C:\Users\ngordat\Documents\GitHub\NGordat-ControlPanel\back\GCP\Controlpanel-e29cb429f0d9.json
