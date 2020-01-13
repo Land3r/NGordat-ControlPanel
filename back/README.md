@@ -83,10 +83,8 @@ You should then set the chosen name in the `appsettings.json` file, under `AppSe
 This software uses Google SMTP for sending emails.
 A Google account is required if you want to send emails.
 
-<aside class="warning">
-An unsecure method is applied for sending emails:
+>:warning: An unsecure method is applied for sending emails:
 [https://support.google.com/cloudidentity/answer/6260879?hl=en](https://support.google.com/cloudidentity/answer/6260879?hl=en)
-</aside>
 
 <br />
 
@@ -97,9 +95,7 @@ Note that the following [restrictions](https://support.google.com/a/answer/16685
 This software uses Google Cloud Platform (GCP) for using SpeechToText features ([Cloud Speech-to-Text API](https://cloud.google.com/speech-to-text/docs/reference/rest/)).
 A Google account with a configured Google Cloud Platform account configured is required.
 
-<aside class="warning">
-Note that you will need a credit card to register, despite the free credit provided.
-</aside>
+>:warning: Note that you will need a credit card to register, despite the free credit provided.
 
 You must create a service account under GCP, [enable the speech to text api](https://cloud.google.com/speech-to-text/) for this user, and [generate the credentials for the service account](https://todo)
 
