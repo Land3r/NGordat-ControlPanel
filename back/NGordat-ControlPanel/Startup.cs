@@ -130,6 +130,8 @@ namespace NGordatControlPanel
       services.AddScoped<ISpeechToTextService, SpeechToTextService>();
       services.AddScoped<IGroceryActionService, GroceryActionService>();
       services.AddScoped<IGroceryItemService, GroceryItemService>();
+      services.AddScoped<IGroceryQuantityService, GroceryQuantityService>();
+      services.AddScoped<IGroceryMeaninglessWordService, GroceryMeaninglessWordService>();
     }
   }
 }

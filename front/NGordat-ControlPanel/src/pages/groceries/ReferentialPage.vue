@@ -20,6 +20,16 @@
         label="Items"
         icon="shopping_cart"
       />
+      <q-tab
+        name="quantities"
+        label="Quantities"
+        icon="sort"
+      />
+      <q-tab
+        name="meaninglesswords"
+        label="Meaningless Words"
+        icon="translate"
+      />
     </q-tabs>
 
     <q-separator />
@@ -49,11 +59,6 @@
               />
             </q-item-section>
             <q-item-section>{{ item.name }}</q-item-section>
-            <q-item-section side>
-              <q-item-label caption>
-                aka: {{ item.aliases }}
-              </q-item-label>
-            </q-item-section>
           </q-item>
         </q-list>
       </q-tab-panel>
@@ -87,6 +92,49 @@
           </q-item>
         </q-list>
       </q-tab-panel>
+
+      <q-tab-panel name="quantities">
+        <div class="text-h6">
+          <q-icon name="sort" />Quantities
+        </div>
+        <q-list
+          bordered
+          separator
+        >
+          <q-item
+            v-for="item in quantities"
+            :key="item.Id"
+            v-ripple
+            clickable
+          >
+            <q-item-section>{{ item.name }}</q-item-section>
+            <q-item-section side>
+              <q-item-label caption>
+                Value: {{ item.value }}
+              </q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-tab-panel>
+
+      <q-tab-panel name="meaninglesswords">
+        <div class="text-h6">
+          <q-icon name="translate" />Meaningless Words
+        </div>
+        <q-list
+          bordered
+          separator
+        >
+          <q-item
+            v-for="item in meaninglesswords"
+            :key="item.Id"
+            v-ripple
+            clickable
+          >
+            <q-item-section>{{ item.name }}</q-item-section>
+          </q-item>
+        </q-list>
+      </q-tab-panel>
     </q-tab-panels>
   </q-page>
 </template>
@@ -97,6 +145,8 @@
 
 import GroceryActionService from 'services/GroceryActionService'
 import GroceryItemService from 'services/GroceryItemService'
+import GroceryQuantityService from 'services/GroceryQuantityService'
+import GroceryMeaninglessWordService from 'services/GroceryMeaninglessWordService'
 
 export default {
   name: 'GroceriesReferentialPage',
@@ -106,7 +156,9 @@ export default {
     return {
       activeTab: 'actions',
       actions: [],
-      items: []
+      items: [],
+      quantities: [],
+      meaninglesswords: []
     }
   },
   created: function () {
@@ -114,14 +166,28 @@ export default {
     groceryActionService.doGet().then((response) => {
       this.actions = response
     }).catch((response) => {
-      console.log('Error')
+      console.log('Error while getting grocery actions.')
     })
 
     const groceryItemService = new GroceryItemService()
     groceryItemService.doGet().then((response) => {
       this.items = response
     }).catch((response) => {
-      console.log('Error')
+      console.log('Error while getting grocery items.')
+    })
+
+    const groceryQuantityService = new GroceryQuantityService()
+    groceryQuantityService.doGet().then((response) => {
+      this.quantities = response
+    }).catch((response) => {
+      console.log('Error while getting grocery quantities.')
+    })
+
+    const groceryMeaninglessWordService = new GroceryMeaninglessWordService()
+    groceryMeaninglessWordService.doGet().then((response) => {
+      this.meaninglesswords = response
+    }).catch((response) => {
+      console.log('Error while getting grocery meaningless words.')
     })
   },
   methods: {

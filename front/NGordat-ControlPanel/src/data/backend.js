@@ -11,6 +11,8 @@ export const API = {
   GROCERY: 'grocery',
   GROCERYACTION: 'groceryactions',
   GROCERYITEM: 'groceryitems',
+  GROCERYQUANTITY: 'groceryquantities',
+  GROCERYMEANINGLESSWORD: 'grocerymeaninglesswords',
   SPEECHTOTEXT: 'speechtotext'
 }
 
