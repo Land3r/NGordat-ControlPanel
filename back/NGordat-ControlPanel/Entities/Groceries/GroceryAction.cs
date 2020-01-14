@@ -16,11 +16,6 @@
     public string Name { get; set; }
 
     /// <summary>
-    /// Gets or sets the list of Aliases of the <see cref="GroceryAction"/>.
-    /// </summary>
-    public IEnumerable<string> Aliases { get; set; }
-
-    /// <summary>
     /// Gets or sets the Action of the <see cref="GroceryAction"/>.
     /// Can be add, remove, delete, ...
     /// </summary>

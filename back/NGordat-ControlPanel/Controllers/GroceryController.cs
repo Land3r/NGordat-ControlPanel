@@ -13,15 +13,15 @@
   using Microsoft.Extensions.Options;
 
   using NGordatControlPanel.Services.Google;
-    using NGordatControlPanel.Services.Groceries;
-    using NGordatControlPanel.Settings;
-    using MongoDB.Driver;
+  using NGordatControlPanel.Services.Groceries;
+  using NGordatControlPanel.Settings;
+  using MongoDB.Driver;
 
-    /// <summary>
-    /// <see cref="GroceryController"/> class.
-    /// API controller for interacting with the groceries.
-    /// </summary>
-    [Authorize]
+  /// <summary>
+  /// <see cref="GroceryController"/> class.
+  /// API controller for interacting with the groceries.
+  /// </summary>
+  [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class GroceryController : ControllerBase
@@ -168,8 +168,8 @@
       // Process:
       // Essaie de trouver un pattern d'action sur le premier mot, l'étends au maximum.
       // Si pattern trouvé,
-        // on recherche un nouveau pattern après.
-        // Si pas de nouveaux pattern, on recherche un étendeur de qté ou produit.
+      // on recherche un nouveau pattern après.
+      // Si pas de nouveaux pattern, on recherche un étendeur de qté ou produit.
 
       // Si pas de pattern trouvé, on avance d'un mot et on recherche encore.
 
