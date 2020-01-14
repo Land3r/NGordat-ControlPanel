@@ -23,11 +23,13 @@ db.GroceryActions.insertOne({
 	Action: "Remove",
 	Icon: "remove_circle_outline"
 });
+db.GroceryActions.insertOne({
 	_id: UUID(),
 	Name: "Supprime {quantity} {item}",
 	Action: "Remove",
 	Icon: "remove_circle_outline"
 });
+db.GroceryActions.insertOne({
 	_id: UUID(),
 	Name: "Efface {quantity} {item}",
 	Action: "Remove",
