@@ -39,8 +39,12 @@
       animated
     >
       <q-tab-panel name="actions">
-        <div class="text-h6">
-          <q-icon name="add_shopping_cart" />Actions
+        <div class="text-h6 q-py-sm">
+          <q-icon
+            name="add_shopping_cart"
+            class="q-mx-sm"
+          />
+          Actions
         </div>
         <q-list
           bordered
@@ -64,8 +68,34 @@
       </q-tab-panel>
 
       <q-tab-panel name="items">
-        <div class="text-h6">
-          <q-icon name="shopping_cart" />Items
+        <div class="text-h6 q-py-sm">
+          <q-icon
+            name="shopping_cart"
+            class="q-mx-sm"
+          />
+          Items
+          <span class="float-right">
+            <q-chip
+              outline
+              color="teal"
+              text-color="white"
+              icon="add_circle_outline"
+              class="gt-xs"
+              clickable
+              @click="showNewItem"
+            >
+              Ajouter un item
+            </q-chip>
+            <q-chip
+              outline
+              color="teal"
+              text-color="white"
+              icon="add_circle_outline"
+              class="lt-sm"
+              clickable
+              @click="showNewItem"
+            />
+          </span>
         </div>
         <q-list
           bordered
@@ -94,8 +124,12 @@
       </q-tab-panel>
 
       <q-tab-panel name="quantities">
-        <div class="text-h6">
-          <q-icon name="sort" />Quantities
+        <div class="text-h6 q-py-sm">
+          <q-icon
+            name="sort"
+            class="q-mx-sm"
+          />
+          Quantities
         </div>
         <q-list
           bordered
@@ -118,8 +152,12 @@
       </q-tab-panel>
 
       <q-tab-panel name="meaninglesswords">
-        <div class="text-h6">
-          <q-icon name="translate" />Meaningless Words
+        <div class="text-h6 q-py-sm">
+          <q-icon
+            name="translate"
+            class="q-mx-sm"
+          />
+          Meaningless Words
         </div>
         <q-list
           bordered

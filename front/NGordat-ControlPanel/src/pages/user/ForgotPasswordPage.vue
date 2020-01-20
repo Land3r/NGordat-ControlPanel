@@ -75,7 +75,7 @@ import xss from 'xss'
 import { NotifySuccess, NotifyFailure } from 'data/notify'
 
 import UserService from 'services/UserService'
-import PublicCard from 'components/layout/PublicCard'
+import PublicCard from 'components/layout/public/PublicCard'
 import Transition from 'components/common/presentation/Transition'
 
 export default {

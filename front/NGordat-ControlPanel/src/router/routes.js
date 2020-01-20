@@ -87,6 +87,20 @@ const routes = [
     ]
   },
   {
+    path: '/test',
+    component: () => import('layouts/MainLayout.vue'),
+    meta: {
+      requiresAuth: true
+    },
+    children: [
+      {
+        name: 'TestPage',
+        path: '/testpage',
+        component: () => import('pages/TestPage.vue')
+      }
+    ]
+  },
+  {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     meta: {

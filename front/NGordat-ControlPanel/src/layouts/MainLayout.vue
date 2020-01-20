@@ -82,6 +82,14 @@
         <q-separator />
         <q-item
           clickable
+          :to="{ name: 'TestPage' }"
+        >
+          <q-item-section>
+            <q-item-label>Test</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item
+          clickable
           tag="a"
           target="_blank"
           href="https://github.com/Land3r/NGordat-ControlPanel/issues"
